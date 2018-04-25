@@ -1,0 +1,3 @@
+/Users/zhuangyi/zhuangyi/nfv_exam/build/CMakeFiles/rebuild_cache.dir
+/Users/zhuangyi/zhuangyi/nfv_exam/build/CMakeFiles/edit_cache.dir
+/Users/zhuangyi/zhuangyi/nfv_exam/build/CMakeFiles/nfv_exam.dir

@@ -1,0 +1,291 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ARCHITECTURE_ID	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#   define ARCHITECTURE_ID /;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#  define ARCHITECTURE_ID /;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#  define ARCHITECTURE_ID$/;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#   define ARCHITECTURE_ID /;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define ARCHITECTURE_ID /;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define ARCHITECTURE_ID$/;"	d	file:
+CMAKE_BINARY_DIR	build/Makefile	/^CMAKE_BINARY_DIR = \/Users\/zhuangyi\/zhuangyi\/nfv_exam\/build$/;"	m
+CMAKE_COMMAND	build/Makefile	/^CMAKE_COMMAND = \/usr\/local\/Cellar\/cmake\/3.9.5\/bin\/cmake$/;"	m
+CMAKE_SOURCE_DIR	build/Makefile	/^CMAKE_SOURCE_DIR = \/Users\/zhuangyi\/zhuangyi\/nfv_exam$/;"	m
+COMPILER_ID	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^# define COMPILER_ID /;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^# define COMPILER_ID /;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^  # define COMPILER_VERSION_MAJOR /;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#  define COMPILER_VERSION_MAJOR /;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^# define COMPILER_VERSION_MAJOR /;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^  # define COMPILER_VERSION_MAJOR /;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define COMPILER_VERSION_MAJOR /;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^# define COMPILER_VERSION_MAJOR /;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^  # define COMPILER_VERSION_MINOR /;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#  define COMPILER_VERSION_MINOR /;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^# define COMPILER_VERSION_MINOR /;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^  # define COMPILER_VERSION_MINOR /;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define COMPILER_VERSION_MINOR /;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^# define COMPILER_VERSION_MINOR /;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^  # define COMPILER_VERSION_PATCH /;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#   define COMPILER_VERSION_PATCH /;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#  define COMPILER_VERSION_PATCH /;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^# define COMPILER_VERSION_PATCH /;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^  # define COMPILER_VERSION_PATCH /;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#   define COMPILER_VERSION_PATCH /;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define COMPILER_VERSION_PATCH /;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^# define COMPILER_VERSION_PATCH /;"	d	file:
+COMPILER_VERSION_TWEAK	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#  define COMPILER_VERSION_TWEAK /;"	d	file:
+COMPILER_VERSION_TWEAK	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^# define COMPILER_VERSION_TWEAK /;"	d	file:
+COMPILER_VERSION_TWEAK	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define COMPILER_VERSION_TWEAK /;"	d	file:
+COMPILER_VERSION_TWEAK	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^# define COMPILER_VERSION_TWEAK /;"	d	file:
+C_DIALECT	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#  define C_DIALECT /;"	d	file:
+C_DIALECT	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#  define C_DIALECT$/;"	d	file:
+C_DIALECT	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^# define C_DIALECT /;"	d	file:
+DEC	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#define DEC(/;"	d	file:
+DEC	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define DEC(/;"	d	file:
+EQUALS	build/Makefile	/^EQUALS = =$/;"	m
+FLOW_H	include/flow.h	/^#define FLOW_H$/;"	d
+FLOW_MANAGER_H	include/flow_manager.h	/^#define FLOW_MANAGER_H$/;"	d
+FLOW_NODE_H	include/flow_node.h	/^#define FLOW_NODE_H$/;"	d
+Flow	include/flow.h	/^class Flow {$/;"	c	namespace:nfv_exam
+FlowManager	include/flow_manager.h	/^class FlowManager {$/;"	c	namespace:nfv_exam
+FlowNode	include/flow_node.h	/^class FlowNode {$/;"	c	namespace:nfv_exam
+FlowTemplate	include/req.h	/^struct FlowTemplate {$/;"	s	namespace:nfv_exam
+HEX	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#define HEX(/;"	d	file:
+HEX	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define HEX(/;"	d	file:
+ID_VOID_MAIN	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^# define ID_VOID_MAIN$/;"	d	file:
+LEVEL0_BANDWIDTH_DECAY	src/main.cpp	/^const int LEVEL0_BANDWIDTH_DECAY = 4;$/;"	v
+LEVEL0_SON_NUM	src/main.cpp	/^const int LEVEL0_SON_NUM = 20;$/;"	v
+LEVEL1_BANDWIDTH_DECAY	src/main.cpp	/^const int LEVEL1_BANDWIDTH_DECAY = 4;$/;"	v
+LEVEL1_SON_NUM	src/main.cpp	/^const int LEVEL1_SON_NUM = 20;$/;"	v
+LEVEL2_SON_NUM	src/main.cpp	/^const int LEVEL2_SON_NUM = 40;$/;"	v
+LOG_H	include/log.h	/^#define LOG_H$/;"	d
+PHYSICAL_NODE_H	include/physical_node.h	/^#define PHYSICAL_NODE_H$/;"	d
+PHYSICAL_NODE_MANAGER_H	include/physical_node_manager.h	/^#define PHYSICAL_NODE_MANAGER_H$/;"	d
+PLATFORM_ID	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#  define PLATFORM_ID /;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#  define PLATFORM_ID$/;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^# define PLATFORM_ID /;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^# define PLATFORM_ID$/;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define PLATFORM_ID /;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define PLATFORM_ID$/;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^# define PLATFORM_ID /;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^# define PLATFORM_ID$/;"	d	file:
+PhysicalNode	include/physical_node.h	/^    PhysicalNode() {} ;$/;"	f	class:nfv_exam::PhysicalNode
+PhysicalNode	include/physical_node.h	/^class PhysicalNode {$/;"	c	namespace:nfv_exam
+PhysicalNode	src/physical_node.cpp	/^PhysicalNode::PhysicalNode(int id, int depth, int cpu, int memory, int up_bandwidth)$/;"	f	class:nfv_exam::PhysicalNode
+PhysicalNodeManager	include/physical_node_manager.h	/^class PhysicalNodeManager {$/;"	c	namespace:nfv_exam
+REQ_H	include/req.h	/^#define REQ_H$/;"	d
+REQ_MANAGER_H	include/req_manager.h	/^#define REQ_MANAGER_H$/;"	d
+RM	build/Makefile	/^RM = \/usr\/local\/Cellar\/cmake\/3.9.5\/bin\/cmake -E remove -f$/;"	m
+Req	include/req.h	/^class Req {$/;"	c	namespace:nfv_exam
+ReqManager	include/req_manager.h	/^class ReqManager {$/;"	c	namespace:nfv_exam
+SCHEDULER_H	include/scheduler.h	/^#define SCHEDULER_H$/;"	d
+SERVER_CPU	src/main.cpp	/^const int SERVER_CPU = 10;$/;"	v
+SERVER_MEMORY	src/main.cpp	/^const int SERVER_MEMORY = 20;$/;"	v
+SERVER_UP_BANDWIDTH	src/main.cpp	/^const int SERVER_UP_BANDWIDTH = 30;$/;"	v
+SERVICE_CHAIN_H	include/service_chain.h	/^#define SERVICE_CHAIN_H$/;"	d
+SERVICE_CHAIN_MANAGER_H	include/service_chain_manager.h	/^#define SERVICE_CHAIN_MANAGER_H$/;"	d
+SHELL	build/Makefile	/^SHELL = \/bin\/sh$/;"	m
+SIMULATE_ID	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#  define SIMULATE_ID /;"	d	file:
+SIMULATE_ID	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define SIMULATE_ID /;"	d	file:
+SIMULATE_VERSION_MAJOR	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#  define SIMULATE_VERSION_MAJOR /;"	d	file:
+SIMULATE_VERSION_MAJOR	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define SIMULATE_VERSION_MAJOR /;"	d	file:
+SIMULATE_VERSION_MINOR	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#  define SIMULATE_VERSION_MINOR /;"	d	file:
+SIMULATE_VERSION_MINOR	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define SIMULATE_VERSION_MINOR /;"	d	file:
+STRINGIFY	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#define STRINGIFY(/;"	d	file:
+STRINGIFY	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define STRINGIFY(/;"	d	file:
+STRINGIFY_HELPER	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#define STRINGIFY_HELPER(/;"	d	file:
+STRINGIFY_HELPER	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define STRINGIFY_HELPER(/;"	d	file:
+SUFFIXES	build/Makefile	/^SUFFIXES =$/;"	m
+Scheduler	include/scheduler.h	/^class Scheduler {$/;"	c	namespace:nfv_exam
+ServiceChain	include/service_chain.h	/^class ServiceChain {$/;"	c	namespace:nfv_exam
+ServiceChainManager	include/service_chain_manager.h	/^class ServiceChainManager {$/;"	c	namespace:nfv_exam
+UNIT_LOG	include/log.h	/^#define UNIT_LOG(/;"	d
+VNF_INSTANCE_H	include/vnf_instance.h	/^#define VNF_INSTANCE_H$/;"	d
+VnfInstance	include/vnf_instance.h	/^class VnfInstance {$/;"	c	namespace:nfv_exam
+accepted_req_count	include/req_manager.h	/^    int accepted_req_count;$/;"	m	class:nfv_exam::ReqManager
+add_flow_template	src/req_manager.cpp	/^int ReqManager::add_flow_template(int length, int flow_bandwidth_cost, $/;"	f	class:nfv_exam::ReqManager
+add_son	src/physical_node.cpp	/^int PhysicalNode::add_son(int son_id)$/;"	f	class:nfv_exam::PhysicalNode
+adjust_req_procedure_count	include/req_manager.h	/^    int adjust_req_procedure_count;$/;"	m	class:nfv_exam::ReqManager
+adjust_req_procedure_count	src/main.cpp	/^const int adjust_req_procedure_count = 1;$/;"	v
+adjust_req_timestamp	include/req_manager.h	/^    std::vector<std::vector<int> > adjust_req_timestamp;$/;"	m	class:nfv_exam::ReqManager
+assign_bandwidth	src/physical_node.cpp	/^int PhysicalNode::assign_bandwidth(int bandwidth_cost)$/;"	f	class:nfv_exam::PhysicalNode
+assign_bandwidth	src/physical_node_manager.cpp	/^int PhysicalNodeManager::assign_bandwidth(int physical_node_id_1, int physical_node_id_2, int bandwidth)$/;"	f	class:nfv_exam::PhysicalNodeManager
+assign_host_resource	src/physical_node.cpp	/^int PhysicalNode::assign_host_resource(int cpu_cost, int memory_cost)$/;"	f	class:nfv_exam::PhysicalNode
+assign_host_resource	src/physical_node_manager.cpp	/^int PhysicalNodeManager::assign_host_resource(int physical_node_id, int cpu_cost, int memory_cost)$/;"	f	class:nfv_exam::PhysicalNodeManager
+assign_total_bandwidth	src/physical_node_manager.cpp	/^int PhysicalNodeManager::assign_total_bandwidth(int bandwidth_cost)$/;"	f	class:nfv_exam::PhysicalNodeManager
+assign_total_host_resource	src/physical_node_manager.cpp	/^int PhysicalNodeManager::assign_total_host_resource(int cpu_cost, int memory_cost)$/;"	f	class:nfv_exam::PhysicalNodeManager
+bandwidth_cost	include/flow.h	/^    int bandwidth_cost; $/;"	m	class:nfv_exam::Flow
+build_3_level_topo	src/physical_node_manager.cpp	/^int PhysicalNodeManager::build_3_level_topo(int level0_son_num, int level1_son_num, int level2_son_num, \\$/;"	f	class:nfv_exam::PhysicalNodeManager
+calculate_total_bandwidth_cost	src/physical_node_manager.cpp	/^int PhysicalNodeManager::calculate_total_bandwidth_cost()$/;"	f	class:nfv_exam::PhysicalNodeManager
+calculate_total_cpu_cost	src/physical_node_manager.cpp	/^int PhysicalNodeManager::calculate_total_cpu_cost()$/;"	f	class:nfv_exam::PhysicalNodeManager
+calculate_total_memory_cost	src/physical_node_manager.cpp	/^int PhysicalNodeManager::calculate_total_memory_cost()$/;"	f	class:nfv_exam::PhysicalNodeManager
+chain_id	include/flow.h	/^    int chain_id;$/;"	m	class:nfv_exam::Flow
+chain_id	include/req.h	/^    int chain_id;   \/\/ only work when req_type=="new"$/;"	m	class:nfv_exam::Req
+const	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^# define const$/;"	d	file:
+cpu	include/physical_node.h	/^    int cpu;$/;"	m	class:nfv_exam::PhysicalNode
+cpu_cost	include/flow_node.h	/^    int cpu_cost;$/;"	m	class:nfv_exam::FlowNode
+cpu_used	include/physical_node.h	/^    int cpu_used;$/;"	m	class:nfv_exam::PhysicalNode
+debug_log	include/log.h	/^#define debug_log(/;"	d
+depth	include/physical_node.h	/^    int depth;$/;"	m	class:nfv_exam::PhysicalNode
+disable_scale_up_down	include/vnf_instance.h	/^    bool disable_scale_up_down;$/;"	m	class:nfv_exam::VnfInstance
+extend_flow_template_trick	src/req_manager.cpp	/^int ReqManager::extend_flow_template_trick(int length, int flow_bandwidth_cost, $/;"	f	class:nfv_exam::ReqManager
+fatal_log	include/log.h	/^#define fatal_log(/;"	d
+features	build/CMakeFiles/feature_tests.c	/^  const char features[] = {"\\n"$/;"	v
+features	build/CMakeFiles/feature_tests.cxx	/^  const char features[] = {"\\n"$/;"	v
+flow_bandwidth_cost	include/req.h	/^    int flow_bandwidth_cost;$/;"	m	struct:nfv_exam::FlowTemplate
+flow_id	include/flow_node.h	/^    int flow_id;$/;"	m	class:nfv_exam::FlowNode
+flow_id	include/req.h	/^    int flow_id;    \/\/only work when req_type=="adjust"$/;"	m	class:nfv_exam::Req
+flow_id_count	include/flow_manager.h	/^    int flow_id_count;$/;"	m	class:nfv_exam::FlowManager
+flow_node_id_count	include/flow_manager.h	/^    int flow_node_id_count;$/;"	m	class:nfv_exam::FlowManager
+flow_node_location	include/flow_node.h	/^    int flow_node_location;$/;"	m	class:nfv_exam::FlowNode
+flow_node_pool	include/flow_manager.h	/^    std::map<int, FlowNode*> flow_node_pool;$/;"	m	class:nfv_exam::FlowManager
+flow_nodes	include/flow.h	/^    std::vector<int> flow_nodes;$/;"	m	class:nfv_exam::Flow
+flow_pool	include/flow_manager.h	/^    std::map<int, Flow*> flow_pool;$/;"	m	class:nfv_exam::FlowManager
+flow_template	include/req_manager.h	/^    std::map<int, FlowTemplate *> flow_template;$/;"	m	class:nfv_exam::ReqManager
+flow_template_file_path	include/req_manager.h	/^    std::string flow_template_file_path;$/;"	m	class:nfv_exam::ReqManager
+flow_template_file_path	src/main.cpp	/^const std::string flow_template_file_path = ".\/data\/flow_template.config";$/;"	v
+flow_template_id	include/req.h	/^    int flow_template_id;$/;"	m	class:nfv_exam::Req
+function_id	include/flow_node.h	/^    int function_id;$/;"	m	class:nfv_exam::FlowNode
+get_bandwidth_hop_count	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_bandwidth_hop_count(int physical_node_id_1, int physical_node_id_2, int &hop_count)$/;"	f	class:nfv_exam::PhysicalNodeManager
+get_cpu_used	src/physical_node.cpp	/^int PhysicalNode::get_cpu_used()$/;"	f	class:nfv_exam::PhysicalNode
+get_depth	src/physical_node.cpp	/^int PhysicalNode::get_depth()$/;"	f	class:nfv_exam::PhysicalNode
+get_flow	src/flow_manager.cpp	/^int FlowManager::get_flow(int flow_id, Flow &flow)$/;"	f	class:nfv_exam::FlowManager
+get_flow_node	src/flow.cpp	/^int Flow::get_flow_node(int function_id, FlowNode &flow_node)$/;"	f	class:nfv_exam::Flow
+get_flow_node	src/flow_manager.cpp	/^int FlowManager::get_flow_node(int flow_node_id, FlowNode &flow_node)$/;"	f	class:nfv_exam::FlowManager
+get_host_cost	src/physical_node.cpp	/^int PhysicalNode::get_host_cost(double &host_cost)$/;"	f	class:nfv_exam::PhysicalNode
+get_instance	src/flow_manager.cpp	/^FlowManager *FlowManager::get_instance()$/;"	f	class:nfv_exam::FlowManager
+get_instance	src/physical_node_manager.cpp	/^PhysicalNodeManager *PhysicalNodeManager::get_instance()$/;"	f	class:nfv_exam::PhysicalNodeManager
+get_instance	src/req_manager.cpp	/^ReqManager *ReqManager::get_instance()$/;"	f	class:nfv_exam::ReqManager
+get_instance	src/service_chain_manager.cpp	/^ServiceChainManager *ServiceChainManager::get_instance()$/;"	f	class:nfv_exam::ServiceChainManager
+get_location	src/flow_node.cpp	/^int FlowNode::get_location()$/;"	f	class:nfv_exam::FlowNode
+get_memory_used	src/physical_node.cpp	/^int PhysicalNode::get_memory_used()$/;"	f	class:nfv_exam::PhysicalNode
+get_next_node	src/flow_node.cpp	/^int FlowNode::get_next_node()$/;"	f	class:nfv_exam::FlowNode
+get_parent_id	src/physical_node.cpp	/^int PhysicalNode::get_parent_id()$/;"	f	class:nfv_exam::PhysicalNode
+get_physical_node	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_physical_node(int node_id, PhysicalNode &physical_node)$/;"	f	class:nfv_exam::PhysicalNodeManager
+get_pre_host_cost	src/physical_node.cpp	/^int PhysicalNode::get_pre_host_cost(int cur_cpu_cost, int cur_memory_cost, double &host_cost)$/;"	f	class:nfv_exam::PhysicalNode
+get_pre_node	src/flow_node.cpp	/^int FlowNode::get_pre_node()$/;"	f	class:nfv_exam::FlowNode
+get_total_bandwidth_statistics	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_total_bandwidth_statistics(int &total_bandwidth_used, int &total_bandwidth)$/;"	f	class:nfv_exam::PhysicalNodeManager
+get_total_cpu_statistics	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_total_cpu_statistics(int &total_cpu_used, int &total_cpu)$/;"	f	class:nfv_exam::PhysicalNodeManager
+get_total_memory_statistics	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_total_memory_statistics(int &total_memory_used, int &total_memory)$/;"	f	class:nfv_exam::PhysicalNodeManager
+get_up_bandwidth	src/physical_node.cpp	/^int PhysicalNode::get_up_bandwidth()$/;"	f	class:nfv_exam::PhysicalNode
+get_up_bandwidth_used	src/physical_node.cpp	/^int PhysicalNode::get_up_bandwidth_used()$/;"	f	class:nfv_exam::PhysicalNode
+has_next_node	src/flow_node.cpp	/^bool FlowNode::has_next_node()$/;"	f	class:nfv_exam::FlowNode
+has_pre_node	src/flow_node.cpp	/^bool FlowNode::has_pre_node()$/;"	f	class:nfv_exam::FlowNode
+id	include/flow.h	/^    int id;$/;"	m	class:nfv_exam::Flow
+id	include/flow_node.h	/^    int id;$/;"	m	class:nfv_exam::FlowNode
+id	include/physical_node.h	/^    int id;$/;"	m	class:nfv_exam::PhysicalNode
+id	include/service_chain.h	/^    int id;$/;"	m	class:nfv_exam::ServiceChain
+id	include/vnf_instance.h	/^    int id;$/;"	m	class:nfv_exam::VnfInstance
+info_arch	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^char const* info_arch = "INFO" ":" "arch[" ARCHITECTURE_ID "]";$/;"	v
+info_arch	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* info_arch = "INFO" ":" "arch[" ARCHITECTURE_ID "]";$/;"	v
+info_compiler	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^char const* info_compiler = "INFO" ":" "compiler[" COMPILER_ID "]";$/;"	v
+info_compiler	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* info_compiler = "INFO" ":" "compiler[" COMPILER_ID "]";$/;"	v
+info_cray	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^char const *info_cray = "INFO" ":" "compiler_wrapper[CrayPrgEnv]";$/;"	v
+info_cray	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const *info_cray = "INFO" ":" "compiler_wrapper[CrayPrgEnv]";$/;"	v
+info_language_dialect_default	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^const char* info_language_dialect_default =$/;"	v
+info_language_dialect_default	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^const char* info_language_dialect_default = "INFO" ":" "dialect_default["$/;"	v
+info_platform	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^char const* info_platform = "INFO" ":" "platform[" PLATFORM_ID "]";$/;"	v
+info_platform	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* info_platform = "INFO" ":" "platform[" PLATFORM_ID "]";$/;"	v
+info_simulate	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^char const* info_simulate = "INFO" ":" "simulate[" SIMULATE_ID "]";$/;"	v
+info_simulate	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* info_simulate = "INFO" ":" "simulate[" SIMULATE_ID "]";$/;"	v
+info_simulate_version	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^char const info_simulate_version[] = {$/;"	v
+info_simulate_version	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_simulate_version[] = {$/;"	v
+info_version	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^char const info_version[] = {$/;"	v
+info_version	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_version[] = {$/;"	v
+init	src/req_manager.cpp	/^int ReqManager::init()$/;"	f	class:nfv_exam::ReqManager
+is_settled	src/flow_node.cpp	/^bool FlowNode::is_settled()$/;"	f	class:nfv_exam::FlowNode
+last_vi_id	include/vnf_instance.h	/^    std::vector<int> last_vi_id;$/;"	m	class:nfv_exam::VnfInstance
+length	include/flow.h	/^    int length;$/;"	m	class:nfv_exam::Flow
+length	include/req.h	/^    int length;$/;"	m	class:nfv_exam::Req
+length	include/req.h	/^    int length;$/;"	m	struct:nfv_exam::FlowTemplate
+lifetime_left	include/flow.h	/^    int lifetime_left;$/;"	m	class:nfv_exam::Flow
+load_flow_template_from_txt	src/req_manager.cpp	/^int ReqManager::load_flow_template_from_txt()$/;"	f	class:nfv_exam::ReqManager
+location	include/vnf_instance.h	/^    int location;$/;"	m	class:nfv_exam::VnfInstance
+log_debug	src/log.cpp	/^void log_debug(const char *fmt, ...)$/;"	f	namespace:rs_frame
+main	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^int main(argc, argv) int argc; char *argv[];$/;"	f
+main	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^void main() {}$/;"	f
+main	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^int main(int argc, char* argv[])$/;"	f
+main	build/CMakeFiles/feature_tests.c	/^int main(int argc, char** argv) { (void)argv; return features[argc]; }$/;"	f
+main	build/CMakeFiles/feature_tests.cxx	/^int main(int argc, char** argv) { (void)argv; return features[argc]; }$/;"	f
+main	src/main.cpp	/^int main()$/;"	f
+memory	include/physical_node.h	/^    int memory;$/;"	m	class:nfv_exam::PhysicalNode
+memory_cost	include/flow_node.h	/^    int memory_cost;$/;"	m	class:nfv_exam::FlowNode
+memory_used	include/physical_node.h	/^    int memory_used;$/;"	m	class:nfv_exam::PhysicalNode
+new_req_procedure_count	include/req_manager.h	/^    int new_req_procedure_count;$/;"	m	class:nfv_exam::ReqManager
+new_req_procedure_count	src/main.cpp	/^const int new_req_procedure_count = 1;$/;"	v
+new_req_timestamp	include/req_manager.h	/^    std::vector<std::vector<int> > new_req_timestamp;$/;"	m	class:nfv_exam::ReqManager
+next_flow_node_id	include/flow_node.h	/^    int next_flow_node_id;$/;"	m	class:nfv_exam::FlowNode
+next_vi_id	include/vnf_instance.h	/^    std::vector<int> next_vi_id;$/;"	m	class:nfv_exam::VnfInstance
+nfv_exam	include/flow.h	/^namespace nfv_exam {$/;"	n
+nfv_exam	include/flow_manager.h	/^namespace nfv_exam {$/;"	n
+nfv_exam	include/flow_node.h	/^namespace nfv_exam {$/;"	n
+nfv_exam	include/physical_node.h	/^namespace nfv_exam {$/;"	n
+nfv_exam	include/physical_node_manager.h	/^namespace nfv_exam {$/;"	n
+nfv_exam	include/req.h	/^namespace nfv_exam {$/;"	n
+nfv_exam	include/req_manager.h	/^namespace nfv_exam {$/;"	n
+nfv_exam	include/scheduler.h	/^namespace nfv_exam {$/;"	n
+nfv_exam	include/service_chain.h	/^namespace nfv_exam {$/;"	n
+nfv_exam	include/service_chain_manager.h	/^namespace nfv_exam {$/;"	n
+nfv_exam	include/vnf_instance.h	/^namespace nfv_exam {$/;"	n
+nfv_exam	src/flow.cpp	/^namespace nfv_exam {$/;"	n	file:
+nfv_exam	src/flow_manager.cpp	/^namespace nfv_exam {$/;"	n	file:
+nfv_exam	src/flow_node.cpp	/^namespace nfv_exam {$/;"	n	file:
+nfv_exam	src/physical_node.cpp	/^namespace nfv_exam {$/;"	n	file:
+nfv_exam	src/physical_node_manager.cpp	/^namespace nfv_exam {$/;"	n	file:
+nfv_exam	src/req.cpp	/^namespace nfv_exam {$/;"	n	file:
+nfv_exam	src/req_manager.cpp	/^namespace nfv_exam {$/;"	n	file:
+nfv_exam	src/scheduler.cpp	/^namespace nfv_exam {$/;"	n	file:
+nfv_exam	src/service_chain.cpp	/^namespace nfv_exam {$/;"	n	file:
+nfv_exam	src/service_chain_manager.cpp	/^namespace nfv_exam {$/;"	n	file:
+nfv_exam	src/vnf_instance.cpp	/^namespace nfv_exam {$/;"	n	file:
+node_cpu_cost	include/req.h	/^    std::vector<int> node_cpu_cost;$/;"	m	struct:nfv_exam::FlowTemplate
+node_memory_cost	include/req.h	/^    std::vector<int> node_memory_cost;$/;"	m	struct:nfv_exam::FlowTemplate
+notice_log	include/log.h	/^#define notice_log(/;"	d
+parent_id	include/physical_node.h	/^    int parent_id;$/;"	m	class:nfv_exam::PhysicalNode
+physical_node	include/physical_node_manager.h	/^    std::map<int, PhysicalNode*> physical_node;$/;"	m	class:nfv_exam::PhysicalNodeManager
+pre_flow_node_id	include/flow_node.h	/^    int pre_flow_node_id;$/;"	m	class:nfv_exam::FlowNode
+qnxnto	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v
+qnxnto	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v
+release_bandwidth	src/physical_node.cpp	/^int PhysicalNode::release_bandwidth(int bandwidth_cost)$/;"	f	class:nfv_exam::PhysicalNode
+release_bandwidth	src/physical_node_manager.cpp	/^int PhysicalNodeManager::release_bandwidth(int physical_node_id_1, int physical_node_id_2, int bandwidth)$/;"	f	class:nfv_exam::PhysicalNodeManager
+release_host_resource	src/physical_node.cpp	/^int PhysicalNode::release_host_resource(int cpu_cost, int memory_cost)$/;"	f	class:nfv_exam::PhysicalNode
+release_host_resource	src/physical_node_manager.cpp	/^int PhysicalNodeManager::release_host_resource(int physical_node_id, int cpu_cost, int memory_cost)$/;"	f	class:nfv_exam::PhysicalNodeManager
+release_total_bandwidth	src/physical_node_manager.cpp	/^int PhysicalNodeManager::release_total_bandwidth(int bandwidth_cost)$/;"	f	class:nfv_exam::PhysicalNodeManager
+release_total_host_resource	src/physical_node_manager.cpp	/^int PhysicalNodeManager::release_total_host_resource(int cpu_cost, int memory_cost)$/;"	f	class:nfv_exam::PhysicalNodeManager
+remove	src/flow_node.cpp	/^int FlowNode::remove()$/;"	f	class:nfv_exam::FlowNode
+req_type	include/req.h	/^    std::string req_type;$/;"	m	class:nfv_exam::Req
+rs_frame	include/log.h	/^namespace rs_frame {$/;"	n
+rs_frame	src/log.cpp	/^namespace rs_frame {$/;"	n	file:
+service_chain_id_count	include/service_chain_manager.h	/^    int service_chain_id_count;$/;"	m	class:nfv_exam::ServiceChainManager
+service_chain_pool	include/service_chain_manager.h	/^    std::map<int, ServiceChain*> service_chain_pool;$/;"	m	class:nfv_exam::ServiceChainManager
+set_flow_template_file_path	src/req_manager.cpp	/^int ReqManager::set_flow_template_file_path(std::string file_path)$/;"	f	class:nfv_exam::ReqManager
+set_generate_procedure_count	src/req_manager.cpp	/^int ReqManager::set_generate_procedure_count(int new_req_procedure_count, int adjust_req_procedure_count)$/;"	f	class:nfv_exam::ReqManager
+set_parent	src/physical_node.cpp	/^int PhysicalNode::set_parent(int parent_id)$/;"	f	class:nfv_exam::PhysicalNode
+settle	src/flow_node.cpp	/^int FlowNode::settle(int vi_id)$/;"	f	class:nfv_exam::FlowNode
+settled_flow_nodes	include/vnf_instance.h	/^    std::set<int> settled_flow_nodes;$/;"	m	class:nfv_exam::VnfInstance
+son_id	include/physical_node.h	/^    std::vector<int> son_id;$/;"	m	class:nfv_exam::PhysicalNode
+to_string	include/req.h	/^    std::string to_string()$/;"	f	struct:nfv_exam::FlowTemplate
+total_bandwidth	include/physical_node_manager.h	/^    int total_bandwidth;$/;"	m	class:nfv_exam::PhysicalNodeManager
+total_bandwidth_used	include/physical_node_manager.h	/^    int total_bandwidth_used;$/;"	m	class:nfv_exam::PhysicalNodeManager
+total_cpu	include/physical_node_manager.h	/^    int total_cpu;$/;"	m	class:nfv_exam::PhysicalNodeManager
+total_cpu_used	include/physical_node_manager.h	/^    int total_cpu_used;$/;"	m	class:nfv_exam::PhysicalNodeManager
+total_memory	include/physical_node_manager.h	/^    int total_memory;$/;"	m	class:nfv_exam::PhysicalNodeManager
+total_memory_used	include/physical_node_manager.h	/^    int total_memory_used;$/;"	m	class:nfv_exam::PhysicalNodeManager
+total_req_count	include/req_manager.h	/^    int total_req_count;$/;"	m	class:nfv_exam::ReqManager
+up_bandwidth	include/physical_node.h	/^    int up_bandwidth;$/;"	m	class:nfv_exam::PhysicalNode
+up_bandwidth_used	include/physical_node.h	/^    int up_bandwidth_used;$/;"	m	class:nfv_exam::PhysicalNode
+vi_cpu	include/vnf_instance.h	/^    int vi_cpu;$/;"	m	class:nfv_exam::VnfInstance
+vi_cpu_used	include/vnf_instance.h	/^    int vi_cpu_used;$/;"	m	class:nfv_exam::VnfInstance
+vi_memory	include/vnf_instance.h	/^    int vi_memory;$/;"	m	class:nfv_exam::VnfInstance
+vi_memory_used	include/vnf_instance.h	/^    int vi_memory_used;$/;"	m	class:nfv_exam::VnfInstance
+vnf_instance	include/service_chain.h	/^    std::map<int, std::vector<int> > vnf_instance; \/\/from function_id to vnf_instance_id$/;"	m	class:nfv_exam::ServiceChain
+vnf_instance_id_count	include/service_chain_manager.h	/^    int vnf_instance_id_count;$/;"	m	class:nfv_exam::ServiceChainManager
+vnf_instance_pool	include/service_chain_manager.h	/^    std::map<int, VnfInstance*> vnf_instance_pool;$/;"	m	class:nfv_exam::ServiceChainManager
+volatile	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^# define volatile$/;"	d	file:
+warning_log	include/log.h	/^#define warning_log(/;"	d
+~FlowManager	src/flow_manager.cpp	/^FlowManager::~FlowManager()$/;"	f	class:nfv_exam::FlowManager
+~PhysicalNodeManager	src/physical_node_manager.cpp	/^PhysicalNodeManager::~PhysicalNodeManager()$/;"	f	class:nfv_exam::PhysicalNodeManager
+~ReqManager	src/req_manager.cpp	/^ReqManager::~ReqManager()$/;"	f	class:nfv_exam::ReqManager
+~ServiceChainManager	src/service_chain_manager.cpp	/^ServiceChainManager::~ServiceChainManager()$/;"	f	class:nfv_exam::ServiceChainManager

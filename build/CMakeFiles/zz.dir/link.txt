@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++  -std=c++11 -Wall -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/zz.dir/src/log.cpp.o CMakeFiles/zz.dir/src/main.cpp.o CMakeFiles/zz.dir/src/physical_node.cpp.o CMakeFiles/zz.dir/src/physical_node_manager.cpp.o  -o ../bin/zz 
