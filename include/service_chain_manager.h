@@ -16,7 +16,7 @@ public:
 
     static ServiceChainManager *get_instance();
 
-
+    int get_all_active_chain_id(int length, std::vector<int> &active_chain_id);
 
 private:
 
@@ -25,6 +25,8 @@ private:
     int service_chain_id_count;
     std::map<int, VnfInstance*> vnf_instance_pool;
     int vnf_instance_id_count;
+
+    std::map<int, std::vector<int> > length2active_chain_id;
 
 };
 

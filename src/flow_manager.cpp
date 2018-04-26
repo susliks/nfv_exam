@@ -50,5 +50,24 @@ int FlowManager::get_flow_node(int flow_node_id, FlowNode &flow_node)
     }
 }
 
+int FlowManager::random_pick_an_active_flow_id(int &flow_id, int &flow_length)
+{
+    int active_flow_count = this->flow_pool.size();
+    int position = rand() % active_flow_count;
+
+    auto iter = this->flow_pool.begin();
+    for (int i = 0; i < position; ++i) {
+        ++iter;
+        if (iter == this->flow_pool.end()) {
+            warning_log("random pick failed.");
+            return -1;
+        }
+    }
+
+    flow_id = iter->first;
+    flow_length = iter->second->get_length();
+    return 0;
+}
+
 
 }

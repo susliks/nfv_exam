@@ -19,6 +19,8 @@ public:
     int get_flow(int flow_id, Flow &flow);
     int get_flow_node(int flow_node_id, FlowNode &flow_node);
 
+    int random_pick_an_active_flow_id(int &flow_id, int &flow_length);
+
 
 private:
 

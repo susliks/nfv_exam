@@ -1,9 +1,9 @@
 #ifndef PHYSICAL_NODE_MANAGER_H
 #define PHYSICAL_NODE_MANAGER_H
 
-//#include <cstdio>
 #include <vector>
 #include <map>
+#include <string>
 
 #include "physical_node.h"
 
@@ -32,6 +32,14 @@ public:
     int get_total_memory_statistics(int &total_memory_used, int &total_memory);
     int get_total_bandwidth_statistics(int &total_bandwidth_used, int &total_bandwidth);
 
+    int update_resource_used_evaluation();
+    double get_resource_used_ratio();
+
+    int set_physical_node_cpu_evaluation_file_path(const std::string &file_path);
+    int set_physical_node_memory_evaluation_file_path(const std::string &file_path);
+    int set_physical_node_bandwidth_evaluation_file_path(const std::string &file_path);
+    int save_evaluation();
+
 private:
     int add_physical_node(int parent_id);
 
@@ -43,6 +51,7 @@ private:
     int calculate_total_cpu_cost(); // for check
     int calculate_total_memory_cost();
     int calculate_total_bandwidth_cost();
+    int calculate_total_resource();
 
 private:
     std::map<int, PhysicalNode*> physical_node;
@@ -52,6 +61,16 @@ private:
     int total_cpu;
     int total_memory;
     int total_bandwidth;
+
+    double resource_used_ratio;
+
+    std::string physical_node_cpu_evaluation_file_path;
+    std::string physical_node_memory_evaluation_file_path;
+    std::string physical_node_bandwidth_evaluation_file_path;
+
+    std::vector<double> total_cpu_used_ratio_history;
+    std::vector<double> total_memory_used_ratio_history;
+    std::vector<double> total_bandwidth_used_ratio_history;
 };
 
 }

@@ -45,9 +45,17 @@ CMakeFiles/nfv_exam.dir/src/req.cpp.o
  ../include/req.h
  /Users/zhuangyi/zhuangyi/nfv_exam/src/req.cpp
 CMakeFiles/nfv_exam.dir/src/req_manager.cpp.o
+ ../include/flow.h
+ ../include/flow_manager.h
+ ../include/flow_node.h
  ../include/log.h
+ ../include/physical_node.h
+ ../include/physical_node_manager.h
  ../include/req.h
  ../include/req_manager.h
+ ../include/service_chain.h
+ ../include/service_chain_manager.h
+ ../include/vnf_instance.h
  /Users/zhuangyi/zhuangyi/nfv_exam/src/req_manager.cpp
 CMakeFiles/nfv_exam.dir/src/scheduler.cpp.o
  ../include/log.h

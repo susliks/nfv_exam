@@ -13,6 +13,8 @@ class Flow {
 public:
     int get_flow_node(int function_id, FlowNode &flow_node);
 
+    int get_length();
+
 
 private:
     int id;

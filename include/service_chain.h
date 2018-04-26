@@ -13,6 +13,7 @@ public:
 private:
     int id;
     std::map<int, std::vector<int> > vnf_instance; //from function_id to vnf_instance_id
+
 };
 
 }

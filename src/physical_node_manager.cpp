@@ -77,10 +77,13 @@ int PhysicalNodeManager::build_3_level_topo(int level0_son_num, int level1_son_n
         }
     }
 
+    if (calculate_total_resource() != 0) {
+        warning_log("calculate_total_resource failed");
+        return -1;
+    }
+
     return 0;
 }
-
-
 
 int PhysicalNodeManager::get_bandwidth_hop_count(int physical_node_id_1, int physical_node_id_2, int &hop_count)
 {
@@ -291,6 +294,38 @@ int PhysicalNodeManager::calculate_total_bandwidth_cost()
     return result;
 }
 
+int PhysicalNodeManager::calculate_total_resource()
+{
+    this->total_cpu = 0;
+    for (std::map<int, PhysicalNode *>::iterator itr = physical_node.begin();
+            itr != physical_node.end(); ++itr) {
+        if (itr->second != NULL && itr->second->get_depth() == 3) {
+            this->total_cpu += itr->second->get_total_cpu_available();
+        }
+    }
+    notice_log("total cpu: %d", this->total_cpu);
+
+    this->total_memory = 0;
+    for (std::map<int, PhysicalNode *>::iterator itr = physical_node.begin();
+            itr != physical_node.end(); ++itr) {
+        if (itr->second != NULL && itr->second->get_depth() == 3) {
+            this->total_memory += itr->second->get_total_memory_available();
+        }
+    }
+    notice_log("total memory: %d", this->total_memory);
+
+    this->total_bandwidth = 0;
+    for (std::map<int, PhysicalNode *>::iterator itr = physical_node.begin();
+            itr != physical_node.end(); ++itr) {
+        if (itr->second != NULL) {
+            this->total_bandwidth += itr->second->get_total_bandwidth_available();
+        }
+    }
+    notice_log("total bandwidth: %d", this->total_bandwidth);
+
+    return 0;
+}
+
 int PhysicalNodeManager::get_physical_node(int node_id, PhysicalNode &physical_node)
 {
     if (this->physical_node.find(node_id) != this->physical_node.end()) {
@@ -302,6 +337,77 @@ int PhysicalNodeManager::get_physical_node(int node_id, PhysicalNode &physical_n
     }
 }
 
+int PhysicalNodeManager::update_resource_used_evaluation()
+{
+    this->total_cpu_used = calculate_total_cpu_cost();
+    this->total_memory_used = calculate_total_memory_cost();
+    this->total_bandwidth_used = calculate_total_bandwidth_cost();
+
+    total_cpu_used_ratio_history.push_back((double)total_cpu_used / total_cpu);
+    total_memory_used_ratio_history.push_back((double)total_memory_used / total_memory);
+    total_bandwidth_used_ratio_history.push_back((double)total_bandwidth_used / total_bandwidth);
+
+    this->resource_used_ratio = (total_cpu_used_ratio_history.back() + 
+            total_memory_used_ratio_history.back() + total_bandwidth_used_ratio_history.back()) / 3;
+
+    return 0;
+}
+
+double PhysicalNodeManager::get_resource_used_ratio()
+{
+    return this->resource_used_ratio;
+}
+
+int PhysicalNodeManager::set_physical_node_cpu_evaluation_file_path(const std::string &file_path)
+{
+    this->physical_node_cpu_evaluation_file_path = file_path;
+    return 0;
+}
+
+int PhysicalNodeManager::set_physical_node_memory_evaluation_file_path(const std::string &file_path)
+{
+    this->physical_node_memory_evaluation_file_path = file_path;
+    return 0;
+}
+
+int PhysicalNodeManager::set_physical_node_bandwidth_evaluation_file_path(const std::string &file_path)
+{
+    this->physical_node_bandwidth_evaluation_file_path = file_path;
+    return 0;
+}
+
+int PhysicalNodeManager::save_evaluation()
+{
+    FILE *out_file(NULL);
+    if ((out_file = fopen(this->physical_node_cpu_evaluation_file_path.c_str(), "w")) == NULL) {
+        warning_log("open cpu evaluation file failed");
+        return -1;
+    }
+    for (auto iter = total_cpu_used_ratio_history.begin(); iter != total_cpu_used_ratio_history.end(); ++iter) {
+        fprintf(out_file, "%lf\n", *iter);
+    }
+    fclose(out_file);
+    
+    if ((out_file = fopen(this->physical_node_memory_evaluation_file_path.c_str(), "w")) == NULL) {
+        warning_log("open memory evaluation file failed");
+        return -1;
+    }
+    for (auto iter = total_memory_used_ratio_history.begin(); iter != total_memory_used_ratio_history.end(); ++iter) {
+        fprintf(out_file, "%lf\n", *iter);
+    }
+    fclose(out_file);
+    
+    if ((out_file = fopen(this->physical_node_bandwidth_evaluation_file_path.c_str(), "w")) == NULL) {
+        warning_log("open bandwidth evaluation file failed");
+        return -1;
+    }
+    for (auto iter = total_bandwidth_used_ratio_history.begin(); iter != total_bandwidth_used_ratio_history.end(); ++iter) {
+        fprintf(out_file, "%lf\n", *iter);
+    }
+    fclose(out_file);
+    
+    return 0;
+}
 
 
 }

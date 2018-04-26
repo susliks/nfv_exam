@@ -29,4 +29,15 @@ ServiceChainManager *ServiceChainManager::get_instance()
     return instance;
 }
 
+int ServiceChainManager::get_all_active_chain_id(int chain_length, std::vector<int> &active_chain_id)
+{
+    if (length2active_chain_id.find(chain_length) != length2active_chain_id.end()) {
+        active_chain_id = length2active_chain_id[chain_length];
+        return 0;
+    } else {
+        warning_log("not exist chain_length = %d", chain_length);
+        return -1;
+    }
+}
+
 }

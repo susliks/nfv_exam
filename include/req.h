@@ -9,6 +9,22 @@ namespace nfv_exam {
 
 class Req {
 public:
+    void clear();
+    std::string to_string();
+
+    int get_chain_id();
+    int get_flow_id();
+    int get_length();
+    int get_flow_template_id();
+    int get_lifetime();
+    const std::string &get_req_type();
+
+    void set_chain_id(int chain_id);
+    void set_flow_id(int flow_id);
+    void set_length(int length);
+    void set_flow_template_id(int flow_template_id);
+    void set_lifetime(int lifetime);
+    void set_req_type(const std::string &req_type);
 
 
 private:
@@ -17,6 +33,7 @@ private:
     int chain_id;   // only work when req_type=="new"
     int flow_id;    //only work when req_type=="adjust"
     int flow_template_id;
+    int lifetime;
 };
 
 struct FlowTemplate {

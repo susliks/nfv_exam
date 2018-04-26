@@ -74,6 +74,21 @@ int PhysicalNode::get_up_bandwidth_used()
     return this->up_bandwidth_used;
 }
 
+int PhysicalNode::get_total_cpu_available()
+{
+    return this->cpu;
+}
+
+int PhysicalNode::get_total_memory_available()
+{
+    return this->memory;
+}
+
+int PhysicalNode::get_total_bandwidth_available()
+{
+    return this->up_bandwidth;
+}
+
 int PhysicalNode::assign_bandwidth(int bandwidth_cost)
 {
     this->up_bandwidth_used += bandwidth_cost;

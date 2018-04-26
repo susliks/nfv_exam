@@ -104,12 +104,14 @@ ServiceChainManager	include/service_chain_manager.h	/^class ServiceChainManager 
 UNIT_LOG	include/log.h	/^#define UNIT_LOG(/;"	d
 VNF_INSTANCE_H	include/vnf_instance.h	/^#define VNF_INSTANCE_H$/;"	d
 VnfInstance	include/vnf_instance.h	/^class VnfInstance {$/;"	c	namespace:nfv_exam
+accept_ratio_history	include/req_manager.h	/^    vector<double> accept_ratio_history;$/;"	m	class:nfv_exam::ReqManager
 accepted_req_count	include/req_manager.h	/^    int accepted_req_count;$/;"	m	class:nfv_exam::ReqManager
 add_flow_template	src/req_manager.cpp	/^int ReqManager::add_flow_template(int length, int flow_bandwidth_cost, $/;"	f	class:nfv_exam::ReqManager
 add_son	src/physical_node.cpp	/^int PhysicalNode::add_son(int son_id)$/;"	f	class:nfv_exam::PhysicalNode
 adjust_req_procedure_count	include/req_manager.h	/^    int adjust_req_procedure_count;$/;"	m	class:nfv_exam::ReqManager
-adjust_req_procedure_count	src/main.cpp	/^const int adjust_req_procedure_count = 1;$/;"	v
+adjust_req_procedure_count	src/main.cpp	/^const int adjust_req_procedure_count = 2;$/;"	v
 adjust_req_timestamp	include/req_manager.h	/^    std::vector<std::vector<int> > adjust_req_timestamp;$/;"	m	class:nfv_exam::ReqManager
+adjust_req_timestamp_ptr	include/req_manager.h	/^    std::vector<int> adjust_req_timestamp_ptr;$/;"	m	class:nfv_exam::ReqManager
 assign_bandwidth	src/physical_node.cpp	/^int PhysicalNode::assign_bandwidth(int bandwidth_cost)$/;"	f	class:nfv_exam::PhysicalNode
 assign_bandwidth	src/physical_node_manager.cpp	/^int PhysicalNodeManager::assign_bandwidth(int physical_node_id_1, int physical_node_id_2, int bandwidth)$/;"	f	class:nfv_exam::PhysicalNodeManager
 assign_host_resource	src/physical_node.cpp	/^int PhysicalNode::assign_host_resource(int cpu_cost, int memory_cost)$/;"	f	class:nfv_exam::PhysicalNode
@@ -118,18 +120,23 @@ assign_total_bandwidth	src/physical_node_manager.cpp	/^int PhysicalNodeManager::
 assign_total_host_resource	src/physical_node_manager.cpp	/^int PhysicalNodeManager::assign_total_host_resource(int cpu_cost, int memory_cost)$/;"	f	class:nfv_exam::PhysicalNodeManager
 bandwidth_cost	include/flow.h	/^    int bandwidth_cost; $/;"	m	class:nfv_exam::Flow
 build_3_level_topo	src/physical_node_manager.cpp	/^int PhysicalNodeManager::build_3_level_topo(int level0_son_num, int level1_son_num, int level2_son_num, \\$/;"	f	class:nfv_exam::PhysicalNodeManager
+build_length2flow_template_id	src/req_manager.cpp	/^int ReqManager::build_length2flow_template_id()$/;"	f	class:nfv_exam::ReqManager
 calculate_total_bandwidth_cost	src/physical_node_manager.cpp	/^int PhysicalNodeManager::calculate_total_bandwidth_cost()$/;"	f	class:nfv_exam::PhysicalNodeManager
 calculate_total_cpu_cost	src/physical_node_manager.cpp	/^int PhysicalNodeManager::calculate_total_cpu_cost()$/;"	f	class:nfv_exam::PhysicalNodeManager
 calculate_total_memory_cost	src/physical_node_manager.cpp	/^int PhysicalNodeManager::calculate_total_memory_cost()$/;"	f	class:nfv_exam::PhysicalNodeManager
 chain_id	include/flow.h	/^    int chain_id;$/;"	m	class:nfv_exam::Flow
 chain_id	include/req.h	/^    int chain_id;   \/\/ only work when req_type=="new"$/;"	m	class:nfv_exam::Req
+clear	src/req.cpp	/^void Req::clear()$/;"	f	class:nfv_exam::Req
 const	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^# define const$/;"	d	file:
 cpu	include/physical_node.h	/^    int cpu;$/;"	m	class:nfv_exam::PhysicalNode
 cpu_cost	include/flow_node.h	/^    int cpu_cost;$/;"	m	class:nfv_exam::FlowNode
 cpu_used	include/physical_node.h	/^    int cpu_used;$/;"	m	class:nfv_exam::PhysicalNode
 debug_log	include/log.h	/^#define debug_log(/;"	d
+decide_chain_id	src/req_manager.cpp	/^int ReqManager::decide_chain_id(int length, int &chain_id) $/;"	f	class:nfv_exam::ReqManager
 depth	include/physical_node.h	/^    int depth;$/;"	m	class:nfv_exam::PhysicalNode
 disable_scale_up_down	include/vnf_instance.h	/^    bool disable_scale_up_down;$/;"	m	class:nfv_exam::VnfInstance
+exam_lifetime	include/req_manager.h	/^    int exam_lifetime;$/;"	m	class:nfv_exam::ReqManager
+exam_lifetime	src/main.cpp	/^const int exam_lifetime = 100;$/;"	v
 extend_flow_template_trick	src/req_manager.cpp	/^int ReqManager::extend_flow_template_trick(int length, int flow_bandwidth_cost, $/;"	f	class:nfv_exam::ReqManager
 fatal_log	include/log.h	/^#define fatal_log(/;"	d
 features	build/CMakeFiles/feature_tests.c	/^  const char features[] = {"\\n"$/;"	v
@@ -148,6 +155,11 @@ flow_template_file_path	include/req_manager.h	/^    std::string flow_template_fi
 flow_template_file_path	src/main.cpp	/^const std::string flow_template_file_path = ".\/data\/flow_template.config";$/;"	v
 flow_template_id	include/req.h	/^    int flow_template_id;$/;"	m	class:nfv_exam::Req
 function_id	include/flow_node.h	/^    int function_id;$/;"	m	class:nfv_exam::FlowNode
+generate_poisson_seq	src/req_manager.cpp	/^int ReqManager::generate_poisson_seq(int exam_lifetime, std::vector<int> &req_timestamp)$/;"	f	class:nfv_exam::ReqManager
+generate_req	src/req_manager.cpp	/^int ReqManager::generate_req(int cur_time, std::vector<Req> &req_list)$/;"	f	class:nfv_exam::ReqManager
+generate_req_info	src/req_manager.cpp	/^int ReqManager::generate_req_info(const std::string &req_type, Req &req)$/;"	f	class:nfv_exam::ReqManager
+generate_timestamp	src/req_manager.cpp	/^int ReqManager::generate_timestamp()$/;"	f	class:nfv_exam::ReqManager
+get_all_active_chain_id	src/service_chain_manager.cpp	/^int ServiceChainManager::get_all_active_chain_id(int chain_length, std::vector<int> &active_chain_id)$/;"	f	class:nfv_exam::ServiceChainManager
 get_bandwidth_hop_count	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_bandwidth_hop_count(int physical_node_id_1, int physical_node_id_2, int &hop_count)$/;"	f	class:nfv_exam::PhysicalNodeManager
 get_cpu_used	src/physical_node.cpp	/^int PhysicalNode::get_cpu_used()$/;"	f	class:nfv_exam::PhysicalNode
 get_depth	src/physical_node.cpp	/^int PhysicalNode::get_depth()$/;"	f	class:nfv_exam::PhysicalNode
@@ -166,6 +178,10 @@ get_parent_id	src/physical_node.cpp	/^int PhysicalNode::get_parent_id()$/;"	f	cl
 get_physical_node	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_physical_node(int node_id, PhysicalNode &physical_node)$/;"	f	class:nfv_exam::PhysicalNodeManager
 get_pre_host_cost	src/physical_node.cpp	/^int PhysicalNode::get_pre_host_cost(int cur_cpu_cost, int cur_memory_cost, double &host_cost)$/;"	f	class:nfv_exam::PhysicalNode
 get_pre_node	src/flow_node.cpp	/^int FlowNode::get_pre_node()$/;"	f	class:nfv_exam::FlowNode
+get_random_int	src/req_manager.cpp	/^int ReqManager::get_random_int(int l, int r)$/;"	f	class:nfv_exam::ReqManager
+get_random_template_id	src/req_manager.cpp	/^int ReqManager::get_random_template_id()$/;"	f	class:nfv_exam::ReqManager
+get_random_template_id	src/req_manager.cpp	/^int ReqManager::get_random_template_id(int length)$/;"	f	class:nfv_exam::ReqManager
+get_resource_used_ratio	src/physical_node_manager.cpp	/^double PhysicalNodeManager::get_resource_used_ratio()$/;"	f	class:nfv_exam::PhysicalNodeManager
 get_total_bandwidth_statistics	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_total_bandwidth_statistics(int &total_bandwidth_used, int &total_bandwidth)$/;"	f	class:nfv_exam::PhysicalNodeManager
 get_total_cpu_statistics	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_total_cpu_statistics(int &total_cpu_used, int &total_cpu)$/;"	f	class:nfv_exam::PhysicalNodeManager
 get_total_memory_statistics	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_total_memory_statistics(int &total_memory_used, int &total_memory)$/;"	f	class:nfv_exam::PhysicalNodeManager
@@ -200,6 +216,9 @@ last_vi_id	include/vnf_instance.h	/^    std::vector<int> last_vi_id;$/;"	m	class
 length	include/flow.h	/^    int length;$/;"	m	class:nfv_exam::Flow
 length	include/req.h	/^    int length;$/;"	m	class:nfv_exam::Req
 length	include/req.h	/^    int length;$/;"	m	struct:nfv_exam::FlowTemplate
+length2active_chain_id	include/service_chain_manager.h	/^    std::map<int, std::vector<int> > length2active_chain_id;$/;"	m	class:nfv_exam::ServiceChainManager
+length2flow_template_id	include/req_manager.h	/^    std::map<int, std::vector<int> > length2flow_template_id;$/;"	m	class:nfv_exam::ReqManager
+lifetime	include/req.h	/^    int lifetime;$/;"	m	class:nfv_exam::Req
 lifetime_left	include/flow.h	/^    int lifetime_left;$/;"	m	class:nfv_exam::Flow
 load_flow_template_from_txt	src/req_manager.cpp	/^int ReqManager::load_flow_template_from_txt()$/;"	f	class:nfv_exam::ReqManager
 location	include/vnf_instance.h	/^    int location;$/;"	m	class:nfv_exam::VnfInstance
@@ -214,8 +233,9 @@ memory	include/physical_node.h	/^    int memory;$/;"	m	class:nfv_exam::PhysicalN
 memory_cost	include/flow_node.h	/^    int memory_cost;$/;"	m	class:nfv_exam::FlowNode
 memory_used	include/physical_node.h	/^    int memory_used;$/;"	m	class:nfv_exam::PhysicalNode
 new_req_procedure_count	include/req_manager.h	/^    int new_req_procedure_count;$/;"	m	class:nfv_exam::ReqManager
-new_req_procedure_count	src/main.cpp	/^const int new_req_procedure_count = 1;$/;"	v
+new_req_procedure_count	src/main.cpp	/^const int new_req_procedure_count = 3;$/;"	v
 new_req_timestamp	include/req_manager.h	/^    std::vector<std::vector<int> > new_req_timestamp;$/;"	m	class:nfv_exam::ReqManager
+new_req_timestamp_ptr	include/req_manager.h	/^    std::vector<int> new_req_timestamp_ptr;$/;"	m	class:nfv_exam::ReqManager
 next_flow_node_id	include/flow_node.h	/^    int next_flow_node_id;$/;"	m	class:nfv_exam::FlowNode
 next_vi_id	include/vnf_instance.h	/^    std::vector<int> next_vi_id;$/;"	m	class:nfv_exam::VnfInstance
 nfv_exam	include/flow.h	/^namespace nfv_exam {$/;"	n
@@ -245,9 +265,19 @@ node_memory_cost	include/req.h	/^    std::vector<int> node_memory_cost;$/;"	m	st
 notice_log	include/log.h	/^#define notice_log(/;"	d
 parent_id	include/physical_node.h	/^    int parent_id;$/;"	m	class:nfv_exam::PhysicalNode
 physical_node	include/physical_node_manager.h	/^    std::map<int, PhysicalNode*> physical_node;$/;"	m	class:nfv_exam::PhysicalNodeManager
+physical_node_bandwidth_evaluation_file_path	include/physical_node_manager.h	/^    std::string physical_node_bandwidth_evaluation_file_path;$/;"	m	class:nfv_exam::PhysicalNodeManager
+physical_node_bandwidth_evaluation_file_path	src/main.cpp	/^const std::string physical_node_bandwidth_evaluation_file_path = ".\/data\/bandwidth_evaluation";$/;"	v
+physical_node_cpu_evaluation_file_path	include/physical_node_manager.h	/^    std::string physical_node_cpu_evaluation_file_path;$/;"	m	class:nfv_exam::PhysicalNodeManager
+physical_node_cpu_evaluation_file_path	src/main.cpp	/^const std::string physical_node_cpu_evaluation_file_path = ".\/data\/cpu_evaluation";$/;"	v
+physical_node_evaluate_frequency	src/main.cpp	/^const int physical_node_evaluate_frequency = 10;$/;"	v
+physical_node_memory_evaluation_file_path	include/physical_node_manager.h	/^    std::string physical_node_memory_evaluation_file_path;$/;"	m	class:nfv_exam::PhysicalNodeManager
+physical_node_memory_evaluation_file_path	src/main.cpp	/^const std::string physical_node_memory_evaluation_file_path = ".\/data\/memory_evaluation";$/;"	v
 pre_flow_node_id	include/flow_node.h	/^    int pre_flow_node_id;$/;"	m	class:nfv_exam::FlowNode
 qnxnto	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v
 qnxnto	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v
+random_exponential	src/req_manager.cpp	/^double ReqManager::random_exponential(double lambda)    $/;"	f	class:nfv_exam::ReqManager
+random_pick_an_active_chain	src/req_manager.cpp	/^int ReqManager::random_pick_an_active_chain(int length, int &chain_id)$/;"	f	class:nfv_exam::ReqManager
+random_pick_an_active_flow	src/req_manager.cpp	/^int ReqManager::random_pick_an_active_flow(int &flow_id, int &flow_length)$/;"	f	class:nfv_exam::ReqManager
 release_bandwidth	src/physical_node.cpp	/^int PhysicalNode::release_bandwidth(int bandwidth_cost)$/;"	f	class:nfv_exam::PhysicalNode
 release_bandwidth	src/physical_node_manager.cpp	/^int PhysicalNodeManager::release_bandwidth(int physical_node_id_1, int physical_node_id_2, int bandwidth)$/;"	f	class:nfv_exam::PhysicalNodeManager
 release_host_resource	src/physical_node.cpp	/^int PhysicalNode::release_host_resource(int cpu_cost, int memory_cost)$/;"	f	class:nfv_exam::PhysicalNode
@@ -255,27 +285,42 @@ release_host_resource	src/physical_node_manager.cpp	/^int PhysicalNodeManager::r
 release_total_bandwidth	src/physical_node_manager.cpp	/^int PhysicalNodeManager::release_total_bandwidth(int bandwidth_cost)$/;"	f	class:nfv_exam::PhysicalNodeManager
 release_total_host_resource	src/physical_node_manager.cpp	/^int PhysicalNodeManager::release_total_host_resource(int cpu_cost, int memory_cost)$/;"	f	class:nfv_exam::PhysicalNodeManager
 remove	src/flow_node.cpp	/^int FlowNode::remove()$/;"	f	class:nfv_exam::FlowNode
+req_evaluation_file_path	include/req_manager.h	/^    std::string req_evaluation_file_path;$/;"	m	class:nfv_exam::ReqManager
+req_evaluation_file_path	src/main.cpp	/^const std::string req_evaluation_file_path = ".\/data\/req_evaluation";$/;"	v
 req_type	include/req.h	/^    std::string req_type;$/;"	m	class:nfv_exam::Req
+resource_used_ratio	include/physical_node_manager.h	/^    double resource_used_ratio;$/;"	m	class:nfv_exam::PhysicalNodeManager
 rs_frame	include/log.h	/^namespace rs_frame {$/;"	n
 rs_frame	src/log.cpp	/^namespace rs_frame {$/;"	n	file:
+save_evaluation	src/physical_node_manager.cpp	/^int PhysicalNodeManager::save_evaluation()$/;"	f	class:nfv_exam::PhysicalNodeManager
 service_chain_id_count	include/service_chain_manager.h	/^    int service_chain_id_count;$/;"	m	class:nfv_exam::ServiceChainManager
 service_chain_pool	include/service_chain_manager.h	/^    std::map<int, ServiceChain*> service_chain_pool;$/;"	m	class:nfv_exam::ServiceChainManager
-set_flow_template_file_path	src/req_manager.cpp	/^int ReqManager::set_flow_template_file_path(std::string file_path)$/;"	f	class:nfv_exam::ReqManager
+set_exam_lifetime	src/req_manager.cpp	/^int ReqManager::set_exam_lifetime(int exam_lifetime)$/;"	f	class:nfv_exam::ReqManager
+set_flow_template_file_path	src/req_manager.cpp	/^int ReqManager::set_flow_template_file_path(const std::string &file_path)$/;"	f	class:nfv_exam::ReqManager
 set_generate_procedure_count	src/req_manager.cpp	/^int ReqManager::set_generate_procedure_count(int new_req_procedure_count, int adjust_req_procedure_count)$/;"	f	class:nfv_exam::ReqManager
 set_parent	src/physical_node.cpp	/^int PhysicalNode::set_parent(int parent_id)$/;"	f	class:nfv_exam::PhysicalNode
+set_physical_node_bandwidth_evaluation_file_path	src/physical_node_manager.cpp	/^int PhysicalNodeManager::set_physical_node_bandwidth_evaluation_file_path(const std::string &file_path)$/;"	f	class:nfv_exam::PhysicalNodeManager
+set_physical_node_cpu_evaluation_file_path	src/physical_node_manager.cpp	/^int PhysicalNodeManager::set_physical_node_cpu_evaluation_file_path(const std::string &file_path)$/;"	f	class:nfv_exam::PhysicalNodeManager
+set_physical_node_memory_evaluation_file_path	src/physical_node_manager.cpp	/^int PhysicalNodeManager::set_physical_node_memory_evaluation_file_path(const std::string &file_path)$/;"	f	class:nfv_exam::PhysicalNodeManager
+set_req_evaluation_file_path	src/req_manager.cpp	/^int ReqManager::set_req_evaluation_file_path(const std::string &file_path)$/;"	f	class:nfv_exam::ReqManager
 settle	src/flow_node.cpp	/^int FlowNode::settle(int vi_id)$/;"	f	class:nfv_exam::FlowNode
 settled_flow_nodes	include/vnf_instance.h	/^    std::set<int> settled_flow_nodes;$/;"	m	class:nfv_exam::VnfInstance
 son_id	include/physical_node.h	/^    std::vector<int> son_id;$/;"	m	class:nfv_exam::PhysicalNode
 to_string	include/req.h	/^    std::string to_string()$/;"	f	struct:nfv_exam::FlowTemplate
+to_string	src/req.cpp	/^std::string to_string()$/;"	f	namespace:nfv_exam
 total_bandwidth	include/physical_node_manager.h	/^    int total_bandwidth;$/;"	m	class:nfv_exam::PhysicalNodeManager
 total_bandwidth_used	include/physical_node_manager.h	/^    int total_bandwidth_used;$/;"	m	class:nfv_exam::PhysicalNodeManager
+total_bandwidth_used_ratio_history	include/physical_node_manager.h	/^    std::vector<double> total_bandwidth_used_ratio_history;$/;"	m	class:nfv_exam::PhysicalNodeManager
 total_cpu	include/physical_node_manager.h	/^    int total_cpu;$/;"	m	class:nfv_exam::PhysicalNodeManager
 total_cpu_used	include/physical_node_manager.h	/^    int total_cpu_used;$/;"	m	class:nfv_exam::PhysicalNodeManager
+total_cpu_used_ratio_history	include/physical_node_manager.h	/^    std::vector<double> total_cpu_used_ratio_history;$/;"	m	class:nfv_exam::PhysicalNodeManager
 total_memory	include/physical_node_manager.h	/^    int total_memory;$/;"	m	class:nfv_exam::PhysicalNodeManager
 total_memory_used	include/physical_node_manager.h	/^    int total_memory_used;$/;"	m	class:nfv_exam::PhysicalNodeManager
+total_memory_used_ratio_history	include/physical_node_manager.h	/^    std::vector<double> total_memory_used_ratio_history;$/;"	m	class:nfv_exam::PhysicalNodeManager
 total_req_count	include/req_manager.h	/^    int total_req_count;$/;"	m	class:nfv_exam::ReqManager
 up_bandwidth	include/physical_node.h	/^    int up_bandwidth;$/;"	m	class:nfv_exam::PhysicalNode
 up_bandwidth_used	include/physical_node.h	/^    int up_bandwidth_used;$/;"	m	class:nfv_exam::PhysicalNode
+update_evaluation	src/req_manager.cpp	/^int ReqManager::update_evaluation(const std::vector<bool> &req_accepted_flag)$/;"	f	class:nfv_exam::ReqManager
+update_resource_used_evaluation	src/physical_node_manager.cpp	/^int PhysicalNodeManager::update_resource_used_evaluation()$/;"	f	class:nfv_exam::PhysicalNodeManager
 vi_cpu	include/vnf_instance.h	/^    int vi_cpu;$/;"	m	class:nfv_exam::VnfInstance
 vi_cpu_used	include/vnf_instance.h	/^    int vi_cpu_used;$/;"	m	class:nfv_exam::VnfInstance
 vi_memory	include/vnf_instance.h	/^    int vi_memory;$/;"	m	class:nfv_exam::VnfInstance

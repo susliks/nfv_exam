@@ -21,5 +21,10 @@ int Flow::get_flow_node(int function_id, FlowNode &flow_node)
     return 0;
 }
 
+int Flow::get_length()
+{
+    return this->length;
+}
+
 
 }

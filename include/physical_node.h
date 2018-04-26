@@ -23,6 +23,9 @@ public:
     int get_cpu_used();
     int get_memory_used();
     int get_up_bandwidth_used();
+    int get_total_cpu_available();
+    int get_total_memory_available();
+    int get_total_bandwidth_available();
 
     int assign_bandwidth(int bandwidth_cost);
     int release_bandwidth(int bandwidth_cost);

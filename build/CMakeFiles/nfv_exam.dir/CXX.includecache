@@ -45,6 +45,8 @@ vector
 -
 map
 -
+string
+-
 physical_node.h
 ../include/physical_node.h
 
@@ -62,6 +64,8 @@ vector
 map
 -
 cmath
+-
+string
 -
 req.h
 ../include/req.h
@@ -129,6 +133,8 @@ vector
 -
 cstdlib
 -
+ctime
+-
 physical_node_manager.h
 /Users/zhuangyi/zhuangyi/nfv_exam/src/physical_node_manager.h
 physical_node.h
@@ -159,8 +165,18 @@ req.h
 /Users/zhuangyi/zhuangyi/nfv_exam/src/req.h
 
 /Users/zhuangyi/zhuangyi/nfv_exam/src/req_manager.cpp
+cmath
+-
+algorithm
+-
 req_manager.h
 /Users/zhuangyi/zhuangyi/nfv_exam/src/req_manager.h
+physical_node_manager.h
+/Users/zhuangyi/zhuangyi/nfv_exam/src/physical_node_manager.h
+service_chain_manager.h
+/Users/zhuangyi/zhuangyi/nfv_exam/src/service_chain_manager.h
+flow_manager.h
+/Users/zhuangyi/zhuangyi/nfv_exam/src/flow_manager.h
 log.h
 /Users/zhuangyi/zhuangyi/nfv_exam/src/log.h
 

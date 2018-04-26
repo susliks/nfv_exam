@@ -44,9 +44,17 @@ CMakeFiles/nfv_exam.dir/src/req.cpp.o: ../include/log.h
 CMakeFiles/nfv_exam.dir/src/req.cpp.o: ../include/req.h
 CMakeFiles/nfv_exam.dir/src/req.cpp.o: ../src/req.cpp
 
+CMakeFiles/nfv_exam.dir/src/req_manager.cpp.o: ../include/flow.h
+CMakeFiles/nfv_exam.dir/src/req_manager.cpp.o: ../include/flow_manager.h
+CMakeFiles/nfv_exam.dir/src/req_manager.cpp.o: ../include/flow_node.h
 CMakeFiles/nfv_exam.dir/src/req_manager.cpp.o: ../include/log.h
+CMakeFiles/nfv_exam.dir/src/req_manager.cpp.o: ../include/physical_node.h
+CMakeFiles/nfv_exam.dir/src/req_manager.cpp.o: ../include/physical_node_manager.h
 CMakeFiles/nfv_exam.dir/src/req_manager.cpp.o: ../include/req.h
 CMakeFiles/nfv_exam.dir/src/req_manager.cpp.o: ../include/req_manager.h
+CMakeFiles/nfv_exam.dir/src/req_manager.cpp.o: ../include/service_chain.h
+CMakeFiles/nfv_exam.dir/src/req_manager.cpp.o: ../include/service_chain_manager.h
+CMakeFiles/nfv_exam.dir/src/req_manager.cpp.o: ../include/vnf_instance.h
 CMakeFiles/nfv_exam.dir/src/req_manager.cpp.o: ../src/req_manager.cpp
 
 CMakeFiles/nfv_exam.dir/src/scheduler.cpp.o: ../include/log.h
