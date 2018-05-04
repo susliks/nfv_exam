@@ -93,12 +93,12 @@ int ServiceChainManager::create_a_chain(int length, bool disable_scale_up_down, 
     for (int i = 0; i < length; ++i) {
         this->service_chain_pool[chain_id]->add_vnf_instance(i, vnf_instances[i]);
     }
-    for (int i = 0; i < length-1; ++i) {
-        this->vnf_instance_pool[vnf_instances[i]]->set_next_vi_id(vnf_instances[i+1]);
-    }
-    for (int i = 1; i < length; ++i) {
-        this->vnf_instance_pool[vnf_instances[i]]->set_pre_vi_id(vnf_instances[i-1]);
-    }
+    //for (int i = 0; i < length-1; ++i) {
+    //    this->vnf_instance_pool[vnf_instances[i]]->set_next_vi_id(vnf_instances[i+1]);
+    //}
+    //for (int i = 1; i < length; ++i) {
+    //    this->vnf_instance_pool[vnf_instances[i]]->set_pre_vi_id(vnf_instances[i-1]);
+    //}
 
     service_chain_id_count += 1;
     return 0;
@@ -122,11 +122,69 @@ int ServiceChainManager::delete_a_chain(int chain_id)
     }
     delete this->service_chain_pool[chain_id];
     this->service_chain_pool.erase(chain_id);
+    return 0;
 }
 
+int ServiceChainManager::delete_a_vnf_instance(int vi_id)
+{
+    if (this->vnf_instance_pool.find(vi_id) == this->vnf_instance_pool.end()) {
+        warning_log("not existed vi: %d", vi_id);
+        return -1;
+    }
+    delete this->vnf_instance_pool[vi_id];
+    this->vnf_instance_pool.erase(vi_id);
+    return 0;
+}
+
+//update settled_flow_nodes. 
+//no resource release (has been done in release_a_service_chain_when_rejected())
 int ServiceChainManager::remove_a_flow_from_a_chain(int flow_id, int chain_id)
 {
+    FlowManager *flow_manager(NULL);
+    if ((flow_manager = FlowManager::get_instance()) == NULL) {
+        warning_log("get flow_manager failed");
+        return -1;
+    }
 
+    Flow *flow(NULL);
+    ServiceChain *chain(NULL);
+    if (flow_manager->get_flow(flow_id, flow) != 0) {
+        warning_log("get flow failed");
+        return -1;
+    }
+    if (get_service_chain(chain_id, chain) != 0) {
+        warning_log("get chain failed");
+        return -1;
+    }
+
+    int flow_length = flow->get_length();
+    int chain_length = chain->get_length();
+    if (flow_length != chain_length) {
+        warning_log("length mismatch");
+        return -1;
+    }
+
+    FlowNode *flow_node(NULL);
+    VnfInstance *vnf_instance(NULL);
+    for (int i = 0; i < flow_length; ++i) {
+        if (flow_manager->get_flow_node(flow_id, i, flow_node) != 0) {
+            warning_log("get flow node failed");
+            return -1;
+        }
+
+        int vi_id = flow_node->get_location();
+        if (get_vnf_instance(vi_id, vnf_instance) != 0) {
+            warning_log("get vi failed");
+            return -1;
+        }
+
+        if (vnf_instance->remove_settled_flow_node(flow_node->get_id()) != 0) {
+            warning_log("remove_settled_flow_node failed");
+            return -1;
+        }
+    }
+
+    return 0;
 }
 
 int ServiceChainManager::place_first_flow_on_an_unsettled_chain(int flow_id, int chain_id)
@@ -199,10 +257,10 @@ int ServiceChainManager::place_first_flow_on_an_unsettled_chain(int flow_id, int
     return 0;
 }
 
-int ServiceChainManager::place_flow_on_a_linear_chain(int flow_id, int chain_id)
-{
-
-}
+//int ServiceChainManager::place_flow_on_a_linear_chain(int flow_id, int chain_id)
+//{
+//
+//}
 
 int ServiceChainManager::get_service_chain(int chain_id, ServiceChain *service_chain)
 {

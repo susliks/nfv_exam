@@ -120,7 +120,7 @@ int FlowManager::update_evaluation()
     return 0;
 }
 
-int init()
+int FlowManager::init()
 {
     this->flow_id_count = 0;
     this->flow_node_id_count = 0;
@@ -223,6 +223,16 @@ int FlowManager::get_flow_node(int flow_id, int func_id, FlowNode *flow_node)
     return 0;
 }
 
+//int FlowManager::flow_aging()
+//{
+//    for (auto iter = this->flow_pool.begin(); iter != this->flow_pool.end() ++iter) {
+//        if ((*iter)->aging() == 1) { //means lifetime_left == 0
+//
+//
+//        }
+//    }
+//    return 0;
+//}
 
 
 }

@@ -29,7 +29,8 @@ public:
 
     int create_a_chain(int length, bool disable_scale_up_down, int &chain_id);
     int create_a_vnf_instance(int &vi_id);
-    int delete_a_chain(int chain_id); // don't call it immediately. call it by call delete_a_flow
+    int delete_a_chain(int chain_id); // don't call it immediately. call it by call remove_empty_vnf_instance()
+    int delete_a_vnf_instance(int vi_id);
 
 
 private:

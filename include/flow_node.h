@@ -16,6 +16,7 @@ public:
 
     int get_id();
     int get_flow_id();
+    int get_function_id();
     int get_cpu_cost();
     int get_memory_cost();
 
@@ -31,6 +32,8 @@ public:
 
     int get_location();
     int remove();
+
+    int adjust_cost(int new_cpu_cost, int new_memory_cost);
 
 
 private:

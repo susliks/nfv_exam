@@ -11,12 +11,15 @@ public:
     int init(int id, int length, int bandwidth_used);
     int get_length();
     int add_vnf_instance(int function_id, int vi_id);
+    int remove_vnf_instance(int function_id, int vi_id);
     const std::map<int, std::vector<int> *> &get_vnf_instance();
-    std::map<int std::vector<int> *> &get_vnf_instance(int function_id);
+    std::vector<int> &get_vnf_instance(int function_id);
     int get_first_vi_id(int function_id); // only work in the FF
 
     int set_bandwidth_used(int bandwidth_used);
     int get_bandwidth_used();
+
+    int get_related_pn_id(std::set<int> &pn_id_set);
 
 
 private:

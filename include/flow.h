@@ -28,6 +28,8 @@ public:
     void set_flow_nodes(const std::vector<int> &flow_nodes);
 
     int get_flow_node_id(int func_id);
+    
+    int aging();
 
 
 private:

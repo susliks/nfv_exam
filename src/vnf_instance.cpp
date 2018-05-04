@@ -40,7 +40,35 @@ int VnfInstance::set_vi_resource_used(int cpu_used, int memory_used)
     return 0;
 }
 
-int VnfInstance::set_pre_vi_id(int pre_vi_id)
+int VnfInstance::remove_pre_vi_id(int pre_vi_id)
+{
+    for (auto iter = this->pre_vi_id.begin(); iter != this->pre_vi_id.end();) {
+        if (*iter == pre_vi_id) {
+            iter = this->pre_vi_id.erase(iter);
+            return 0;
+        } else {
+            ++iter;
+        }
+    }
+    warning_log("not existed pre_vi_id: %d", pre_vi_id);
+    return -1;
+}
+
+int VnfInstance::remove_next_vi_id(int next_vi_id)
+{
+    for (auto iter = this->next_vi_id.begin(); iter != this->next_vi_id.end();) {
+        if (*iter == next_vi_id) {
+            iter = this->pre_vi_id.erase(iter);
+            return 0;
+        } else {
+            ++iter;
+        }
+    }
+    warning_log("not existed next_vi_id: %d", next_vi_id);
+    return -1;
+}
+
+int VnfInstance::add_pre_vi_id(int pre_vi_id)
 {
     for (auto iter = this->pre_vi_id.begin(); iter != this->pre_vi_id.end(); ++iter) {
         if (*iter == pre_vi_id) {
@@ -52,7 +80,7 @@ int VnfInstance::set_pre_vi_id(int pre_vi_id)
     return 0;
 }
 
-int VnfInstance::set_next_vi_id(int next_vi_id)
+int VnfInstance::add_next_vi_id(int next_vi_id)
 {
     for (auto iter = this->next_vi_id.begin(); iter != this->next_vi_id.end(); ++iter) {
         if (*iter == next_vi_id) {
@@ -84,6 +112,11 @@ int VnfInstance::remove_settled_flow_node(int flow_node_id)
 
     this->settled_flow_nodes.erase(flow_node_id);
     return 0;
+}
+
+bool VnfInstance::has_settled_flow_node()
+{
+    return this->settled_flow_nodes.size() != 0;
 }
 
 int VnfInstance::get_id()
@@ -131,6 +164,14 @@ int VnfInstance::is_settled()
     return this->location == -1;
 }
 
+int VnfInstance::get_settled_flow_node(std::vector<int> &settled_flow_nodes)
+{
+    settled_flow_nodes.clear();
+    for (auto iter = this->settled_flow_nodes.begin(); iter != this->settled_flow_nodes.end(); ++iter) {
+        settled_flow_nodes.push_back(*iter);
+    }
+    return 0;
+}
 
 
 }

@@ -30,6 +30,7 @@ public:
     int get_cpu_statistics(int pn_id, int &cpu_used, int &cpu);
     int get_memory_statistics(int pn_id, int &memory_used, int &memory);
     int get_bandwidth_statistics(int pn_1_id, int pn_2_id, int &bandwidth_left); //note: return bandwidth left: (total - used)
+    int get_bandwidth_statistics(int pn_id, int &up_bandwidth_used, int &up_bandwidth);
 
     int get_physical_node(int node_id, PhysicalNode &physical_node);
 
@@ -45,6 +46,9 @@ public:
     int set_physical_node_memory_evaluation_file_path(const std::string &file_path);
     int set_physical_node_bandwidth_evaluation_file_path(const std::string &file_path);
     int save_evaluation();
+
+    int get_server_cpu();
+    int get_server_memory();
 
 private:
     int add_physical_node(int parent_id);
@@ -79,6 +83,8 @@ private:
     std::vector<double> total_bandwidth_used_ratio_history;
 
     int server_count;
+    int server_cpu;
+    int server_memory;
 };
 
 }

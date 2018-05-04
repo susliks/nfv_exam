@@ -13,6 +13,11 @@ int FlowNode::get_flow_id()
     return this->flow_id;
 }
 
+int FlowNode::get_function_id()
+{
+    return this->function_id;
+}
+
 int FlowNode::settle(int vi_id)
 {
     if (this->flow_node_location != -1) {
@@ -157,6 +162,13 @@ int FlowNode::get_cpu_cost()
 int FlowNode::get_memory_cost()
 {
     return this->memory_cost;
+}
+
+int FlowNode::adjust_cost(int new_cpu_cost, int new_memory_cost)
+{
+    this->cpu_cost = new_cpu_cost;
+    this->memory_cost = new_memory_cost;
+    return 0;
 }
 
 

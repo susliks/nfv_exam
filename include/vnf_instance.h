@@ -11,8 +11,10 @@ public:
     int init(int id, int location, bool disable_scale_up_down, int vi_cpu_used, 
             int vi_memory_used, int vi_cpu_cost, int vi_memory_cost);
     int set_vi_resource_used(int cpu_used, int memory_used);
-    int set_pre_vi_id(int pre_vi_id);
-    int set_next_vi_id(int next_vi_id);
+    int add_pre_vi_id(int pre_vi_id);
+    int add_next_vi_id(int next_vi_id);
+    int remove_pre_vi_id(int pre_vi_id);
+    int remove_next_vi_id(int next_vi_id);
 
     int get_id();
     int get_cpu_cost();
@@ -22,8 +24,10 @@ public:
 
     int add_settled_flow_node(int flow_node_id);
     int remove_settled_flow_node(int flow_node_id);
+    int get_settled_flow_node(std::vector<int> &settled_flow_nodes);
+    bool has_settled_flow_node();
 
-    int settle(in pn_id);
+    int settle(int pn_id);
     int remove();
     bool is_settled();
 

@@ -94,4 +94,14 @@ int Flow::get_flow_node_id(int func_id)
     return this->flow_nodes[func_id];
 }
 
+int Flow::aging()
+{
+    this->lifetime_left -= 1;
+    if (this->lifetime_left == 0) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 }

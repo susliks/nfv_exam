@@ -28,11 +28,23 @@ int PhysicalNodeManager::get_server_count()
     return this->server_count;
 }
 
+int PhysicalNodeManager::get_server_cpu()
+{
+    return this->server_cpu;
+}
+
+int PhysicalNodeManager::get_server_memory()
+{
+    return this->server_memory;
+}
+
 int PhysicalNodeManager::build_3_level_topo(int level0_son_num, int level1_son_num, int level2_son_num, \
         int server_cpu, int server_memory, int server_up_bandwidth, \
         double level1_bandwidth_decay_rate, double level2_bandwidth_decay_rate)
 {
     this->server_count = level0_son_num * level1_son_num * level2_son_num;
+    this->server_cpu = server_cpu;
+    this->server_memory = server_memory;
 
     int physical_node_num = 0;
 
@@ -277,6 +289,20 @@ int PhysicalNodeManager::get_memory_statistics(int pn_id, int &memory_used, int 
 
     memory_used = physical_node.get_memory_used();
     memory = physical_node.get_total_memory_available();
+
+    return 0;
+}
+
+int PhysicalNodeManager::get_bandwidth_statistics(int pn_id, int &up_bandwidth_used, int &up_bandwidth)
+{
+    PhysicalNode physical_node;
+    if (get_physical_node(pn_id, physical_node) != 0) {
+        warning_log("get physical_node failed, id = %d", physical_node_id);
+        return -1;
+    }
+
+    up_bandwidth_used = physical_node.get_up_bandwidth_used();
+    up_bandwidth = physical_node.get_total_bandwidth_available();
 
     return 0;
 }

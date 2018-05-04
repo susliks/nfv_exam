@@ -30,7 +30,7 @@ public:
 private:
     std::string req_type;
     int length;
-    int chain_id;   // only work when req_type=="new"
+    int chain_id;   // only work when req_type=="new" and don't want to start a new chain
     int flow_id;    //only work when req_type=="adjust"
     int flow_template_id;
     int lifetime;

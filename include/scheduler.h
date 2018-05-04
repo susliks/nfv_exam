@@ -41,18 +41,38 @@ public:
     int calculate_a_flow_link_cost(FlowNode *flow_node_1, FlowNode *flow_node_2, bool &enough_flag, int &delta_bandwidth);
 
     int remove_a_flow_node(FlowNode *flow_node, VnfInstance *vnf_instance, int bandwidth_cost);
+    int remove_a_flow_node(FlowNode *flow_node, int vnf_instance_id, int bandwidth_cost);
     int remove_a_flow_v(FlowNode *flow_node, VnfInstance *vnf_instance);
     int remove_a_flow_link(FlowNode *flow_node_1, FlowNode *flow_node_2, int bandwidth_cost);
 
+    int delete_a_flow(int flow_id);
 
+    int save_pre_flow_state(Flow *flow);
+    int adjust_flow_resource(Flow *flow, const Req &req, bool &resource_enough_flag);
+    int release_flow_when_rejected(Flow *flow);
+    int recover_flow_without_adjustment(Flow *flow);
+
+    int remove_empty_vnf_instance(int chain_id);
+    
+
+
+    int flow_aging();
         
 
     //-------------vertical and horizontal---------------
     int handle_req(const Req &req, bool &req_result);
     int sugoi_arrange(const Req &req, bool &req_result)
-    int route()
-    int migration()
-    int scale_out()
+    int route(Flow *flow, ServiceChain *chain, bool &resource_enough_flag);
+
+    int migration(FlowNode *flow_node, ServiceChain *chain, bool &resource_enough_flag);
+    int Scheduler::get_all_flow_nodes_in_the_same_vi(FlowNode *flow_node, vector<FlowNode *> &flow_nodes)
+
+    int scale_out(FlowNode *flow_node, ServiceChain *chain, int flow_bandwidth, bool &resource_enough_flag);
+    int get_not_related_servers(ServiceChain *chain, std::vector<ServerCandidate> &server_candidates);
+    int get_pn_cost_result(int pn_id, double &cost_result);
+    int create_a_settled_vnf_instance(ServiceChain *chain, int function_id, int pn_id, int &vi_id);
+
+    int calculate_flow_node_resource(FlowNode *flow_node, bool &resource_enough_flag);
 
 
     //-------------vertical only---------------
@@ -78,9 +98,72 @@ private:
 
     int search_physical_node_ptr;
     int server_count;
-    int physical_nodes_total_bandwidth; //TODO
+    int server_cpu;
+    int server_memory;
+
+    int physical_nodes_total_bandwidth; 
     double alpha;
 
+    FlowState flow_state;
+
+    int place_vnf_shuffle_max_time;
+
+};
+
+class RouteBestSolution
+{
+public:
+    RouteBestSolution();
+    
+    void update(int vi_id, bool enough_flag, double cost_result);
+    int get_solution();
+private:
+    double enough_cost_result;
+    int enough_vi_id;
+    double not_enough_cost_result;
+    int not_enough_vi_id;
+};
+
+struct FlowState
+{
+    int id;
+    std::vector<int> cpu_cost;
+    std::vector<int> memory_cost;
+    int flow_bandwidth;
+    std::vector<int> location;
+};
+
+struct ServerCandidate
+{
+    double cost_result;
+    int physical_node_id;
+
+    bool operator < (const ServerCandidate &another) const {
+        return cost_result < another.cost_result;
+    }
+};
+
+struct FlowNodeCandidate
+{
+    int fn_id;
+    double cost_result;
+    FlowNode *flow_node;
+    bool is_settled;
+
+    bool operator < (const FlowNodeCandidate &another) const {
+        return cost_result < another.cost_result;
+    }
+};
+
+struct VnfInstanceCandidate
+{
+    int vi_id;
+    double cost_result;
+    VnfInstance *vi;
+    
+    bool operator < (const VnfInstanceCandidate &another) const {
+        return cost_result < another.cost_result;
+    }
 };
 
 }
