@@ -3,5 +3,134 @@
 
 namespace nfv_exam {
 
+int VnfInstance::init(int id, int location, bool disable_scale_up_down, int vi_cpu_used, 
+            int vi_memory_used, int vi_cpu_cost, int vi_memory_cost)
+{
+    this->id = id;
+    this->location = location;
+    this->disable_scale_up_down = disable_scale_up_down;
+    this->vi_cpu_used = vi_cpu_used;
+    this->vi_memory_used = vi_memory_used;
+    this->vi_cpu_cost = vi_cpu_cost;
+    this->vi_memory_cost = vi_memory_cost;
+
+    this->pre_vi_id.clear();
+    this->next_vi_id.clear();
+    settled_flow_nodes.clear();
+
+    return 0;
+}
+
+int VnfInstance::set_vi_resource_used(int cpu_used, int memory_used)
+{
+    if (this->disable_scale_up_down == true) {
+        if (cpu_used > this->vi_cpu_cost || memory_used > this->vi_memory_cost) {
+            warning_log("illegal set, cpu_used=%d, memory_used=%d", cpu_used, memory_used);
+            return -1;
+        }
+    }
+    this->vi_cpu_used = cpu_used;
+    this->vi_memory_used = memory_used;
+
+    if (this->disable_scale_up_down == false) {
+        this->vi_cpu_cost = this->vi_cpu_used;
+        this->vi_memory_cost = this->vi_memory_used;
+    }
+
+    return 0;
+}
+
+int VnfInstance::set_pre_vi_id(int pre_vi_id)
+{
+    for (auto iter = this->pre_vi_id.begin(); iter != this->pre_vi_id.end(); ++iter) {
+        if (*iter == pre_vi_id) {
+            warning_log("existed pre_vi_id: %d", pre_vi_id);
+            return -1;
+        }
+    }
+    this->pre_vi_id.push_back(pre_vi_id);
+    return 0;
+}
+
+int VnfInstance::set_next_vi_id(int next_vi_id)
+{
+    for (auto iter = this->next_vi_id.begin(); iter != this->next_vi_id.end(); ++iter) {
+        if (*iter == next_vi_id) {
+            warning_log("existed next_vi_id: %d", next_vi_id);
+            return -1;
+        }
+    }
+    this->next_vi_id.push_back(next_vi_id);
+    return 0;
+}
+
+int VnfInstance::add_settled_flow_node(int flow_node_id)
+{
+    if (this->settled_flow_nodes.find(flow_node_id) != this->settled_flow_nodes.end()) {
+        warning_log("existed flow node id: %d", flow_node_id);
+        return -1;
+    }
+
+    this->settled_flow_nodes.insert(flow_node_id);
+    return 0;
+}
+
+int VnfInstance::remove_settled_flow_node(int flow_node_id)
+{
+    if (this->settled_flow_nodes.find(flow_node_id) == this->settled_flow_nodes.end()) {
+        warning_log("not exist flow node id: %d", flow_node_id);
+        return -1;
+    }
+
+    this->settled_flow_nodes.erase(flow_node_id);
+    return 0;
+}
+
+int VnfInstance::get_id()
+{
+    return this->id;
+}
+
+int VnfInstance::settle(int pn_id)
+{
+    if (this->location != -1) {
+        warning_log("already settled");
+        return -1;
+    }
+    this->location = pn_id;
+    return 0;
+}
+
+int VnfInstance::remove()
+{
+    if (this->location == -1) {
+        warning_log("already removed");
+        return -1;
+    }
+    this->location = -1;
+    return 0;
+}
+
+int VnfInstance::get_cpu_cost()
+{
+    return this->vi_cpu_cost;
+}
+
+int VnfInstance::get_memory_cost()
+{
+    return this->vi_memory_cost;
+}
+
+int VnfInstance::get_location()
+{
+    return this->location;
+}
+
+int VnfInstance::is_settled()
+{
+    return this->location == -1;
+}
+
+
 
 }

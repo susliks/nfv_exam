@@ -23,10 +23,17 @@ PhysicalNodeManager *PhysicalNodeManager::get_instance()
     return instance;
 }
 
+int PhysicalNodeManager::get_server_count()
+{
+    return this->server_count;
+}
+
 int PhysicalNodeManager::build_3_level_topo(int level0_son_num, int level1_son_num, int level2_son_num, \
         int server_cpu, int server_memory, int server_up_bandwidth, \
         double level1_bandwidth_decay_rate, double level2_bandwidth_decay_rate)
 {
+    this->server_count = level0_son_num * level1_son_num * level2_son_num;
+
     int physical_node_num = 0;
 
     std::vector<int> level_son_num;
@@ -80,6 +87,42 @@ int PhysicalNodeManager::build_3_level_topo(int level0_son_num, int level1_son_n
     if (calculate_total_resource() != 0) {
         warning_log("calculate_total_resource failed");
         return -1;
+    }
+
+    return 0;
+}
+
+int PhysicalNodeManager::get_bandwidth_statistics(int physical_node_id_1, int physical_node_id_2, int &bandwidth_left)
+{
+    PhysicalNode physical_node_1;
+    PhysicalNode physical_node_2;
+    if (get_physical_node(physical_node_id_1, physical_node_1) != 0 ||
+            get_physical_node(physical_node_id_2, physical_node_2) != 0) {
+        warning_log("get physical node failed, id = %d & %d", physical_node_id_1, physical_node_id_2);
+        return -1;
+    }
+
+    if (physical_node_1.get_depth() != 3 || physical_node_2.get_depth() != 3) {
+        warning_log("both node should be level 3. node_id = %d & %d", 
+                physical_node_id_1, physical_node_id_2);
+        return -1;
+    }
+
+    int parent_id_1 = physical_node_id_1;
+    int parent_id_2 = physical_node_id_2;
+    hop_count = 0;
+    bandwidth_left = 0x7fffffff;
+    while (parent_id_1 != parent_id_2) {
+        hop_count += 2;
+        if (get_physical_node(parent_id_1, physical_node_1) != 0 ||
+                get_physical_node(parent_id_2, physical_node_2) != 0) {
+            warning_log("get physical node failed, id = %d & %d", parent_id_1, parent_id_2);
+            return -1;
+        }
+        bandwidth_left = min(bandwidth_left, physical_node_1.get_up_bandwidth() - physical_node_1.get_up_bandwidth_used());
+        bandwidth_left = min(bandwidth_left, physical_node_2.get_up_bandwidth() - physical_node_2.get_up_bandwidth_used());
+        parent_id_1 = physical_node_1.get_parent_id();
+        parent_id_2 = physical_node_2.get_parent_id();
     }
 
     return 0;
@@ -192,7 +235,6 @@ int PhysicalNodeManager::release_bandwidth(int physical_node_id_1, int physical_
     }
 
     return 0;
-
 }
 
 int PhysicalNodeManager::release_host_resource(int physical_node_id, int cpu_cost, int memory_cost)
@@ -207,6 +249,34 @@ int PhysicalNodeManager::release_host_resource(int physical_node_id, int cpu_cos
         warning_log("release physical_node host cost failed, physical_node_id = %d", physical_node_id);
         return -1;
     }
+
+    return 0;
+}
+
+int PhysicalNodeManager::get_cpu_statistics(int pn_id, int &cpu_used, int &cpu)
+{
+    PhysicalNode physical_node;
+    if (get_physical_node(pn_id, physical_node) != 0) {
+        warning_log("get physical_node failed, id = %d", physical_node_id);
+        return -1;
+    }
+
+    cpu_used = physical_node.get_cpu_used();
+    cpu = physical_node.get_total_cpu_available();
+
+    return 0;
+}
+
+int PhysicalNodeManager::get_memory_statistics(int pn_id, int &memory_used, int &memory)
+{
+    PhysicalNode physical_node;
+    if (get_physical_node(pn_id, physical_node) != 0) {
+        warning_log("get physical_node failed, id = %d", physical_node_id);
+        return -1;
+    }
+
+    memory_used = physical_node.get_memory_used();
+    memory = physical_node.get_total_memory_available();
 
     return 0;
 }
@@ -230,6 +300,11 @@ int PhysicalNodeManager::get_total_bandwidth_statistics(int &total_bandwidth_use
     total_bandwidth_used = this->total_bandwidth_used;
     total_bandwidth = this->total_bandwidth;
     return 0;
+}
+
+int PhysicalNodeManager::get_total_bandwidth()
+{
+    return this->total_bandwidth;
 }
 
 int PhysicalNodeManager::assign_total_host_resource(int cpu_cost, int memory_cost)

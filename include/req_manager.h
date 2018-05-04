@@ -23,6 +23,7 @@ public:
     int init();
 
     int generate_req(int cur_time, std::vector<Req> &req_list);
+    int update_evaluation(const std::vector<bool> &req_accepted_flag);
 
     int get_template_info(int flow_template_id, int &length, std::vector<int> &node_cpu_cost, 
             std::vector<int> &node_memory_cost, int &flow_bandwidth_cost); 
@@ -55,7 +56,6 @@ private:
     int random_pick_an_active_chain(int length, int &chain_id);
     int decide_chain_id(int length, int &chain_id);
 
-    int update_evaluation(const std::vector<bool> &req_accepted_flag);
     int save_evaluation();
 
 private:

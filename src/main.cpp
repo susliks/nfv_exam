@@ -34,11 +34,14 @@ const int adjust_req_procedure_count = 2;
 
 const int exam_lifetime = 100;
 
+const std::string scheduler_strategy = "normal";
+
 int main()
 {
     srand((unsigned)time(NULL));
 
     notice_log("log start");
+
     nfv_exam::PhysicalNodeManager *physical_node_manager = nfv_exam::PhysicalNodeManager::get_instance();
     physical_node_manager->set_physical_node_cpu_evaluation_file_path(physical_node_cpu_evaluation_file_path);
     physical_node_manager->set_physical_node_memory_evaluation_file_path(physical_node_memory_evaluation_file_path);
@@ -53,8 +56,31 @@ int main()
     req_manager->set_exam_lifetime(exam_lifetime);
     req_manager->init();
 
+    nfv_exam::Scheduler scheduler;
+    if (scheduler.set_strategy(scheduler_strategy) != 0) {
+        warning_log("set strategy failed");
+        return -1;
+    }
+    scheduler.init();
+
+    std::vector<nfv_exam::Req> req_list;
+    std::vector<bool> req_accepted_flag;
 
     for (int cur_time = 0; cur_time < exam_lifetime; ++cur_time) {
+        if (req_manager->generate_req(cur_time, req_list) != 0) {
+            warning_log("generate req failed");
+            return -1;
+        }
+
+        if (scheduler.handle_req_list(req_list, req_accepted_flag) != 0) {
+            warning_log("handle req list failed");
+            return -1;
+        }
+
+        if (req_manager->update_evaluation(req_accepted_flag) != 0) {
+            warning_log("update accepted flag into Req failed");
+            return -1;
+        }
 
         //todo
 

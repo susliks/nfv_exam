@@ -9,13 +9,25 @@ namespace nfv_exam {
 
 class FlowNode {
 public:
+
+    int init(int id, int flow_id, int function_id, int cpu_cost, int memory_cost);
+    int set_pre_flow_node_id(int pre_flow_node_id);
+    int set_next_flow_node_id(int next_flow_node_id);
+
+    int get_id();
+    int get_flow_id();
+    int get_cpu_cost();
+    int get_memory_cost();
+
     int settle(int vi_id);
-    int remove(int vi_id);
+    int remove();
     bool is_settled();
     bool has_pre_node();
     bool has_next_node();
-    int get_pre_node();
-    int get_next_node();
+    FlowNode *get_pre_node();
+    FlowNode *get_next_node();
+    int get_pre_node_id();
+    int get_next_node_id();
 
     int get_location();
     int remove();
