@@ -1,3 +1,5 @@
+#include "service_chain.h"
+#include "flow_manager.h"
 #include "service_chain_manager.h"
 #include "log.h"
 
@@ -33,7 +35,7 @@ ServiceChainManager *ServiceChainManager::get_instance()
 int ServiceChainManager::update_length2active_chain_id(int chain_length)
 {
     if (this->length2active_chain_id.find(chain_length) == this->length2active_chain_id.end()) {
-        length2active_chain_id[chain_length] = new vector<int>;
+        length2active_chain_id[chain_length] = new std::vector<int>;
     } else {
         length2active_chain_id[chain_length]->clear();
     }
@@ -47,7 +49,7 @@ int ServiceChainManager::update_length2active_chain_id(int chain_length)
     return 0;
 }
 
-int ServiceChainManager::get_all_active_chain_id(int chain_length, const std::vector<int> &active_chain_id)
+int ServiceChainManager::get_all_active_chain_id(int chain_length, std::vector<int> &active_chain_id)
 {
     if (update_length2active_chain_id(chain_length) != 0) {
         warning_log("update_length2active_chain_id failed");
@@ -72,7 +74,7 @@ int ServiceChainManager::set_default_vnf_instance_resource(int vnf_instance_defa
 
 int ServiceChainManager::create_a_chain(int length, bool disable_scale_up_down, int &chain_id)
 {
-    int chain_id = service_chain_id_count;
+    chain_id = service_chain_id_count;
     this->service_chain_pool[chain_id] = new ServiceChain;
     this->service_chain_pool[chain_id]->init(chain_id, length, 0);
 
@@ -221,7 +223,14 @@ int ServiceChainManager::place_first_flow_on_an_unsettled_chain(int flow_id, int
     VnfInstance *vnf_instance(NULL);
     ServiceChain *chain = this->service_chain_pool[chain_id];
     for (int i = 0; i < flow_length; ++i) {
-        if (get_vnf_instance(chain_id, i, vnf_instance) != 0) {
+        int vi_id = chain->get_first_vi_id(i);
+        if (vi_id == -1) {
+            warning_log("get first vi id failed");
+            return -1;
+        }
+
+        //if (get_vnf_instance(chain_id, i, vnf_instance) != 0) {
+        if (get_vnf_instance(vi_id, vnf_instance) != 0) {
             warning_log("get vnf instance failed");
             return -1;
         }
@@ -244,9 +253,24 @@ int ServiceChainManager::place_first_flow_on_an_unsettled_chain(int flow_id, int
         //update vnf instance cpu and memory cost
         int cpu_used = flow_node->get_cpu_cost();
         int memory_used = flow_node->get_memory_cost();
+
         if (vnf_instance->set_vi_resource_used(cpu_used, memory_used) != 0) {
             warning_log("set vi first resourced used failed");
             return -1;
+        }
+
+        //handle h only
+        if (vnf_instance->get_disable_scale_up_down() == true) {
+            int cpu_cost(0);
+            int memory_cost(0);
+            if (get_vi_template(cpu_used, memory_used, cpu_cost, memory_cost) != 0) {
+                warning_log("get vi template failed");
+                return -1;
+            }
+            if (vnf_instance->set_vi_resource_cost(cpu_cost, memory_cost) != 0) {
+                warning_log("set vi resource cost failed");
+                return -1;
+            }
         }
     }
 
@@ -296,19 +320,21 @@ int ServiceChainManager::get_first_vnf_instance(int chain_id, int func_id, VnfIn
         return -1;
     }
 
-    const auto &vnf_instances = service_chain->get_vnf_instance();
+    //const auto &vnf_instances = service_chain->get_vnf_instance();
+    //const std::map<int, std::vector<int> *> &vnf_instances = service_chain->get_vnf_instance(); //todo: not elegant
+    std::map<int, std::vector<int> *> &vnf_instances = service_chain->get_vnf_instance();
 
     if (vnf_instances.find(func_id) == vnf_instances.end()) {
         warning_log("func_id not found %d", func_id);
         return -1;
     }
        
-    if (vnf_instances[func_id].size() != 1 ) {
+    if (vnf_instances[func_id]->size() != 1 ) {
         warning_log("this function only for linear chain");
         return -1;
     }
 
-    int vi_id = vnf_instances[func_id][0];
+    int vi_id = (*vnf_instances[func_id])[0];
     if (get_vnf_instance(vi_id, vnf_instance) != 0) {
         warning_log("get vnf_instance failed");
         return -1;
@@ -318,9 +344,46 @@ int ServiceChainManager::get_first_vnf_instance(int chain_id, int func_id, VnfIn
 }
     
 
+int ServiceChainManager::init()
+{
+    load_vi_template();
 
+    return 0;
+}
 
+int ServiceChainManager::load_vi_template()
+{
+    ViTemplate vi_template;
+    vi_template.cpu = 2;
+    vi_template.memory = 4;
+    this->vi_template.push_back(vi_template);
+    vi_template.cpu = 4;
+    vi_template.memory = 8;
+    this->vi_template.push_back(vi_template);
+    vi_template.cpu = 8;
+    vi_template.memory = 16;
+    this->vi_template.push_back(vi_template);
+    sort(this->vi_template.begin(), this->vi_template.begin() + this->vi_template.size());
 
+    for (auto iter = this->vi_template.begin(); iter != this->vi_template.end(); ++iter) {
+        notice_log("add vi template: cpu:%d memory:%d", iter->cpu, iter->memory);
+    }
+
+    return 0;
+}
+
+int ServiceChainManager::get_vi_template(int fn_cpu_cost, int fn_memory_cost, int &vi_cpu, int &vi_memory)
+{
+    for (auto iter = this->vi_template.begin(); iter != this->vi_template.end(); ++iter) {
+        if (fn_cpu_cost <= iter->cpu && fn_memory_cost <= iter->memory) {
+            vi_cpu = iter->cpu;
+            vi_memory = iter->memory;
+            return 0;
+        }
+    }
+    warning_log("no capable vi template");
+    return -1;
+}
 
 
 

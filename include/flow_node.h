@@ -4,6 +4,8 @@
 #include <vector>
 
 #include "log.h"
+//#include "flow.h"
+#include "flow_manager.h"
 
 namespace nfv_exam {
 
@@ -20,8 +22,10 @@ public:
     int get_cpu_cost();
     int get_memory_cost();
 
+    int get_flow_bandwidth();
+
     int settle(int vi_id);
-    int remove();
+    //int remove();
     bool is_settled();
     bool has_pre_node();
     bool has_next_node();

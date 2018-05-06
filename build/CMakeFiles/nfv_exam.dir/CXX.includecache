@@ -19,6 +19,8 @@ vector
 -
 map
 -
+string
+-
 flow_node.h
 ../include/flow_node.h
 flow.h
@@ -29,6 +31,10 @@ vector
 -
 log.h
 ../include/log.h
+flow.h
+../include/flow.h
+flow_manager.h
+../include/flow_manager.h
 
 ../include/log.h
 string
@@ -73,17 +79,33 @@ req.h
 ../include/scheduler.h
 vector
 -
+map
+-
+string
+-
+flow_manager.h
+../include/flow_manager.h
+service_chain_manager.h
+../include/service_chain_manager.h
+physical_node_manager.h
+../include/physical_node_manager.h
+req_manager.h
+../include/req_manager.h
 
 ../include/service_chain.h
 vector
 -
 map
 -
+set
+-
 
 ../include/service_chain_manager.h
 vector
 -
 map
+-
+algorithm
 -
 vnf_instance.h
 ../include/vnf_instance.h
@@ -103,6 +125,8 @@ flow_manager.h
 /Users/zhuangyi/zhuangyi/nfv_exam/src/flow_manager.h
 
 /Users/zhuangyi/zhuangyi/nfv_exam/src/flow_manager.cpp
+service_chain_manager.cpp
+/Users/zhuangyi/zhuangyi/nfv_exam/src/service_chain_manager.cpp
 flow_manager.h
 /Users/zhuangyi/zhuangyi/nfv_exam/src/flow_manager.h
 log.h
@@ -193,6 +217,10 @@ log.h
 /Users/zhuangyi/zhuangyi/nfv_exam/src/log.h
 
 /Users/zhuangyi/zhuangyi/nfv_exam/src/service_chain_manager.cpp
+service_chain.h
+/Users/zhuangyi/zhuangyi/nfv_exam/src/service_chain.h
+flow_manager.h
+/Users/zhuangyi/zhuangyi/nfv_exam/src/flow_manager.h
 service_chain_manager.h
 /Users/zhuangyi/zhuangyi/nfv_exam/src/service_chain_manager.h
 log.h

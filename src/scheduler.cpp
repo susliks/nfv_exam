@@ -140,7 +140,7 @@ int Scheduler::place_first_flow_on_a_chain(int flow_id, int chain_id)
 
     ServiceChain *service_chain(NULL);
 
-    if (service_chain_manager->place_first_flow_on_a_chain(int flow_id, int chain_id) != 0) {
+    if (service_chain_manager->place_first_flow_on_an_unsettled_chain(int flow_id, int chain_id) != 0) {
         warning_log("place first flow on a chain failed");
         return -1;
     }
@@ -467,9 +467,17 @@ int Scheduler::new_flow_on_new_chain_arrange(const Req &req, bool &req_result)
         return -1;
     }
 
-    if (create_new_chain(req.get_length(), false, chain_id) != 0) {
-        warning_log("create new chain failed");
-        return -1;
+    if (this->strategy != std::string("horizontal_only")) {
+        if (create_new_chain(req.get_length(), false, chain_id) != 0) {
+            warning_log("create new chain failed");
+            return -1;
+        }
+    } else {
+        notice_log("h only mode");
+        if (create_new_chain(req.get_length(), true, chain_id) != 0) {
+            warning_log("create new chain failed");
+            return -1;
+        }
     }
 
     if (place_first_flow_on_a_chain(flow_id, chain_id) != 0) {
@@ -1329,7 +1337,7 @@ int Scheduler::handle_req(const Req &req, bool &req_result)
             return -1;
         }
     } else {
-        if (sugoi_arrange(const Req &req, bool &req_result) != 0) {
+        if (sugoi_arrange(req, req_result) != 0) {
             warning_log("sugoi arrange failed");
             return -1;
         }
@@ -1643,7 +1651,226 @@ int Scheduler::route(Flow *flow, Chain *chain, bool &resource_enough_flag)
 
 int Scheduler::migration(FlowNode *flow_node, ServiceChain *chain, bool &resource_enough_flag)
 {
+    int pre_vi_id(-1), next_vi_id(-1), vi_id(-1);
+    FlowNode *pre_fn(NULL), *next_fn(NULL);
+    VnfInstance *pre_vi(NULL), *next_vi(NULL);
+    VnfInstance *located_vi(NULL);
+    int function_id = flow_node->get_function_id();
 
+    ServiceChainManager *service_chain_manager(NULL);
+    if ((service_chain_manager = ServiceChainManager::get_instance()) == NULL) {
+        warning_log("get instance failed");
+        return -1;
+    }
+
+    //for recover_to_settled()
+    vi_id = flow_node->get_location();
+    if (service_chain_manager->get_vnf_instance(vi_id, located_vi) != 0) {
+        warning_log("get located_vi failed");
+        return -1;
+    }
+
+    //get pre_vi & next_vi, for calculate_a_vnf_instance_cost()
+    if (flow_node->has_pre_node()) {
+        pre_fn = flow_node->get_pre_node();
+        if (pre_fn == NULL || pre_fn->is_settled() == false) {
+            warning_log("null ptr or pre_fn unsettled:impossible");
+            return -1;
+        }
+        pre_vi_id = pre_fn->get_location();
+        if (service_chain_manager->get_vnf_instance(pre_vi_id, pre_vi) != 0) {
+            warning_log("get pre_vi failed");
+            return -1;
+        }
+    }
+
+    if (flow_node->has_next_node()) {
+        next_fn = flow_node->get_next_node();
+        if (next_fn == NULL || next_fn->is_settled() == false) {
+            warning_log("null ptr or next_fn unsettled:impossible");
+            return -1;
+        }
+        next_vi_id = next_fn->get_location();
+        if (service_chain_manager->get_vnf_instance(next_vi_id, next_vi) != 0) {
+            warning_log("get next_vi failed");
+            return -1;
+        }
+    }
+
+    std::vector<FlowNodeCandidate> fn_candidates;
+    if (get_all_flow_nodes_in_the_same_vi(flow_node, fn_candidates) != 0) {
+        warning_log("get_all_flow_nodes_in_the_same_vi failed");
+        return -1;
+    }
+    sort(fn_candidates);
+    int fn_candidates_size = fn_candidates.size();
+
+    for (int mig_fn_count = 1; mig_fn_count <= fn_candidates_size; ++mig_fn_count) {
+        for (int i = 0; i < (fn_candidates_size - mig_fn_count + 1); ++i) {
+            //std::vector<FlowNodeCandidate> local_fn_candidates;
+            //for (int j = i; j < i+mig_fn_count; ++j) {
+            //    local_fn_candidates.push_back(fn_candidates[j]);
+            //}
+            //int local_fn_candidates_size = local_fn_candidates.size();
+            int l = i;
+            int r = i + mig_fn_count - 1;
+  
+            for (int j = l; j <= r; j++) {
+                if (remove_a_flow_node(fn_candidates[j].flow_node, located_vi, fn_candidates[j].flow_bandwidth) != 0) {
+                    warning_log("remove_a_flow_node failed");
+                    return -1;
+                }
+            }
+            bool local_enough_flag(false);
+            if (calculate_a_vnf_instance_cost(located_vi, pre_vi, next_vi, local_enough_flag) != 0) {
+                warning_log("calculate_a_vnf_instance_cost failed");
+                return -1;
+            }
+
+            if (local_enough_flag == true && place_vnf(chain, function_id, fn_candidates, l, r, located_vi) == true) {
+                resource_enough_flag = true;
+                return 0;
+            } else {
+                if (recover_to_pre_located_vi(fn_candidates, l, r, located_vi) != 0) {
+                    warning_log("recover_to_pre_located_vi failed");
+                    return -1;
+                }
+            }
+        }
+    }
+    
+    resource_enough_flag = false;
+    return 0;
+}
+
+bool Scheduler::place_vnf(ServiceChain *chain, int function_id, std::vector<FlowNodeCandidate> &fn_candidates, 
+        int l, int r, VnfInstance *located_vi)
+{
+    ServiceChainManager *service_chain_manager(NULL);
+    VnfInstance *vi(NULL);
+    if ((service_chain_manager = ServiceChainManager::get_instance()) == NULL) {
+        warning_log("get instance failed");
+        return false;
+        //return -1;
+    }
+
+    std::vector<int> vnf_instances;
+    vnf_instances = chain->get_vnf_instance(function_id);
+
+    std::vector<VnfInstanceCandidate> vi_candidates;
+    for (auto iter = vnf_instances.begin(); iter != vnf_instances.end(); ++iter) {
+        if (*iter != located_vi->get_id()) {
+            int vi_id = *iter;
+
+            if (service_chain_manager->get_vnf_instance(vi_id, vi) != 0) {
+                warning_log("get vi failed");
+                return false;
+                //return -1;
+            }
+            int pn_id = vi->get_location();
+            double cost_result(0);
+            if (get_pn_cost_result(pn_id, cost_result) != 0) {
+                warning_log("get_pn_cost_result failed");
+                return false;
+                //return -1;
+            }
+            
+            vi_candidates.push_back(VnfInstanceCandidate());
+            vi_candidates.back().vi_id = vi_id;
+            vi_candidates.back().vi = vi;
+            vi_candidates.back().cost_result = cost_result;
+        }
+    }
+    sort(vi_candidates);
+
+    for (int i = 0; i < this->place_vnf_shuffle_max_time; i++) {
+        std::vector<FlowNodeCandidate> local_fn_candidates;
+        for (int j = l; j <= r; ++j) {
+            local_fn_candidates.push_back(fn_candidates[j]);
+        }
+        random_shuffle(local_fn_candidates);
+
+        int vi_candidates_size = vi_candidates.size();
+        int local_fn_candidates_size = local_fn_candidates.size();
+        for (int j = 0; j < vi_candidates_size; ++j) {
+            for (int k = 0; k < local_fn_candidates_size; ++k) {
+                if (local_fn_candidates[k].is_settled == false) {
+                    if (settle_a_flow_node(local_fn_candidates[k].flow_node, vi_candidates[j].vi, 
+                                local_fn_candidates[k].flow_bandwidth) != 0) {
+                        warning_log("settle_a_flow_node failed");
+                        return false;
+                        //return -1;
+                    }
+                    local_fn_candidates[k].is_settled = true;
+
+                    bool local_enough_flag(false);
+                    double local_cost_result(0);
+                    if (calculate_a_flow_node_cost(local_fn_candidates[k].flow_node, local_enough_flag, local_cost_result) != 0) {
+                        warning_log("calculate_a_flow_node_cost failed");
+                        return false;
+                        //return -1;
+                    }
+
+                    if (local_enough_flag == false) {
+                        if (remove_a_flow_node(local_fn_candidates[k].flow_node, vi_candidates[j].vi, 
+                                    local_fn_candidates[k].flow_bandwidth) != 0) {
+                            warning_log("remove_a_flow_node failed");
+                            return false;
+                            //return -1;
+                        }
+                        local_fn_candidates[k].is_settled = false;
+                    }
+                }
+            }
+        }
+
+        bool success_flag = true;
+        for (int k = 0; k < local_fn_candidates_size && success_flag; ++k) {
+            if (local_fn_candidates[k].is_settled == false) {
+                success_flag = false;
+            }
+        }
+
+        if (success_flag == true) {
+            return true;
+        } else {
+            VnfInstance *vi(NULL);
+            FlowNode *fn(NULL);
+            for (int k = 0; k < local_fn_candidates_size; ++k) {
+                if (local_fn_candidates[k].is_settled == true) {
+                    //get settled vi
+                    fn = local_fn_candidates[k].flow_node;
+                    int vi_id = fn->get_location();
+                    int flow_bandwidth = local_fn_candidates[k].flow_bandwidth;
+                    if (service_chain_manager->get_vnf_instance(vi_id, vi) != 0) {
+                        warning_log("get vi failed");
+                        return false;
+                        //return -1;
+                    }
+
+                    if (remove_a_flow_node(fn, vi, flow_bandwidth) != 0) {
+                        warning_log("remove_a_flow_node failed");
+                        return false;
+                        //return -1;
+                    }
+                    local_fn_candidates[k].is_settled = false;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+int Scheduler::recover_to_pre_located_vi(std::vector<FlowNodeCandidate> &fn_candidates, int l, int r, VnfInstance *located_vi)
+{
+    for (int i = l; i <= r; ++i) {
+        if (settle_a_flow_node(fn_candidates[i].flow_node, located_vi, fn_candidates[i].flow_bandwidth) != 0) {
+            warning_log("settle_a_flow_node failed");
+            return -1;
+        }
+    }
+    return 0;
 }
 
 int Scheduler::get_all_flow_nodes_in_the_same_vi(FlowNode *flow_node, vector<FlowNodeCandidate *> &flow_nodes)
@@ -1708,6 +1935,7 @@ int Scheduler::get_all_flow_nodes_in_the_same_vi(FlowNode *flow_node, vector<Flo
         flow_nodes.back().flow_node = flow_node;
         flow_nodes.back().cost_result = cost_result;
         flow_nodes.back().is_settled = false;
+        flow_nodes.back().flow_bandwidth = flow_node->get_flow_bandwidth();
     }
 
     return 0;
@@ -1878,10 +2106,39 @@ int Scheduler::create_a_settled_vnf_instance(ServiceChain *chain, int function_i
 
 
 //-------------vertical only---------------
+int Scheduler::handle_req_v_only(const Req &req, bool &req_result)
+{
+    req_result = false;
+    if (req.get_req_type() == std::string("new") && req.get_chain_id() = -1) {
+        if (new_flow_on_new_chain_arrange_v_only(req, req_result) != 0) {
+            warning_log("new flow on new chain arrange failed");
+            return -1;
+        }
+    } else {
+        if (sugoi_arrange(req, req_result) != 0) {
+            warning_log("sugoi arrange failed");
+            return -1;
+        }
+    }
+
+}
 
 
 //-------------horizontal only---------------
-   
+int Scheduler::handle_req_h_only(const Req &req, bool &req_result)
+{
+    req_result = false;
+    if (req.get_req_type() == std::string("new") && req.get_chain_id() = -1) {
+        if (new_flow_on_new_chain_arrange(req, req_result) != 0) {
+            warning_log("new flow on new chain arrange failed");
+            return -1;
+        }
+    } else {
+
+    }
+}
+
+  
 
 
 RouteBestSolution::RouteBestSolution()

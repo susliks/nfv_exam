@@ -50,7 +50,7 @@ int Flow::get_flow_bandwidth()
     return this->flow_bandwidth;
 }
 
-std::vector<int> Flow::get_flow_nodes()
+const std::vector<int> &Flow::get_flow_nodes()
 {
     return this->flow_nodes;
 }

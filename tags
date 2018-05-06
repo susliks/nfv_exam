@@ -51,6 +51,7 @@ FLOW_NODE_H	include/flow_node.h	/^#define FLOW_NODE_H$/;"	d
 Flow	include/flow.h	/^class Flow {$/;"	c	namespace:nfv_exam
 FlowManager	include/flow_manager.h	/^class FlowManager {$/;"	c	namespace:nfv_exam
 FlowNode	include/flow_node.h	/^class FlowNode {$/;"	c	namespace:nfv_exam
+FlowNodeCandidate	include/scheduler.h	/^struct FlowNodeCandidate$/;"	s	namespace:nfv_exam
 FlowState	include/scheduler.h	/^struct FlowState$/;"	s	namespace:nfv_exam
 FlowTemplate	include/req.h	/^struct FlowTemplate {$/;"	s	namespace:nfv_exam
 HEX	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#define HEX(/;"	d	file:
@@ -82,6 +83,7 @@ RM	build/Makefile	/^RM = \/usr\/local\/Cellar\/cmake\/3.9.5\/bin\/cmake -E remov
 Req	include/req.h	/^class Req {$/;"	c	namespace:nfv_exam
 ReqManager	include/req_manager.h	/^class ReqManager {$/;"	c	namespace:nfv_exam
 RouteBestSolution	include/scheduler.h	/^class RouteBestSolution$/;"	c	namespace:nfv_exam
+RouteBestSolution	src/scheduler.cpp	/^RouteBestSolution::RouteBestSolution()$/;"	f	class:nfv_exam::RouteBestSolution
 SCHEDULER_H	include/scheduler.h	/^#define SCHEDULER_H$/;"	d
 SERVER_CPU	src/main.cpp	/^const int SERVER_CPU = 10;$/;"	v
 SERVER_MEMORY	src/main.cpp	/^const int SERVER_MEMORY = 20;$/;"	v
@@ -101,15 +103,20 @@ STRINGIFY_HELPER	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^#define
 STRINGIFY_HELPER	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define STRINGIFY_HELPER(/;"	d	file:
 SUFFIXES	build/Makefile	/^SUFFIXES =$/;"	m
 Scheduler	include/scheduler.h	/^class Scheduler {$/;"	c	namespace:nfv_exam
+ServerCandidate	include/scheduler.h	/^struct ServerCandidate$/;"	s	namespace:nfv_exam
 ServiceChain	include/service_chain.h	/^class ServiceChain {$/;"	c	namespace:nfv_exam
 ServiceChainManager	include/service_chain_manager.h	/^class ServiceChainManager {$/;"	c	namespace:nfv_exam
 UNIT_LOG	include/log.h	/^#define UNIT_LOG(/;"	d
 VNF_INSTANCE_H	include/vnf_instance.h	/^#define VNF_INSTANCE_H$/;"	d
+ViTemplate	include/scheduler.h	/^struct ViTemplate$/;"	s	namespace:nfv_exam
 VnfInstance	include/vnf_instance.h	/^class VnfInstance {$/;"	c	namespace:nfv_exam
+VnfInstanceCandidate	include/scheduler.h	/^struct VnfInstanceCandidate$/;"	s	namespace:nfv_exam
 accept_ratio_history	include/req_manager.h	/^    std::vector<double> accept_ratio_history;$/;"	m	class:nfv_exam::ReqManager
 accepted_req_count	include/req_manager.h	/^    int accepted_req_count;$/;"	m	class:nfv_exam::ReqManager
 active_flow_count	include/flow_manager.h	/^    std::vector<int> active_flow_count;$/;"	m	class:nfv_exam::FlowManager
 add_flow_template	src/req_manager.cpp	/^int ReqManager::add_flow_template(int length, int flow_bandwidth_cost, $/;"	f	class:nfv_exam::ReqManager
+add_next_vi_id	src/vnf_instance.cpp	/^int VnfInstance::add_next_vi_id(int next_vi_id)$/;"	f	class:nfv_exam::VnfInstance
+add_pre_vi_id	src/vnf_instance.cpp	/^int VnfInstance::add_pre_vi_id(int pre_vi_id)$/;"	f	class:nfv_exam::VnfInstance
 add_settled_flow_node	src/vnf_instance.cpp	/^int VnfInstance::add_settled_flow_node(int flow_node_id)$/;"	f	class:nfv_exam::VnfInstance
 add_son	src/physical_node.cpp	/^int PhysicalNode::add_son(int son_id)$/;"	f	class:nfv_exam::PhysicalNode
 add_vnf_instance	src/service_chain.cpp	/^int ServiceChain::add_vnf_instance(int function_id, int vi_id)$/;"	f	class:nfv_exam::ServiceChain
@@ -119,6 +126,7 @@ adjust_req_procedure_count	include/req_manager.h	/^    int adjust_req_procedure_
 adjust_req_procedure_count	src/main.cpp	/^const int adjust_req_procedure_count = 2;$/;"	v
 adjust_req_timestamp	include/req_manager.h	/^    std::vector<std::vector<int> > adjust_req_timestamp;$/;"	m	class:nfv_exam::ReqManager
 adjust_req_timestamp_ptr	include/req_manager.h	/^    std::vector<int> adjust_req_timestamp_ptr;$/;"	m	class:nfv_exam::ReqManager
+aging	src/flow.cpp	/^int Flow::aging()$/;"	f	class:nfv_exam::Flow
 alpha	include/scheduler.h	/^    double alpha;$/;"	m	class:nfv_exam::Scheduler
 assign_bandwidth	src/physical_node.cpp	/^int PhysicalNode::assign_bandwidth(int bandwidth_cost)$/;"	f	class:nfv_exam::PhysicalNode
 assign_bandwidth	src/physical_node_manager.cpp	/^int PhysicalNodeManager::assign_bandwidth(int physical_node_id_1, int physical_node_id_2, int bandwidth)$/;"	f	class:nfv_exam::PhysicalNodeManager
@@ -134,19 +142,25 @@ calculate_a_flow_node_cost	src/scheduler.cpp	/^int Scheduler::calculate_a_flow_n
 calculate_a_flow_node_links_cost	src/scheduler.cpp	/^int Scheduler::calculate_a_flow_node_links_cost(FlowNode *flow_node, bool &enough_flag, double &bandwidth_cost)$/;"	f	class:nfv_exam::Scheduler
 calculate_a_flow_v_cost	src/scheduler.cpp	/^int Scheduler::calculate_a_flow_v_cost(FlowNode *flow_node, bool &enough_flag, double &host_cost_result)$/;"	f	class:nfv_exam::Scheduler
 calculate_a_vnf_instance_cost	src/scheduler.cpp	/^int Scheduler::calculate_a_vnf_instance_cost(VnfInstance *vnf_instance, $/;"	f	class:nfv_exam::Scheduler
+calculate_flow_node_resource	src/scheduler.cpp	/^int Scheduler::calculate_flow_node_resource(FlowNode *flow_node, bool &resource_enough_flag)$/;"	f	class:nfv_exam::Scheduler
 calculate_total_bandwidth_cost	src/physical_node_manager.cpp	/^int PhysicalNodeManager::calculate_total_bandwidth_cost()$/;"	f	class:nfv_exam::PhysicalNodeManager
 calculate_total_cpu_cost	src/physical_node_manager.cpp	/^int PhysicalNodeManager::calculate_total_cpu_cost()$/;"	f	class:nfv_exam::PhysicalNodeManager
 calculate_total_memory_cost	src/physical_node_manager.cpp	/^int PhysicalNodeManager::calculate_total_memory_cost()$/;"	f	class:nfv_exam::PhysicalNodeManager
 calculate_total_resource	src/physical_node_manager.cpp	/^int PhysicalNodeManager::calculate_total_resource()$/;"	f	class:nfv_exam::PhysicalNodeManager
 chain_id	include/flow.h	/^    int chain_id;$/;"	m	class:nfv_exam::Flow
-chain_id	include/req.h	/^    int chain_id;   \/\/ only work when req_type=="new"$/;"	m	class:nfv_exam::Req
+chain_id	include/req.h	/^    int chain_id;   \/\/ only work when req_type=="new" and don't want to start a new chain$/;"	m	class:nfv_exam::Req
 clear	src/req.cpp	/^void Req::clear()$/;"	f	class:nfv_exam::Req
 const	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^# define const$/;"	d	file:
+cost_result	include/scheduler.h	/^    double cost_result;$/;"	m	struct:nfv_exam::FlowNodeCandidate
+cost_result	include/scheduler.h	/^    double cost_result;$/;"	m	struct:nfv_exam::ServerCandidate
+cost_result	include/scheduler.h	/^    double cost_result;$/;"	m	struct:nfv_exam::VnfInstanceCandidate
 cpu	include/physical_node.h	/^    int cpu;$/;"	m	class:nfv_exam::PhysicalNode
+cpu	include/scheduler.h	/^    int cpu;$/;"	m	struct:nfv_exam::ViTemplate
 cpu_cost	include/flow_node.h	/^    int cpu_cost;$/;"	m	class:nfv_exam::FlowNode
 cpu_cost	include/scheduler.h	/^    std::vector<int> cpu_cost;$/;"	m	struct:nfv_exam::FlowState
 cpu_used	include/physical_node.h	/^    int cpu_used;$/;"	m	class:nfv_exam::PhysicalNode
 create_a_chain	src/service_chain_manager.cpp	/^int ServiceChainManager::create_a_chain(int length, bool disable_scale_up_down, int &chain_id)$/;"	f	class:nfv_exam::ServiceChainManager
+create_a_settled_vnf_instance	src/scheduler.cpp	/^int Scheduler::create_a_settled_vnf_instance(ServiceChain *chain, int function_id, int pn_id, int &vi_id)$/;"	f	class:nfv_exam::Scheduler
 create_a_vnf_instance	src/service_chain_manager.cpp	/^int ServiceChainManager::create_a_vnf_instance(int &vi_id)$/;"	f	class:nfv_exam::ServiceChainManager
 create_new_chain	src/scheduler.cpp	/^int Scheduler::create_new_chain(int length, bool disable_scale_up_down = false, int &chain_id)$/;"	f	class:nfv_exam::Scheduler
 create_new_flow	src/scheduler.cpp	/^int Scheduler::create_new_flow(int flow_template_id, int chain_id, int lifetime, int &flow_id)$/;"	f	class:nfv_exam::Scheduler
@@ -154,6 +168,7 @@ debug_log	include/log.h	/^#define debug_log(/;"	d
 decide_chain_id	src/req_manager.cpp	/^int ReqManager::decide_chain_id(int length, int &chain_id) $/;"	f	class:nfv_exam::ReqManager
 delete_a_chain	src/service_chain_manager.cpp	/^int ServiceChainManager::delete_a_chain(int chain_id)$/;"	f	class:nfv_exam::ServiceChainManager
 delete_a_flow	src/scheduler.cpp	/^int Scheduler::delete_a_flow(int flow_id)$/;"	f	class:nfv_exam::Scheduler
+delete_a_vnf_instance	src/service_chain_manager.cpp	/^int ServiceChainManager::delete_a_vnf_instance(int vi_id)$/;"	f	class:nfv_exam::ServiceChainManager
 depth	include/physical_node.h	/^    int depth;$/;"	m	class:nfv_exam::PhysicalNode
 disable_scale_up_down	include/vnf_instance.h	/^    bool disable_scale_up_down;$/;"	m	class:nfv_exam::VnfInstance
 enough_cost_result	include/scheduler.h	/^    double enough_cost_result;$/;"	m	class:nfv_exam::RouteBestSolution
@@ -164,13 +179,16 @@ extend_flow_template_trick	src/req_manager.cpp	/^int ReqManager::extend_flow_tem
 fatal_log	include/log.h	/^#define fatal_log(/;"	d
 features	build/CMakeFiles/feature_tests.c	/^  const char features[] = {"\\n"$/;"	v
 features	build/CMakeFiles/feature_tests.cxx	/^  const char features[] = {"\\n"$/;"	v
+flow_aging	src/scheduler.cpp	/^int Scheduler::flow_aging()$/;"	f	class:nfv_exam::Scheduler
 flow_bandwidth	include/flow.h	/^    int flow_bandwidth; $/;"	m	class:nfv_exam::Flow
+flow_bandwidth	include/scheduler.h	/^    int flow_bandwidth;$/;"	m	struct:nfv_exam::FlowNodeCandidate
 flow_bandwidth	include/scheduler.h	/^    int flow_bandwidth;$/;"	m	struct:nfv_exam::FlowState
 flow_bandwidth_cost	include/req.h	/^    int flow_bandwidth_cost;$/;"	m	struct:nfv_exam::FlowTemplate
 flow_evaluation_file_path	include/flow_manager.h	/^    std::string flow_evaluation_file_path;$/;"	m	class:nfv_exam::FlowManager
 flow_id	include/flow_node.h	/^    int flow_id;$/;"	m	class:nfv_exam::FlowNode
 flow_id	include/req.h	/^    int flow_id;    \/\/only work when req_type=="adjust"$/;"	m	class:nfv_exam::Req
 flow_id_count	include/flow_manager.h	/^    int flow_id_count;$/;"	m	class:nfv_exam::FlowManager
+flow_node	include/scheduler.h	/^    FlowNode *flow_node;$/;"	m	struct:nfv_exam::FlowNodeCandidate
 flow_node_id_count	include/flow_manager.h	/^    int flow_node_id_count;$/;"	m	class:nfv_exam::FlowManager
 flow_node_location	include/flow_node.h	/^    int flow_node_location;$/;"	m	class:nfv_exam::FlowNode
 flow_node_pool	include/flow_manager.h	/^    std::map<int, FlowNode*> flow_node_pool;$/;"	m	class:nfv_exam::FlowManager
@@ -181,14 +199,17 @@ flow_template	include/req_manager.h	/^    std::map<int, FlowTemplate *> flow_tem
 flow_template_file_path	include/req_manager.h	/^    std::string flow_template_file_path;$/;"	m	class:nfv_exam::ReqManager
 flow_template_file_path	src/main.cpp	/^const std::string flow_template_file_path = ".\/data\/flow_template.config";$/;"	v
 flow_template_id	include/req.h	/^    int flow_template_id;$/;"	m	class:nfv_exam::Req
+fn_id	include/scheduler.h	/^    int fn_id;$/;"	m	struct:nfv_exam::FlowNodeCandidate
 function_id	include/flow_node.h	/^    int function_id;$/;"	m	class:nfv_exam::FlowNode
 generate_poisson_seq	src/req_manager.cpp	/^int ReqManager::generate_poisson_seq(int exam_lifetime, std::vector<int> &req_timestamp)$/;"	f	class:nfv_exam::ReqManager
 generate_req	src/req_manager.cpp	/^int ReqManager::generate_req(int cur_time, std::vector<Req> &req_list)$/;"	f	class:nfv_exam::ReqManager
 generate_req_info	src/req_manager.cpp	/^int ReqManager::generate_req_info(const std::string &req_type, Req &req)$/;"	f	class:nfv_exam::ReqManager
 generate_timestamp	src/req_manager.cpp	/^int ReqManager::generate_timestamp()$/;"	f	class:nfv_exam::ReqManager
 get_all_active_chain_id	src/service_chain_manager.cpp	/^int ServiceChainManager::get_all_active_chain_id(int chain_length, const std::vector<int> &active_chain_id)$/;"	f	class:nfv_exam::ServiceChainManager
+get_all_flow_nodes_in_the_same_vi	src/scheduler.cpp	/^int Scheduler::get_all_flow_nodes_in_the_same_vi(FlowNode *flow_node, vector<FlowNodeCandidate *> &flow_nodes)$/;"	f	class:nfv_exam::Scheduler
 get_bandwidth_hop_count	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_bandwidth_hop_count(int physical_node_id_1, int physical_node_id_2, int &hop_count)$/;"	f	class:nfv_exam::PhysicalNodeManager
 get_bandwidth_statistics	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_bandwidth_statistics(int physical_node_id_1, int physical_node_id_2, int &bandwidth_left)$/;"	f	class:nfv_exam::PhysicalNodeManager
+get_bandwidth_statistics	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_bandwidth_statistics(int pn_id, int &up_bandwidth_used, int &up_bandwidth)$/;"	f	class:nfv_exam::PhysicalNodeManager
 get_bandwidth_used	src/service_chain.cpp	/^int ServiceChain::get_bandwidth_used()$/;"	f	class:nfv_exam::ServiceChain
 get_chain_id	src/flow.cpp	/^int Flow::get_chain_id()$/;"	f	class:nfv_exam::Flow
 get_chain_id	src/req.cpp	/^int Req::get_chain_id()$/;"	f	class:nfv_exam::Req
@@ -207,6 +228,7 @@ get_flow_node	src/flow.cpp	/^int Flow::get_flow_node(int function_id, FlowNode *
 get_flow_node_id	src/flow.cpp	/^int Flow::get_flow_node_id(int func_id)$/;"	f	class:nfv_exam::Flow
 get_flow_nodes	src/flow.cpp	/^std::vector<int> Flow::get_flow_nodes()$/;"	f	class:nfv_exam::Flow
 get_flow_template_id	src/req.cpp	/^int Req::get_flow_template_id()$/;"	f	class:nfv_exam::Req
+get_function_id	src/flow_node.cpp	/^int FlowNode::get_function_id()$/;"	f	class:nfv_exam::FlowNode
 get_host_cost	src/physical_node.cpp	/^int PhysicalNode::get_host_cost(double &host_cost)$/;"	f	class:nfv_exam::PhysicalNode
 get_id	src/flow.cpp	/^int Flow::get_id()$/;"	f	class:nfv_exam::Flow
 get_id	src/flow_node.cpp	/^int FlowNode::get_id()$/;"	f	class:nfv_exam::FlowNode
@@ -228,18 +250,25 @@ get_memory_statistics	src/physical_node_manager.cpp	/^int PhysicalNodeManager::g
 get_memory_used	src/physical_node.cpp	/^int PhysicalNode::get_memory_used()$/;"	f	class:nfv_exam::PhysicalNode
 get_next_node	src/flow_node.cpp	/^FlowNode *get_next_node()$/;"	f	namespace:nfv_exam
 get_next_node_id	src/flow_node.cpp	/^int FlowNode::get_next_node_id()$/;"	f	class:nfv_exam::FlowNode
+get_not_related_servers	src/scheduler.cpp	/^int Scheduler::get_not_related_servers(ServiceChain *chain, std::vector<ServerCandidate> &server_candidates)$/;"	f	class:nfv_exam::Scheduler
 get_parent_id	src/physical_node.cpp	/^int PhysicalNode::get_parent_id()$/;"	f	class:nfv_exam::PhysicalNode
 get_physical_node	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_physical_node(int node_id, PhysicalNode &physical_node)$/;"	f	class:nfv_exam::PhysicalNodeManager
+get_pn_cost_result	src/scheduler.cpp	/^int Scheduler::get_pn_cost_result(int pn_id, double &cost_result)$/;"	f	class:nfv_exam::Scheduler
 get_pre_host_cost	src/physical_node.cpp	/^int PhysicalNode::get_pre_host_cost(int cur_cpu_cost, int cur_memory_cost, double &host_cost)$/;"	f	class:nfv_exam::PhysicalNode
 get_pre_node	src/flow_node.cpp	/^FlowNode *get_pre_node()$/;"	f	namespace:nfv_exam
 get_pre_node_id	src/flow_node.cpp	/^int FlowNode::get_pre_node_id()$/;"	f	class:nfv_exam::FlowNode
 get_random_int	src/req_manager.cpp	/^int ReqManager::get_random_int(int l, int r)$/;"	f	class:nfv_exam::ReqManager
 get_random_template_id	src/req_manager.cpp	/^int ReqManager::get_random_template_id()$/;"	f	class:nfv_exam::ReqManager
 get_random_template_id	src/req_manager.cpp	/^int ReqManager::get_random_template_id(int length)$/;"	f	class:nfv_exam::ReqManager
+get_related_pn_id	src/service_chain.cpp	/^int ServiceChain::get_related_pn_id(std::set<int> &pn_id_set)$/;"	f	class:nfv_exam::ServiceChain
 get_req_type	src/req.cpp	/^const std::string &Req::get_req_type()$/;"	f	class:nfv_exam::Req
 get_resource_used_ratio	src/physical_node_manager.cpp	/^double PhysicalNodeManager::get_resource_used_ratio()$/;"	f	class:nfv_exam::PhysicalNodeManager
 get_server_count	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_server_count()$/;"	f	class:nfv_exam::PhysicalNodeManager
+get_server_cpu	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_server_cpu()$/;"	f	class:nfv_exam::PhysicalNodeManager
+get_server_memory	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_server_memory()$/;"	f	class:nfv_exam::PhysicalNodeManager
 get_service_chain	src/service_chain_manager.cpp	/^int ServiceChainManager::get_service_chain(int chain_id, ServiceChain *service_chain)$/;"	f	class:nfv_exam::ServiceChainManager
+get_settled_flow_node	src/vnf_instance.cpp	/^int VnfInstance::get_settled_flow_node(std::vector<int> &settled_flow_nodes)$/;"	f	class:nfv_exam::VnfInstance
+get_solution	src/scheduler.cpp	/^int RouteBestSolution::get_solution()$/;"	f	class:nfv_exam::RouteBestSolution
 get_template_info	src/req_manager.cpp	/^int ReqManager::get_template_info(int flow_template_id, int &length, std::vector<int> &node_cpu_cost, $/;"	f	class:nfv_exam::ReqManager
 get_total_bandwidth	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_total_bandwidth()$/;"	f	class:nfv_exam::PhysicalNodeManager
 get_total_bandwidth_available	src/physical_node.cpp	/^int PhysicalNode::get_total_bandwidth_available()$/;"	f	class:nfv_exam::PhysicalNode
@@ -250,12 +279,17 @@ get_total_memory_available	src/physical_node.cpp	/^int PhysicalNode::get_total_m
 get_total_memory_statistics	src/physical_node_manager.cpp	/^int PhysicalNodeManager::get_total_memory_statistics(int &total_memory_used, int &total_memory)$/;"	f	class:nfv_exam::PhysicalNodeManager
 get_up_bandwidth	src/physical_node.cpp	/^int PhysicalNode::get_up_bandwidth()$/;"	f	class:nfv_exam::PhysicalNode
 get_up_bandwidth_used	src/physical_node.cpp	/^int PhysicalNode::get_up_bandwidth_used()$/;"	f	class:nfv_exam::PhysicalNode
+get_vi_template	src/scheduler.cpp	/^int Scheduler::get_vi_template(int fn_cpu_cost, int fn_memory_cost, int &vi_cpu, int &vi_memory)$/;"	f	class:nfv_exam::Scheduler
 get_vnf_instance	src/service_chain.cpp	/^const std::map<int, std::vector<int> *> &ServiceChain::get_vnf_instance()$/;"	f	class:nfv_exam::ServiceChain
 get_vnf_instance	src/service_chain.cpp	/^std::vector<int> &ServiceChain::get_vnf_instance(int function_id)$/;"	f	class:nfv_exam::ServiceChain
 get_vnf_instance	src/service_chain_manager.cpp	/^int ServiceChainManager::get_vnf_instance(int vi_id, VnfInstance *vnf_instance)$/;"	f	class:nfv_exam::ServiceChainManager
+handle_req	src/scheduler.cpp	/^int Scheduler::handle_req(const Req &req, bool &req_result)$/;"	f	class:nfv_exam::Scheduler
+handle_req_h_only	src/scheduler.cpp	/^int Scheduler::handle_req_h_only(const Req &req, bool &req_result)$/;"	f	class:nfv_exam::Scheduler
 handle_req_list	src/scheduler.cpp	/^int Scheduler::handle_req_list(const std::vector<Req> &req_list, std::vector<bool> &req_accepted_flag)$/;"	f	class:nfv_exam::Scheduler
+handle_req_v_only	src/scheduler.cpp	/^int Scheduler::handle_req_v_only(const Req &req, bool &req_result)$/;"	f	class:nfv_exam::Scheduler
 has_next_node	src/flow_node.cpp	/^bool FlowNode::has_next_node()$/;"	f	class:nfv_exam::FlowNode
 has_pre_node	src/flow_node.cpp	/^bool FlowNode::has_pre_node()$/;"	f	class:nfv_exam::FlowNode
+has_settled_flow_node	src/vnf_instance.cpp	/^bool VnfInstance::has_settled_flow_node()$/;"	f	class:nfv_exam::VnfInstance
 id	include/flow.h	/^    int id;$/;"	m	class:nfv_exam::Flow
 id	include/flow_node.h	/^    int id;$/;"	m	class:nfv_exam::FlowNode
 id	include/physical_node.h	/^    int id;$/;"	m	class:nfv_exam::PhysicalNode
@@ -283,6 +317,7 @@ init	src/req_manager.cpp	/^int ReqManager::init()$/;"	f	class:nfv_exam::ReqManag
 init	src/scheduler.cpp	/^int Scheduler::init()$/;"	f	class:nfv_exam::Scheduler
 init	src/service_chain.cpp	/^int ServiceChain::init(int id, int length, int bandwidth_used)$/;"	f	class:nfv_exam::ServiceChain
 init	src/vnf_instance.cpp	/^int VnfInstance::init(int id, int location, bool disable_scale_up_down, int vi_cpu_used, $/;"	f	class:nfv_exam::VnfInstance
+is_settled	include/scheduler.h	/^    bool is_settled;$/;"	m	struct:nfv_exam::FlowNodeCandidate
 is_settled	src/flow_node.cpp	/^bool FlowNode::is_settled()$/;"	f	class:nfv_exam::FlowNode
 is_settled	src/vnf_instance.cpp	/^int VnfInstance::is_settled()$/;"	f	class:nfv_exam::VnfInstance
 length	include/flow.h	/^    int length;$/;"	m	class:nfv_exam::Flow
@@ -294,6 +329,7 @@ length2flow_template_id	include/req_manager.h	/^    std::map<int, std::vector<in
 lifetime	include/req.h	/^    int lifetime;$/;"	m	class:nfv_exam::Req
 lifetime_left	include/flow.h	/^    int lifetime_left;$/;"	m	class:nfv_exam::Flow
 load_flow_template_from_txt	src/req_manager.cpp	/^int ReqManager::load_flow_template_from_txt()$/;"	f	class:nfv_exam::ReqManager
+load_vi_template	src/scheduler.cpp	/^int Scheduler::load_vi_template()$/;"	f	class:nfv_exam::Scheduler
 location	include/scheduler.h	/^    std::vector<int> location;$/;"	m	struct:nfv_exam::FlowState
 location	include/vnf_instance.h	/^    int location;$/;"	m	class:nfv_exam::VnfInstance
 log_debug	src/log.cpp	/^void log_debug(const char *fmt, ...)$/;"	f	namespace:rs_frame
@@ -304,10 +340,12 @@ main	build/CMakeFiles/feature_tests.c	/^int main(int argc, char** argv) { (void)
 main	build/CMakeFiles/feature_tests.cxx	/^int main(int argc, char** argv) { (void)argv; return features[argc]; }$/;"	f
 main	src/main.cpp	/^int main()$/;"	f
 memory	include/physical_node.h	/^    int memory;$/;"	m	class:nfv_exam::PhysicalNode
+memory	include/scheduler.h	/^    int memory;$/;"	m	struct:nfv_exam::ViTemplate
 memory_cost	include/flow_node.h	/^    int memory_cost;$/;"	m	class:nfv_exam::FlowNode
 memory_cost	include/scheduler.h	/^    std::vector<int> memory_cost;$/;"	m	struct:nfv_exam::FlowState
 memory_used	include/physical_node.h	/^    int memory_used;$/;"	m	class:nfv_exam::PhysicalNode
-new_flow_on_new_chain_arrange	src/scheduler.cpp	/^int Schedeler::new_flow_on_new_chain_arrange(const Req &req, bool &req_result)$/;"	f	class:nfv_exam::Schedeler
+migration	src/scheduler.cpp	/^int Scheduler::migration(FlowNode *flow_node, ServiceChain *chain, bool &resource_enough_flag)$/;"	f	class:nfv_exam::Scheduler
+new_flow_on_new_chain_arrange	src/scheduler.cpp	/^int Scheduler::new_flow_on_new_chain_arrange(const Req &req, bool &req_result)$/;"	f	class:nfv_exam::Scheduler
 new_req_procedure_count	include/req_manager.h	/^    int new_req_procedure_count;$/;"	m	class:nfv_exam::ReqManager
 new_req_procedure_count	src/main.cpp	/^const int new_req_procedure_count = 3;$/;"	v
 new_req_timestamp	include/req_manager.h	/^    std::vector<std::vector<int> > new_req_timestamp;$/;"	m	class:nfv_exam::ReqManager
@@ -341,6 +379,10 @@ node_memory_cost	include/req.h	/^    std::vector<int> node_memory_cost;$/;"	m	st
 not_enough_cost_result	include/scheduler.h	/^    double not_enough_cost_result;$/;"	m	class:nfv_exam::RouteBestSolution
 not_enough_vi_id	include/scheduler.h	/^    int not_enough_vi_id;$/;"	m	class:nfv_exam::RouteBestSolution
 notice_log	include/log.h	/^#define notice_log(/;"	d
+operator <	include/scheduler.h	/^    bool operator < (const FlowNodeCandidate &another) const {$/;"	f	struct:nfv_exam::FlowNodeCandidate
+operator <	include/scheduler.h	/^    bool operator < (const ServerCandidate &another) const {$/;"	f	struct:nfv_exam::ServerCandidate
+operator <	include/scheduler.h	/^    bool operator < (const ViTemplate &another) const {$/;"	f	struct:nfv_exam::ViTemplate
+operator <	include/scheduler.h	/^    bool operator < (const VnfInstanceCandidate &another) const {$/;"	f	struct:nfv_exam::VnfInstanceCandidate
 parent_id	include/physical_node.h	/^    int parent_id;$/;"	m	class:nfv_exam::PhysicalNode
 physical_node	include/physical_node_manager.h	/^    std::map<int, PhysicalNode*> physical_node;$/;"	m	class:nfv_exam::PhysicalNodeManager
 physical_node_bandwidth_evaluation_file_path	include/physical_node_manager.h	/^    std::string physical_node_bandwidth_evaluation_file_path;$/;"	m	class:nfv_exam::PhysicalNodeManager
@@ -348,13 +390,15 @@ physical_node_bandwidth_evaluation_file_path	src/main.cpp	/^const std::string ph
 physical_node_cpu_evaluation_file_path	include/physical_node_manager.h	/^    std::string physical_node_cpu_evaluation_file_path;$/;"	m	class:nfv_exam::PhysicalNodeManager
 physical_node_cpu_evaluation_file_path	src/main.cpp	/^const std::string physical_node_cpu_evaluation_file_path = ".\/data\/cpu_evaluation";$/;"	v
 physical_node_evaluate_frequency	src/main.cpp	/^const int physical_node_evaluate_frequency = 10;$/;"	v
+physical_node_id	include/scheduler.h	/^    int physical_node_id;$/;"	m	struct:nfv_exam::ServerCandidate
 physical_node_memory_evaluation_file_path	include/physical_node_manager.h	/^    std::string physical_node_memory_evaluation_file_path;$/;"	m	class:nfv_exam::PhysicalNodeManager
 physical_node_memory_evaluation_file_path	src/main.cpp	/^const std::string physical_node_memory_evaluation_file_path = ".\/data\/memory_evaluation";$/;"	v
 physical_nodes_total_bandwidth	include/scheduler.h	/^    int physical_nodes_total_bandwidth; $/;"	m	class:nfv_exam::Scheduler
 place_first_flow_on_a_chain	src/scheduler.cpp	/^int Scheduler::place_first_flow_on_a_chain(int flow_id, int chain_id)$/;"	f	class:nfv_exam::Scheduler
 place_first_flow_on_an_unsettled_chain	src/service_chain_manager.cpp	/^int ServiceChainManager::place_first_flow_on_an_unsettled_chain(int flow_id, int chain_id)$/;"	f	class:nfv_exam::ServiceChainManager
-place_flow_on_a_linear_chain	src/service_chain_manager.cpp	/^int ServiceChainManager::place_flow_on_a_linear_chain(int flow_id, int chain_id)$/;"	f	class:nfv_exam::ServiceChainManager
 place_new_chain_on_physical_nodes	src/scheduler.cpp	/^int Scheduler::place_new_chain_on_physical_nodes(int chain_id, bool &req_result)$/;"	f	class:nfv_exam::Scheduler
+place_vnf	src/scheduler.cpp	/^bool Scheduler::place_vnf(ServiceChain *chain, int function_id, std::vector<FlowNodeCandidate> &fn_candidates, $/;"	f	class:nfv_exam::Scheduler
+place_vnf_shuffle_max_time	include/scheduler.h	/^    int place_vnf_shuffle_max_time;$/;"	m	class:nfv_exam::Scheduler
 pre_flow_node_id	include/flow_node.h	/^    int pre_flow_node_id;$/;"	m	class:nfv_exam::FlowNode
 pre_vi_id	include/vnf_instance.h	/^    std::vector<int> pre_vi_id;$/;"	m	class:nfv_exam::VnfInstance
 qnxnto	build/CMakeFiles/3.9.5/CompilerIdC/CMakeCCompilerId.c	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v
@@ -362,12 +406,14 @@ qnxnto	build/CMakeFiles/3.9.5/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const*
 random_exponential	src/req_manager.cpp	/^double ReqManager::random_exponential(double lambda)    $/;"	f	class:nfv_exam::ReqManager
 random_pick_an_active_chain	src/req_manager.cpp	/^int ReqManager::random_pick_an_active_chain(int length, int &chain_id)$/;"	f	class:nfv_exam::ReqManager
 random_pick_an_active_flow	src/req_manager.cpp	/^int ReqManager::random_pick_an_active_flow(int &flow_id, int &flow_length)$/;"	f	class:nfv_exam::ReqManager
+recover_flow_without_adjustment	src/scheduler.cpp	/^int Scheduler::recover_flow_without_adjustment(Flow *flow)$/;"	f	class:nfv_exam::Scheduler
+recover_to_pre_located_vi	src/scheduler.cpp	/^int Scheduler::recover_to_pre_located_vi(std::vector<FlowNodeCandidate> &fn_candidates, int l, int r, VnfInstance *located_vi)$/;"	f	class:nfv_exam::Scheduler
 release_bandwidth	src/physical_node.cpp	/^int PhysicalNode::release_bandwidth(int bandwidth_cost)$/;"	f	class:nfv_exam::PhysicalNode
 release_bandwidth	src/physical_node_manager.cpp	/^int PhysicalNodeManager::release_bandwidth(int physical_node_id_1, int physical_node_id_2, int bandwidth)$/;"	f	class:nfv_exam::PhysicalNodeManager
 release_flow_when_rejected	src/scheduler.cpp	/^int Scheduler::release_flow_when_rejected(Flow *flow)$/;"	f	class:nfv_exam::Scheduler
 release_host_resource	src/physical_node.cpp	/^int PhysicalNode::release_host_resource(int cpu_cost, int memory_cost)$/;"	f	class:nfv_exam::PhysicalNode
 release_host_resource	src/physical_node_manager.cpp	/^int PhysicalNodeManager::release_host_resource(int physical_node_id, int cpu_cost, int memory_cost)$/;"	f	class:nfv_exam::PhysicalNodeManager
-release_service_chain_when_rejected	src/scheduler.cpp	/^int Schedeler::release_service_chain_when_rejected(ServiceChain *service_chain)$/;"	f	class:nfv_exam::Schedeler
+release_service_chain_when_rejected	src/scheduler.cpp	/^int Scheduler::release_service_chain_when_rejected(ServiceChain *service_chain)$/;"	f	class:nfv_exam::Scheduler
 release_total_bandwidth	src/physical_node_manager.cpp	/^int PhysicalNodeManager::release_total_bandwidth(int bandwidth_cost)$/;"	f	class:nfv_exam::PhysicalNodeManager
 release_total_host_resource	src/physical_node_manager.cpp	/^int PhysicalNodeManager::release_total_host_resource(int cpu_cost, int memory_cost)$/;"	f	class:nfv_exam::PhysicalNodeManager
 remove	src/flow_node.cpp	/^int FlowNode::remove()$/;"	f	class:nfv_exam::FlowNode
@@ -375,27 +421,38 @@ remove	src/vnf_instance.cpp	/^int VnfInstance::remove()$/;"	f	class:nfv_exam::Vn
 remove_a_flow_from_a_chain	src/service_chain_manager.cpp	/^int ServiceChainManager::remove_a_flow_from_a_chain(int flow_id, int chain_id)$/;"	f	class:nfv_exam::ServiceChainManager
 remove_a_flow_link	src/scheduler.cpp	/^int Scheduler::remove_a_flow_link(FlowNode *flow_node_1, FlowNode *flow_node_2, int bandwidth_cost)$/;"	f	class:nfv_exam::Scheduler
 remove_a_flow_node	src/scheduler.cpp	/^int Scheduler::remove_a_flow_node(FlowNode *flow_node, VnfInstance *vnf_instance, int bandwidth_cost)$/;"	f	class:nfv_exam::Scheduler
+remove_a_flow_node	src/scheduler.cpp	/^int Scheduler::remove_a_flow_node(FlowNode *flow_node, int vi_id, int bandwidth_cost)$/;"	f	class:nfv_exam::Scheduler
 remove_a_flow_v	src/scheduler.cpp	/^int Scheduler::remove_a_flow_v(FlowNode *flow_node, VnfInstance *vnf_instance)$/;"	f	class:nfv_exam::Scheduler
 remove_a_vnf_instance	src/scheduler.cpp	/^int Scheduler::remove_a_vnf_instance(VnfInstance *vnf_instance, int bandwidth_cost, $/;"	f	class:nfv_exam::Scheduler
+remove_empty_vnf_instance	src/scheduler.cpp	/^int Scheduler::remove_empty_vnf_instance(int chain_id)$/;"	f	class:nfv_exam::Scheduler
+remove_next_vi_id	src/vnf_instance.cpp	/^int VnfInstance::remove_next_vi_id(int next_vi_id)$/;"	f	class:nfv_exam::VnfInstance
+remove_pre_vi_id	src/vnf_instance.cpp	/^int VnfInstance::remove_pre_vi_id(int pre_vi_id)$/;"	f	class:nfv_exam::VnfInstance
 remove_settled_flow_node	src/vnf_instance.cpp	/^int VnfInstance::remove_settled_flow_node(int flow_node_id)$/;"	f	class:nfv_exam::VnfInstance
+remove_vnf_instance	src/service_chain.cpp	/^int ServiceChain::remove_vnf_instance(int function_id, int vi_id)$/;"	f	class:nfv_exam::ServiceChain
 req_evaluation_file_path	include/req_manager.h	/^    std::string req_evaluation_file_path;$/;"	m	class:nfv_exam::ReqManager
 req_evaluation_file_path	src/main.cpp	/^const std::string req_evaluation_file_path = ".\/data\/req_evaluation";$/;"	v
 req_type	include/req.h	/^    std::string req_type;$/;"	m	class:nfv_exam::Req
 resource_used_ratio	include/physical_node_manager.h	/^    double resource_used_ratio;$/;"	m	class:nfv_exam::PhysicalNodeManager
+route	src/scheduler.cpp	/^int Scheduler::route(Flow *flow, Chain *chain, bool &resource_enough_flag)$/;"	f	class:nfv_exam::Scheduler
 rs_frame	include/log.h	/^namespace rs_frame {$/;"	n
 rs_frame	src/log.cpp	/^namespace rs_frame {$/;"	n	file:
 save_evaluation	src/physical_node_manager.cpp	/^int PhysicalNodeManager::save_evaluation()$/;"	f	class:nfv_exam::PhysicalNodeManager
 save_evaluation	src/req_manager.cpp	/^int ReqManager::save_evaluation()$/;"	f	class:nfv_exam::ReqManager
 save_pre_flow_state	src/scheduler.cpp	/^int Scheduler::save_pre_flow_state(Flow *flow)$/;"	f	class:nfv_exam::Scheduler
+scale_out	src/scheduler.cpp	/^int Scheduler::scale_out(FlowNode *flow_node, ServiceChain *chain, int flow_bandwidth, bool &resource_enough_flag)$/;"	f	class:nfv_exam::Scheduler
 scheduler_strategy	src/main.cpp	/^const std::string scheduler_strategy = "normal";$/;"	v
 search_physical_node_ptr	include/scheduler.h	/^    int search_physical_node_ptr;$/;"	m	class:nfv_exam::Scheduler
-search_physical_node_ptr_add_one	src/scheduler.cpp	/^void Schedeler::search_physical_node_ptr_add_one()$/;"	f	class:nfv_exam::Schedeler
-search_physical_node_ptr_random_jump	src/scheduler.cpp	/^void Schedeler::search_physical_node_ptr_random_jump()$/;"	f	class:nfv_exam::Schedeler
+search_physical_node_ptr_add_one	src/scheduler.cpp	/^void Scheduler::search_physical_node_ptr_add_one()$/;"	f	class:nfv_exam::Scheduler
+search_physical_node_ptr_random_jump	src/scheduler.cpp	/^void Scheduler::search_physical_node_ptr_random_jump()$/;"	f	class:nfv_exam::Scheduler
 server_count	include/physical_node_manager.h	/^    int server_count;$/;"	m	class:nfv_exam::PhysicalNodeManager
 server_count	include/scheduler.h	/^    int server_count;$/;"	m	class:nfv_exam::Scheduler
+server_cpu	include/physical_node_manager.h	/^    int server_cpu;$/;"	m	class:nfv_exam::PhysicalNodeManager
+server_cpu	include/scheduler.h	/^    int server_cpu;$/;"	m	class:nfv_exam::Scheduler
+server_memory	include/physical_node_manager.h	/^    int server_memory;$/;"	m	class:nfv_exam::PhysicalNodeManager
+server_memory	include/scheduler.h	/^    int server_memory;$/;"	m	class:nfv_exam::Scheduler
 service_chain_id_count	include/service_chain_manager.h	/^    int service_chain_id_count;$/;"	m	class:nfv_exam::ServiceChainManager
 service_chain_pool	include/service_chain_manager.h	/^    std::map<int, ServiceChain*> service_chain_pool;$/;"	m	class:nfv_exam::ServiceChainManager
-set_alpha	src/scheduler.cpp	/^int Schedule::set_alpha(double alpha)$/;"	f	class:nfv_exam::Schedule
+set_alpha	src/scheduler.cpp	/^int Scheduler::set_alpha(double alpha)$/;"	f	class:nfv_exam::Scheduler
 set_bandwidth_used	src/service_chain.cpp	/^int ServiceChain::set_bandwidth_used(int bandwidth_used)$/;"	f	class:nfv_exam::ServiceChain
 set_chain_id	src/flow.cpp	/^void Flow::set_chain_id(int chain_id)$/;"	f	class:nfv_exam::Flow
 set_chain_id	src/req.cpp	/^void Req::set_chain_id(int chain_id)$/;"	f	class:nfv_exam::Req
@@ -413,13 +470,11 @@ set_length	src/req.cpp	/^void Req::set_length(int length)$/;"	f	class:nfv_exam::
 set_lifetime	src/req.cpp	/^void Req::set_lifetime(int lifetime)$/;"	f	class:nfv_exam::Req
 set_lifetime_left	src/flow.cpp	/^void Flow::set_lifetime_left(int lifetime)$/;"	f	class:nfv_exam::Flow
 set_next_flow_node_id	src/flow_node.cpp	/^int FlowNode::set_next_flow_node_id(int next_flow_node_id)$/;"	f	class:nfv_exam::FlowNode
-set_next_vi_id	src/vnf_instance.cpp	/^int VnfInstance::set_next_vi_id(int next_vi_id)$/;"	f	class:nfv_exam::VnfInstance
 set_parent	src/physical_node.cpp	/^int PhysicalNode::set_parent(int parent_id)$/;"	f	class:nfv_exam::PhysicalNode
 set_physical_node_bandwidth_evaluation_file_path	src/physical_node_manager.cpp	/^int PhysicalNodeManager::set_physical_node_bandwidth_evaluation_file_path(const std::string &file_path)$/;"	f	class:nfv_exam::PhysicalNodeManager
 set_physical_node_cpu_evaluation_file_path	src/physical_node_manager.cpp	/^int PhysicalNodeManager::set_physical_node_cpu_evaluation_file_path(const std::string &file_path)$/;"	f	class:nfv_exam::PhysicalNodeManager
 set_physical_node_memory_evaluation_file_path	src/physical_node_manager.cpp	/^int PhysicalNodeManager::set_physical_node_memory_evaluation_file_path(const std::string &file_path)$/;"	f	class:nfv_exam::PhysicalNodeManager
 set_pre_flow_node_id	src/flow_node.cpp	/^int FlowNode::set_pre_flow_node_id(int pre_flow_node_id)$/;"	f	class:nfv_exam::FlowNode
-set_pre_vi_id	src/vnf_instance.cpp	/^int VnfInstance::set_pre_vi_id(int pre_vi_id)$/;"	f	class:nfv_exam::VnfInstance
 set_req_evaluation_file_path	src/req_manager.cpp	/^int ReqManager::set_req_evaluation_file_path(const std::string &file_path)$/;"	f	class:nfv_exam::ReqManager
 set_req_type	src/req.cpp	/^void Req::set_req_type(const std::string &req_type)$/;"	f	class:nfv_exam::Req
 set_strategy	src/scheduler.cpp	/^int Scheduler::set_strategy(const std::string &strategy)$/;"	f	class:nfv_exam::Scheduler
@@ -433,6 +488,7 @@ settle_a_vnf_instance	src/scheduler.cpp	/^int Scheduler::settle_a_vnf_instance(V
 settled_flow_nodes	include/vnf_instance.h	/^    std::set<int> settled_flow_nodes;$/;"	m	class:nfv_exam::VnfInstance
 son_id	include/physical_node.h	/^    std::vector<int> son_id;$/;"	m	class:nfv_exam::PhysicalNode
 strategy	include/scheduler.h	/^    std::string strategy;$/;"	m	class:nfv_exam::Scheduler
+sugoi_arrange	src/scheduler.cpp	/^int Scheduler::sugoi_arrange(const Req &req, bool &req_result)$/;"	f	class:nfv_exam::Scheduler
 throughput_record	include/flow_manager.h	/^    std::vector<int> throughput_record;$/;"	m	class:nfv_exam::FlowManager
 to_string	include/req.h	/^    std::string to_string()$/;"	f	struct:nfv_exam::FlowTemplate
 to_string	src/req.cpp	/^std::string Req::to_string()$/;"	f	class:nfv_exam::Req
@@ -448,13 +504,17 @@ total_memory_used_ratio_history	include/physical_node_manager.h	/^    std::vecto
 total_req_count	include/req_manager.h	/^    int total_req_count;$/;"	m	class:nfv_exam::ReqManager
 up_bandwidth	include/physical_node.h	/^    int up_bandwidth;$/;"	m	class:nfv_exam::PhysicalNode
 up_bandwidth_used	include/physical_node.h	/^    int up_bandwidth_used;$/;"	m	class:nfv_exam::PhysicalNode
+update	src/scheduler.cpp	/^void RouteBestSolution::update(int vi_id, bool enough_flag, double cost_result)$/;"	f	class:nfv_exam::RouteBestSolution
 update_evaluation	src/req_manager.cpp	/^int ReqManager::update_evaluation(const std::vector<bool> &req_accepted_flag)$/;"	f	class:nfv_exam::ReqManager
 update_length2active_chain_id	src/service_chain_manager.cpp	/^int ServiceChainManager::update_length2active_chain_id(int chain_length)$/;"	f	class:nfv_exam::ServiceChainManager
 update_resource_used_evaluation	src/physical_node_manager.cpp	/^int PhysicalNodeManager::update_resource_used_evaluation()$/;"	f	class:nfv_exam::PhysicalNodeManager
+vi	include/scheduler.h	/^    VnfInstance *vi;$/;"	m	struct:nfv_exam::VnfInstanceCandidate
 vi_cpu_cost	include/vnf_instance.h	/^    int vi_cpu_cost;    \/\/vi cost, when type==normal: vi_cpu_cost == vi_cpu_used$/;"	m	class:nfv_exam::VnfInstance
 vi_cpu_used	include/vnf_instance.h	/^    int vi_cpu_used;    \/\/flow cost$/;"	m	class:nfv_exam::VnfInstance
+vi_id	include/scheduler.h	/^    int vi_id;$/;"	m	struct:nfv_exam::VnfInstanceCandidate
 vi_memory_cost	include/vnf_instance.h	/^    int vi_memory_cost;$/;"	m	class:nfv_exam::VnfInstance
 vi_memory_used	include/vnf_instance.h	/^    int vi_memory_used;$/;"	m	class:nfv_exam::VnfInstance
+vi_template	include/scheduler.h	/^    vector<ViTemplate> vi_template;$/;"	m	class:nfv_exam::Scheduler
 vnf_instance	include/service_chain.h	/^    std::map<int, std::vector<int> *> vnf_instance; \/\/from function_id to vnf_instance_id$/;"	m	class:nfv_exam::ServiceChain
 vnf_instance_default_cpu	include/service_chain_manager.h	/^    int vnf_instance_default_cpu;$/;"	m	class:nfv_exam::ServiceChainManager
 vnf_instance_default_memory	include/service_chain_manager.h	/^    int vnf_instance_default_memory;$/;"	m	class:nfv_exam::ServiceChainManager

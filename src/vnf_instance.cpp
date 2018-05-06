@@ -144,6 +144,11 @@ int VnfInstance::remove()
     return 0;
 }
 
+bool VnfInstance::get_disable_scale_up_down()
+{
+    return this->disable_scale_up_down;
+}
+
 int VnfInstance::get_cpu_cost()
 {
     return this->vi_cpu_cost;
@@ -162,6 +167,19 @@ int VnfInstance::get_location()
 int VnfInstance::is_settled()
 {
     return this->location == -1;
+}
+
+int VnfInstance::set_vi_resource_cost(int vi_cpu_cost, int vi_memory_cost)
+{
+    if (this->disable_scale_up_down != true) {
+        warning_log("this function only for disable_scale_up_down==true");
+        return -1;
+    }
+
+    this->vi_cpu_cost = vi_cpu_cost;
+    this->vi_memory_cost = vi_memory_cost;
+
+    return 0;
 }
 
 int VnfInstance::get_settled_flow_node(std::vector<int> &settled_flow_nodes)

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <map>
+#include <set>
 
 namespace nfv_exam {
 
@@ -12,7 +13,8 @@ public:
     int get_length();
     int add_vnf_instance(int function_id, int vi_id);
     int remove_vnf_instance(int function_id, int vi_id);
-    const std::map<int, std::vector<int> *> &get_vnf_instance();
+    //const std::map<int, std::vector<int> *> &get_vnf_instance();
+    std::map<int, std::vector<int> *> &get_vnf_instance();
     std::vector<int> &get_vnf_instance(int function_id);
     int get_first_vi_id(int function_id); // only work in the FF
 

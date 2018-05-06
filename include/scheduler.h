@@ -12,6 +12,49 @@
 
 namespace nfv_exam {
 
+struct FlowState
+{
+    int id;
+    std::vector<int> cpu_cost;
+    std::vector<int> memory_cost;
+    int flow_bandwidth;
+    std::vector<int> location;
+};
+
+struct ServerCandidate
+{
+    double cost_result;
+    int physical_node_id;
+
+    bool operator < (const ServerCandidate &another) const {
+        return cost_result < another.cost_result;
+    }
+};
+
+struct FlowNodeCandidate
+{
+    int fn_id;
+    double cost_result;
+    FlowNode *flow_node;
+    bool is_settled;
+    int flow_bandwidth;
+
+    bool operator < (const FlowNodeCandidate &another) const {
+        return cost_result < another.cost_result;
+    }
+};
+
+struct VnfInstanceCandidate
+{
+    int vi_id;
+    double cost_result;
+    VnfInstance *vi;
+    
+    bool operator < (const VnfInstanceCandidate &another) const {
+        return cost_result < another.cost_result;
+    }
+};
+
 class Scheduler {
 public:
 
@@ -65,7 +108,10 @@ public:
     int route(Flow *flow, ServiceChain *chain, bool &resource_enough_flag);
 
     int migration(FlowNode *flow_node, ServiceChain *chain, bool &resource_enough_flag);
-    int Scheduler::get_all_flow_nodes_in_the_same_vi(FlowNode *flow_node, vector<FlowNode *> &flow_nodes)
+    int get_all_flow_nodes_in_the_same_vi(FlowNode *flow_node, vector<FlowNode *> &flow_nodes)
+    bool place_vnf(ServiceChain *chain, int function_id, std::vector<FlowNodeCandidate> &fn_candidates, 
+        int l, int r, VnfInstance *located_vi);
+    int recover_to_pre_located_vi(std::vector<FlowNodeCandidate> &fn_candidates, int l, int r, VnfInstance *located_vi);
 
     int scale_out(FlowNode *flow_node, ServiceChain *chain, int flow_bandwidth, bool &resource_enough_flag);
     int get_not_related_servers(ServiceChain *chain, std::vector<ServerCandidate> &server_candidates);
@@ -81,7 +127,6 @@ public:
 
     //-------------horizontal only---------------
     int handle_req_h_only(const Req &req, bool &req_result);
-   
 
 
 
@@ -108,6 +153,8 @@ private:
 
     int place_vnf_shuffle_max_time;
 
+    
+
 };
 
 class RouteBestSolution
@@ -122,48 +169,6 @@ private:
     int enough_vi_id;
     double not_enough_cost_result;
     int not_enough_vi_id;
-};
-
-struct FlowState
-{
-    int id;
-    std::vector<int> cpu_cost;
-    std::vector<int> memory_cost;
-    int flow_bandwidth;
-    std::vector<int> location;
-};
-
-struct ServerCandidate
-{
-    double cost_result;
-    int physical_node_id;
-
-    bool operator < (const ServerCandidate &another) const {
-        return cost_result < another.cost_result;
-    }
-};
-
-struct FlowNodeCandidate
-{
-    int fn_id;
-    double cost_result;
-    FlowNode *flow_node;
-    bool is_settled;
-
-    bool operator < (const FlowNodeCandidate &another) const {
-        return cost_result < another.cost_result;
-    }
-};
-
-struct VnfInstanceCandidate
-{
-    int vi_id;
-    double cost_result;
-    VnfInstance *vi;
-    
-    bool operator < (const VnfInstanceCandidate &another) const {
-        return cost_result < another.cost_result;
-    }
 };
 
 }

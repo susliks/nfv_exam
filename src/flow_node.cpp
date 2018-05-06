@@ -171,6 +171,22 @@ int FlowNode::adjust_cost(int new_cpu_cost, int new_memory_cost)
     return 0;
 }
 
+int FlowNode::get_flow_bandwidth();
+{
+    FlowManager *flow_manager(NULL);
+    if ((flow_manager = FlowManager::get_instance()) == NULL) {
+        warning_log("get instance failed");
+        return -1;
+    }
+
+    Flow *flow(NULL);
+    if (flow_manager->get_flow(this->flow_id, flow) != 0) {
+        warning_log("get flow failed");
+        return -1;
+    }
+
+    return flow->get_flow_bandwidth();
+}
 
 }
 

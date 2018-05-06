@@ -1,3 +1,4 @@
+#include "service_chain_manager.cpp"
 #include "flow_manager.h"
 #include "log.h"
 
@@ -37,6 +38,7 @@ int FlowManager::get_flow(int flow_id, Flow *flow)
         if (flow == NULL) {
             warning_log("get flow failed, NULL ptr");
             return -1;
+        }
         return 0;
     } else {
         warning_log("get flow failed, flow_id = %d", flow_id);
@@ -87,7 +89,7 @@ int FlowManager::set_flow_evaluation_file_path(const std::string &file_path)
 int FlowManager::save_evaluation()
 {
     FILE *out_file(NULL);
-    if ((out_file = fopen(this->physical_node_cpu_evaluation_file_path.c_str(), "w")) == NULL) {
+    if ((out_file = fopen(this->flow_evaluation_file_path.c_str(), "w")) == NULL) {
         warning_log("open cpu evaluation file failed");
         return -1;
     }
@@ -111,7 +113,7 @@ int FlowManager::update_evaluation()
     int flow_count = this->flow_pool.size();
     int throughput = 0;
     for (auto iter = flow_pool.begin(); iter != flow_pool.end(); ++iter) {
-        throughput += (iter->get_length() - 1) * iter->get_flow_bandwidth();
+        throughput += (iter->second->get_length() - 1) * iter->second->get_flow_bandwidth();
     }
 
     this->active_flow_count.push_back(flow_count);
@@ -132,7 +134,7 @@ int FlowManager::create_a_flow(int length, int chain_id, int lifetime, int flow_
         const std::vector<int> &flow_node_cpu_cost, const std::vector<int> &flow_node_memory_cost, int &flow_id)
 {
     this->flow_pool[flow_id_count] = new Flow;
-    int flow_id = flow_id_count;
+    flow_id = flow_id_count;
 
     if (length != flow_node_cpu_cost.size() || length != flow_node_memory_cost.size()) {
         warning_log("flow nodes count inconsistent");

@@ -154,11 +154,15 @@ int ServiceChain::remove_vnf_instance(int function_id, int vi_id)
     return 0;
 }
 
-
-const std::map<int, std::vector<int> *> &ServiceChain::get_vnf_instance()
+std::map<int, std::vector<int> *> &ServiceChain::get_vnf_instance()
 {
     return this->vnf_instance;
 }
+
+//const std::map<int, std::vector<int> *> &ServiceChain::get_vnf_instance()
+//{
+//    return this->vnf_instance;
+//}
 
 std::vector<int> &ServiceChain::get_vnf_instance(int function_id)
 {
