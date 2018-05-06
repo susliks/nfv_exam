@@ -5,9 +5,11 @@
 #include <vector>
 #include <map>
 #include <algorithm>
+#include <set>
 
 #include "vnf_instance.h"
 #include "service_chain.h"
+#include "flow_manager.h"
 
 namespace nfv_exam {
 
@@ -26,8 +28,9 @@ public:
 
     static ServiceChainManager *get_instance();
 
-    int set_default_vnf_instance_resource(int vnf_instance_default_cpu, int vnf_instance_default_memory);
+    //int set_default_vnf_instance_resource(int vnf_instance_default_cpu, int vnf_instance_default_memory);
 
+    int set_cpu_enlarge_factor(int cpu_enlarge_factor);
     int init();
 
     int get_service_chain(int chain_id, ServiceChain *service_chain);
@@ -49,6 +52,11 @@ public:
 
     int get_first_vnf_instance(int chain_id, int func_id, VnfInstance *vnf_instance);
 
+    int add_vnf_instance(ServiceChain *chain, int function_id, int vi_id);
+    int remove_vnf_instance(ServiceChain *chain, int function_id, int vi_id);
+    int get_related_pn_id(ServiceChain *chain, std::set<int> &pn_id_set);
+
+
 private:
 
 private:
@@ -59,8 +67,10 @@ private:
 
     std::map<int, std::vector<int> *> length2active_chain_id;
 
-    int vnf_instance_default_cpu;
-    int vnf_instance_default_memory;
+    int cpu_enlarge_factor;
+
+    //int vnf_instance_default_cpu;
+    //int vnf_instance_default_memory;
 
 //-------------horizontal only---------------
     std::vector<ViTemplate> vi_template;

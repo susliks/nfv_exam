@@ -67,39 +67,39 @@ bool FlowNode::has_next_node()
     }
 }
 
-FlowNode *get_pre_node()
-{
-    FlowManager *flow_manager(NULL);
-    if ((flow_manager = FlowManager::get_instance()) == NULL) {
-        warning_log("get flow manager failed");
-        return NULL;
-    }
-
-    FlowNode *pre_node(NULL);
-    if (flow_manager->get_flow_node(this->pre_flow_node_id, pre_node) != 0) {
-        warning_log("get pre flow node failed");
-        return NULL;
-    }
-
-    return pre_node;
-}
-
-FlowNode *get_next_node()
-{
-    FlowManager *flow_manager(NULL);
-    if ((flow_manager = FlowManager::get_instance()) == NULL) {
-        warning_log("get flow manager failed");
-        return NULL;
-    }
-
-    FlowNode *next_node(NULL);
-    if (flow_manager->get_flow_node(this->next_flow_node_id, next_node) != 0) {
-        warning_log("get next flow node failed");
-        return NULL;
-    }
-
-    return next_node;
-}
+//FlowNode *get_pre_node()
+//{
+//    FlowManager *flow_manager(NULL);
+//    if ((flow_manager = FlowManager::get_instance()) == NULL) {
+//        warning_log("get flow manager failed");
+//        return NULL;
+//    }
+//
+//    FlowNode *pre_node(NULL);
+//    if (flow_manager->get_flow_node(this->pre_flow_node_id, pre_node) != 0) {
+//        warning_log("get pre flow node failed");
+//        return NULL;
+//    }
+//
+//    return pre_node;
+//}
+//
+//FlowNode *get_next_node()
+//{
+//    FlowManager *flow_manager(NULL);
+//    if ((flow_manager = FlowManager::get_instance()) == NULL) {
+//        warning_log("get flow manager failed");
+//        return NULL;
+//    }
+//
+//    FlowNode *next_node(NULL);
+//    if (flow_manager->get_flow_node(this->next_flow_node_id, next_node) != 0) {
+//        warning_log("get next flow node failed");
+//        return NULL;
+//    }
+//
+//    return next_node;
+//}
 
 int FlowNode::get_pre_node_id()
 {
@@ -117,6 +117,28 @@ int FlowNode::get_next_node_id()
     } else {
         return -1;
     }
+}
+
+FlowNode *FlowNode::get_pre_node()
+{
+    return this->pre_flow_node;
+}
+
+FlowNode *FlowNode::get_next_node()
+{
+    return this->next_flow_node;
+}
+
+int FlowNode::set_pre_flow_node(FlowNode *pre_flow_node)
+{
+    this->pre_flow_node = pre_flow_node;
+    return 0;
+}
+
+int FlowNode::set_next_flow_node(FlowNode *next_flow_node)
+{
+    this->next_flow_node = next_flow_node;
+    return 0;
 }
 
 int FlowNode::get_location()
@@ -139,6 +161,8 @@ int FlowNode::init(int id, int flow_id, int function_id, int cpu_cost, int memor
     this->memory_cost = memory_cost;
     this->pre_flow_node_id = -1;
     this->next_flow_node_id = -1;
+    this->pre_flow_node = NULL;
+    this->next_flow_node = NULL;
     return 0;
 }
 
@@ -171,22 +195,22 @@ int FlowNode::adjust_cost(int new_cpu_cost, int new_memory_cost)
     return 0;
 }
 
-int FlowNode::get_flow_bandwidth();
-{
-    FlowManager *flow_manager(NULL);
-    if ((flow_manager = FlowManager::get_instance()) == NULL) {
-        warning_log("get instance failed");
-        return -1;
-    }
-
-    Flow *flow(NULL);
-    if (flow_manager->get_flow(this->flow_id, flow) != 0) {
-        warning_log("get flow failed");
-        return -1;
-    }
-
-    return flow->get_flow_bandwidth();
-}
+//int FlowNode::get_flow_bandwidth();
+//{
+//    FlowManager *flow_manager(NULL);
+//    if ((flow_manager = FlowManager::get_instance()) == NULL) {
+//        warning_log("get instance failed");
+//        return -1;
+//    }
+//
+//    Flow *flow(NULL);
+//    if (flow_manager->get_flow(this->flow_id, flow) != 0) {
+//        warning_log("get flow failed");
+//        return -1;
+//    }
+//
+//    return flow->get_flow_bandwidth();
+//}
 
 }
 

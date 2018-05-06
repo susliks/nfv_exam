@@ -12,12 +12,12 @@ public:
     void clear();
     std::string to_string();
 
-    int get_chain_id();
-    int get_flow_id();
-    int get_length();
-    int get_flow_template_id();
-    int get_lifetime();
-    const std::string &get_req_type();
+    int get_chain_id() const;
+    int get_flow_id() const;
+    int get_length() const;
+    int get_flow_template_id() const;
+    int get_lifetime() const;
+    const std::string &get_req_type() const;
 
     void set_chain_id(int chain_id);
     void set_flow_id(int flow_id);

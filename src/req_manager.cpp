@@ -29,6 +29,12 @@ ReqManager *ReqManager::get_instance()
     return instance;
 }
 
+int ReqManager::set_cpu_enlarge_factor(int cpu_enlarge_factor)
+{
+    this->cpu_enlarge_factor = cpu_enlarge_factor;
+    return 0;
+}
+
 int ReqManager::set_flow_template_file_path(const std::string &file_path)
 {
     this->flow_template_file_path = file_path;
@@ -94,7 +100,7 @@ int ReqManager::load_flow_template_from_txt()
         fscanf(in_file, "%d", &length);
         //int length = 4; //magic number
 
-        int flow_template_id = this->flow_template.size();
+        //int flow_template_id = this->flow_template.size();
 
         fscanf(in_file, "%d", &b);
         
@@ -140,7 +146,7 @@ int ReqManager::add_flow_template(int length, int flow_bandwidth_cost,
 {
     //not elegant
     double eps = 1e-7;
-    int cpu_enlargement_factor = 100;
+    //int cpu_enlargement_factor = 100;
 
     int new_flow_template_id = this->flow_template.size();
     
@@ -149,7 +155,7 @@ int ReqManager::add_flow_template(int length, int flow_bandwidth_cost,
     this->flow_template[new_flow_template_id]->flow_bandwidth_cost = flow_bandwidth_cost;
     for (int i = 0; i < length; ++i) {
         this->flow_template[new_flow_template_id]->node_cpu_cost.push_back(
-                floor(node_cpu_cost[i] * cpu_enlargement_factor + eps));
+                floor(node_cpu_cost[i] * this->cpu_enlarge_factor + eps));
         this->flow_template[new_flow_template_id]->node_memory_cost.push_back(node_memory_cost[i]);
     }
     notice_log("add a flow_template succussful:%s", this->flow_template[new_flow_template_id]->to_string().c_str());
@@ -250,9 +256,17 @@ int ReqManager::generate_req(int cur_time, std::vector<Req> &req_list)
             new_req_timestamp_ptr[i] += 1;
         }
     }
+    debug_log("new req done");
 
     for (int i = 0; i < this->adjust_req_procedure_count; ++i) {
         while (adjust_req_timestamp[i][adjust_req_timestamp_ptr[i]] == cur_time) {
+
+            //trick
+            if (cur_time < 20) {
+                adjust_req_timestamp_ptr[i] += 1;
+                continue;
+            }
+
             req.clear();
             if (generate_req_info("adjust", req) != 0) {
                 warning_log("generate adjust req failed");
@@ -262,6 +276,7 @@ int ReqManager::generate_req(int cur_time, std::vector<Req> &req_list)
             adjust_req_timestamp_ptr[i] += 1;
         }
     }
+    debug_log("adjust req done");
 
     notice_log("new req count = %d. req info:", req_list.size());
     int req_list_size = req_list.size();
@@ -302,6 +317,7 @@ int ReqManager::generate_req_info(const std::string &req_type, Req &req)
     }
 
     req.set_lifetime(ceil(random_exponential((double)1/3600)));
+    notice_log("generate req info done");
 
     return 0;
 }
@@ -356,10 +372,13 @@ int ReqManager::decide_chain_id(int length, int &chain_id)
     }
 
     double resource_used_ratio = physical_node_manager->get_resource_used_ratio();
-    int enlargement_factor = 100;
-    int threshold = floor(resource_used_ratio * enlargement_factor);
-    int random_int = rand() % enlargement_factor;
-    if (random_int < threshold) {
+    //int enlargement_factor = 100;
+    //int threshold = floor(resource_used_ratio * enlargement_factor);
+    //int random_int = rand() % enlargement_factor;
+    int threshold = floor(resource_used_ratio * this->cpu_enlarge_factor);
+    int random_int = rand() % this->cpu_enlarge_factor;
+    notice_log("threshold:%d, random_int:%d", threshold, random_int);
+    if (random_int > threshold) {
         chain_id = -1;
         notice_log("new req in new chain");
     } else {

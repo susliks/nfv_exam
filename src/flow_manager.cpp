@@ -1,4 +1,4 @@
-#include "service_chain_manager.cpp"
+#include "service_chain_manager.h"
 #include "flow_manager.h"
 #include "log.h"
 
@@ -29,6 +29,11 @@ FlowManager *FlowManager::get_instance()
         instance = new FlowManager;
     }
     return instance;
+}
+
+std::map<int, Flow*> &FlowManager::get_flow_pool() //only for Scheduler::flow_aging()
+{
+    return this->flow_pool;
 }
 
 int FlowManager::get_flow(int flow_id, Flow *flow)
@@ -135,6 +140,7 @@ int FlowManager::create_a_flow(int length, int chain_id, int lifetime, int flow_
 {
     this->flow_pool[flow_id_count] = new Flow;
     flow_id = flow_id_count;
+    debug_log("flow_id = %d", flow_id);
 
     if (length != flow_node_cpu_cost.size() || length != flow_node_memory_cost.size()) {
         warning_log("flow nodes count inconsistent");
@@ -155,9 +161,11 @@ int FlowManager::create_a_flow(int length, int chain_id, int lifetime, int flow_
     }
     for (int i = 0; i < length-1; ++i) {
         flow_node_pool[flow_nodes[i]]->set_next_flow_node_id(flow_nodes[i+1]);
+        flow_node_pool[flow_nodes[i]]->set_next_flow_node(flow_node_pool[flow_nodes[i+1]]);
     }
     for (int i = 1; i < length; ++i) {
         flow_node_pool[flow_nodes[i]]->set_pre_flow_node_id(flow_nodes[i-1]);
+        flow_node_pool[flow_nodes[i]]->set_pre_flow_node(flow_node_pool[flow_nodes[i-1]]);
     }
 
     this->flow_pool[flow_id]->set_flow_nodes(flow_nodes);

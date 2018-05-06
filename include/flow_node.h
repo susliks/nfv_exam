@@ -5,7 +5,7 @@
 
 #include "log.h"
 //#include "flow.h"
-#include "flow_manager.h"
+//#include "flow_manager.h"
 
 namespace nfv_exam {
 
@@ -15,6 +15,8 @@ public:
     int init(int id, int flow_id, int function_id, int cpu_cost, int memory_cost);
     int set_pre_flow_node_id(int pre_flow_node_id);
     int set_next_flow_node_id(int next_flow_node_id);
+    int set_pre_flow_node(FlowNode *pre_flow_node);
+    int set_next_flow_node(FlowNode *next_flow_node);
 
     int get_id();
     int get_flow_id();
@@ -22,7 +24,7 @@ public:
     int get_cpu_cost();
     int get_memory_cost();
 
-    int get_flow_bandwidth();
+    //int get_flow_bandwidth();
 
     int settle(int vi_id);
     //int remove();
@@ -49,6 +51,8 @@ private:
     int memory_cost;
     int pre_flow_node_id;
     int next_flow_node_id;
+    FlowNode *pre_flow_node;
+    FlowNode *next_flow_node;
 };
 
 }

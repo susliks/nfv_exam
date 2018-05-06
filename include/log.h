@@ -8,6 +8,8 @@
 #ifndef LOG_H
 #define LOG_H
 
+#define filename(x) strrchr(x,'/')?strrchr(x,'/')+1:x   //only select the filename from __FILE__
+
 #include <string>
 
 #define UNIT_LOG(level, format, args...) \
@@ -16,7 +18,7 @@
             level, \
             __DATE__, \
             __TIME__, \
-            __FILE__, \
+            filename(__FILE__), \
             __FUNCTION__, \
             __LINE__, \
             ##args)

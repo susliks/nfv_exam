@@ -4,6 +4,8 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <random>
+#include <algorithm>
 
 #include "flow_manager.h"
 #include "service_chain_manager.h"
@@ -15,6 +17,7 @@ namespace nfv_exam {
 struct FlowState
 {
     int id;
+    int length;
     std::vector<int> cpu_cost;
     std::vector<int> memory_cost;
     int flow_bandwidth;
@@ -69,9 +72,9 @@ public:
     int settle_a_vnf_instance(VnfInstance *vnf_instance, int pn_id, int bandwidth_cost, VnfInstance *pre_vi, VnfInstance *next_vi);
     int calculate_a_vnf_instance_cost(VnfInstance *vnf_instance, VnfInstance *pre_vi, VnfInstance *next_vi, bool &enough_flag);//todo:not sure whether cost is needed
     int remove_a_vnf_instance(VnfInstance *vnf_instance, int bandwidth_cost, VnfInstance *pre_vi, VnfInstance *next_vi);
-    int release_service_chain_when_rejected(ServiceChain *service_chain)
+    int release_service_chain_when_rejected(ServiceChain *service_chain);
 
-    int create_new_chain(int length, bool disable_scale_up_down = false, int &chain_id);
+    int create_new_chain(int length, int &chain_id, bool disable_scale_up_down);
     int create_new_flow(int flow_template_id, int chain_id, int lifetime, int &flow_id);
 
     int settle_a_flow_node(FlowNode *flow_node, VnfInstance *vnf_instance, int bandwidth_cost);
@@ -98,17 +101,18 @@ public:
     int remove_empty_vnf_instance(int chain_id);
     
 
+    int new_flow_on_new_chain_arrange(const Req &req, bool &req_result);
 
     int flow_aging();
         
 
     //-------------vertical and horizontal---------------
     int handle_req(const Req &req, bool &req_result);
-    int sugoi_arrange(const Req &req, bool &req_result)
+    int sugoi_arrange(const Req &req, bool &req_result);
     int route(Flow *flow, ServiceChain *chain, bool &resource_enough_flag);
 
-    int migration(FlowNode *flow_node, ServiceChain *chain, bool &resource_enough_flag);
-    int get_all_flow_nodes_in_the_same_vi(FlowNode *flow_node, vector<FlowNode *> &flow_nodes)
+    int migration(FlowNode *flow_node, int flow_bandwidth, ServiceChain *chain, bool &resource_enough_flag);
+    int get_all_flow_nodes_in_the_same_vi(FlowNode *flow_node, int flow_bandwidth, std::vector<FlowNodeCandidate> &fn_candidates);
     bool place_vnf(ServiceChain *chain, int function_id, std::vector<FlowNodeCandidate> &fn_candidates, 
         int l, int r, VnfInstance *located_vi);
     int recover_to_pre_located_vi(std::vector<FlowNodeCandidate> &fn_candidates, int l, int r, VnfInstance *located_vi);

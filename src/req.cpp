@@ -10,42 +10,42 @@ void Req::clear()
 std::string Req::to_string()
 {
     std::string result;
-    result += std::string("req_type") + std::string(this->req_type);
-    result += std::string(" length=%d") + std::to_string(this->length);
-    result += std::string(" chain_id=%d") + std::to_string(this->chain_id);
-    result += std::string(" flow_id=%d") + std::to_string(this->flow_id);
-    result += std::string(" flow_template_id=%d") + std::to_string(this->flow_template_id);
-    result += std::string(" lifetime=%d") + std::to_string(this->lifetime);
+    result += std::string("req_type=") + std::string(this->req_type);
+    result += std::string(" length=") + std::to_string(this->length);
+    result += std::string(" chain_id=") + std::to_string(this->chain_id);
+    result += std::string(" flow_id=") + std::to_string(this->flow_id);
+    result += std::string(" flow_template_id=") + std::to_string(this->flow_template_id);
+    result += std::string(" lifetime=") + std::to_string(this->lifetime);
     
     return result;
 }
 
-int Req::get_chain_id()
+int Req::get_chain_id() const
 {
     return this->chain_id;
 }
 
-int Req::get_flow_id()
+int Req::get_flow_id() const
 {
     return this->flow_id;
 }
 
-int Req::get_length()
+int Req::get_length() const
 {
     return this->length;
 }
 
-int Req::get_flow_template_id()
+int Req::get_flow_template_id() const
 {
     return this->flow_template_id;
 }
 
-int Req::get_lifetime()
+int Req::get_lifetime() const
 {
     return this->lifetime;
 }
 
-const std::string &Req::get_req_type()
+const std::string &Req::get_req_type() const
 {
     return this->req_type;
 }

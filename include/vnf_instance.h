@@ -4,6 +4,8 @@
 #include <vector>
 #include <set>
 
+#include "physical_node.h"
+
 namespace nfv_exam {
 
 class VnfInstance {

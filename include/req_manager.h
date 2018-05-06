@@ -17,7 +17,9 @@ public:
 
     static ReqManager *get_instance();
 
+    int set_cpu_enlarge_factor(int cpu_enlarge_factor);
     int set_flow_template_file_path(const std::string &file_path);
+    int set_req_evaluation_file_path(const std::string &file_path);
     int set_generate_procedure_count(int new_req_procedure_count, int adjust_req_procedure_count);
     int set_exam_lifetime(int exam_lifetime);
     int init();
@@ -28,8 +30,8 @@ public:
     int get_template_info(int flow_template_id, int &length, std::vector<int> &node_cpu_cost, 
             std::vector<int> &node_memory_cost, int &flow_bandwidth_cost); 
 
-    int set_req_evaluation_file_path(const std::string &file_path);
     
+    int save_evaluation();
 
 private:
 
@@ -56,7 +58,6 @@ private:
     int random_pick_an_active_chain(int length, int &chain_id);
     int decide_chain_id(int length, int &chain_id);
 
-    int save_evaluation();
 
 private:
     std::string flow_template_file_path;
@@ -72,6 +73,8 @@ private:
     std::vector<std::vector<int> > adjust_req_timestamp;
     std::vector<int> new_req_timestamp_ptr;
     std::vector<int> adjust_req_timestamp_ptr;
+
+    int cpu_enlarge_factor;
 
     
     int accepted_req_count;

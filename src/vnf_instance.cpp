@@ -1,5 +1,5 @@
-#include "physical_node.h"
 #include "log.h"
+#include "vnf_instance.h"
 
 namespace nfv_exam {
 
@@ -164,7 +164,7 @@ int VnfInstance::get_location()
     return this->location;
 }
 
-int VnfInstance::is_settled()
+bool VnfInstance::is_settled()
 {
     return this->location == -1;
 }

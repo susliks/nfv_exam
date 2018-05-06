@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <algorithm>
 
 #include "physical_node.h"
 
@@ -29,10 +30,10 @@ public:
 
     int get_cpu_statistics(int pn_id, int &cpu_used, int &cpu);
     int get_memory_statistics(int pn_id, int &memory_used, int &memory);
-    int get_bandwidth_statistics(int pn_1_id, int pn_2_id, int &bandwidth_left); //note: return bandwidth left: (total - used)
+    int get_left_bandwidth_statistics(int pn_1_id, int pn_2_id, int &bandwidth_left); //note: return bandwidth left: (total - used)
     int get_bandwidth_statistics(int pn_id, int &up_bandwidth_used, int &up_bandwidth);
 
-    int get_physical_node(int node_id, PhysicalNode &physical_node);
+    int get_physical_node(int node_id, PhysicalNode *physical_node);
 
     int get_total_cpu_statistics(int &total_cpu_used, int &total_cpu);
     int get_total_memory_statistics(int &total_memory_used, int &total_memory);

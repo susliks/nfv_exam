@@ -5,14 +5,22 @@
 #include <map>
 #include <set>
 
+//#include "vnf_instance.h"
+//#include "service_chain_manager.h"
+
 namespace nfv_exam {
 
 class ServiceChain {
 public:
     int init(int id, int length, int bandwidth_used);
+    int get_id();
     int get_length();
-    int add_vnf_instance(int function_id, int vi_id);
-    int remove_vnf_instance(int function_id, int vi_id);
+    
+    //move to ServiceChainManager
+    //int add_vnf_instance(int function_id, int vi_id);
+    //int remove_vnf_instance(int function_id, int vi_id);
+    //int get_related_pn_id(std::set<int> &pn_id_set);
+    
     //const std::map<int, std::vector<int> *> &get_vnf_instance();
     std::map<int, std::vector<int> *> &get_vnf_instance();
     std::vector<int> &get_vnf_instance(int function_id);
@@ -21,7 +29,6 @@ public:
     int set_bandwidth_used(int bandwidth_used);
     int get_bandwidth_used();
 
-    int get_related_pn_id(std::set<int> &pn_id_set);
 
 
 private:
