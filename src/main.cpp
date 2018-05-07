@@ -22,11 +22,11 @@ const int cpu_enlarge_factor = 100;
 const int LEVEL0_SON_NUM = 4;
 const int LEVEL1_SON_NUM = 20;
 const int LEVEL2_SON_NUM = 20;
-const int SERVER_CPU = 10 * cpu_enlarge_factor;
-const int SERVER_MEMORY = 20;
-const int SERVER_UP_BANDWIDTH = 30;
-const int LEVEL0_BANDWIDTH_DECAY = 4;
-const int LEVEL1_BANDWIDTH_DECAY = 4;
+const int SERVER_CPU = 12 * cpu_enlarge_factor;
+const int SERVER_MEMORY = 32000;
+const int SERVER_UP_BANDWIDTH = 1000;
+const int LEVEL0_BANDWIDTH_DECAY = 2;
+const int LEVEL1_BANDWIDTH_DECAY = 2;
 
 
 const std::string flow_template_file_path = "./data/flow_template.config";
@@ -36,10 +36,10 @@ const std::string physical_node_cpu_evaluation_file_path = "./data/cpu_evaluatio
 const std::string physical_node_memory_evaluation_file_path = "./data/memory_evaluation";
 const std::string physical_node_bandwidth_evaluation_file_path = "./data/bandwidth_evaluation";
 const int physical_node_evaluate_frequency = 10;
-const int new_req_procedure_count = 1;
-const int adjust_req_procedure_count = 1;
+const int new_req_procedure_count = 6;
+const int adjust_req_procedure_count = 6;
 
-const int exam_lifetime = 100;
+const int exam_lifetime = 36000;
 
 //scheduler
 const double scheduler_alpha = 1.0;
@@ -96,12 +96,14 @@ int main()
             return -1;
         }
         debug_log("gen req done");
+        notice_log("gen req done");
 
         if (scheduler.handle_req_list(req_list, req_accepted_flag) != 0) {
             warning_log("handle req list failed");
             return -1;
         }
         debug_log("handle req done");
+        notice_log("handle req done");
 
         if (req_manager->update_evaluation(req_accepted_flag) != 0) {
             warning_log("update accepted flag into Req failed");
@@ -114,6 +116,11 @@ int main()
         if (cur_time % physical_node_evaluate_frequency == 0) {
             physical_node_manager->update_resource_used_evaluation();
             flow_manager->update_evaluation();
+
+            //TODO: for debug
+            physical_node_manager->save_evaluation();
+            req_manager->save_evaluation();
+            flow_manager->save_evaluation();
         }
     }
 

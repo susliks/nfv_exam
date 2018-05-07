@@ -268,9 +268,13 @@ int ReqManager::generate_req(int cur_time, std::vector<Req> &req_list)
             }
 
             req.clear();
-            if (generate_req_info("adjust", req) != 0) {
+            int return_value = generate_req_info("adjust", req);
+            if (return_value == -1) {
                 warning_log("generate adjust req failed");
                 return -1;
+            } else if (return_value == 1) {
+                notice_log("no active flow, skip this adjust part");
+                continue;
             }
             req_list.push_back(req);
             adjust_req_timestamp_ptr[i] += 1;
@@ -292,9 +296,13 @@ int ReqManager::generate_req_info(const std::string &req_type, Req &req)
     if (req_type == "adjust") {
         req.set_req_type(req_type);
         int flow_id(-1), flow_length(-1);
-        if (random_pick_an_active_flow(flow_id, flow_length) != 0) {
+        int return_value = random_pick_an_active_flow(flow_id, flow_length);
+        if (return_value == -1) {
             warning_log("random_pick_an_active_flow failed");
             return -1;
+        } else if (return_value == 1) {
+            notice_log("skip");
+            return 1;
         }
         req.set_chain_id(-1);
         req.set_flow_id(flow_id);
@@ -317,6 +325,8 @@ int ReqManager::generate_req_info(const std::string &req_type, Req &req)
     }
 
     req.set_lifetime(ceil(random_exponential((double)1/3600)));
+    //TODO:debug!
+    //req.set_lifetime(1000000);
     notice_log("generate req info done");
 
     return 0;
@@ -330,9 +340,13 @@ int ReqManager::random_pick_an_active_flow(int &flow_id, int &flow_length)
         return -1;
     }
     
-    if (flow_manager->random_pick_an_active_flow_id(flow_id, flow_length) != 0) {
+    int return_value = flow_manager->random_pick_an_active_flow_id(flow_id, flow_length);
+    if (return_value == -1) {
         warning_log("random_pick_an_active_flow_id failed");
         return -1;
+    } else if (return_value == 1) {
+        notice_log("skip");
+        return 1;
     }
 
     return 0;

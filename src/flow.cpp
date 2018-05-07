@@ -104,4 +104,15 @@ int Flow::aging()
     }
 }
 
+const std::string Flow::to_string()
+{
+    std::string result;
+    result += std::string("id:") + std::to_string(id) + std::string(" ");
+    result += std::string("chain_id:") + std::to_string(chain_id) + std::string(" ");
+    result += std::string("lifetime_left:") + std::to_string(lifetime_left) + std::string(" ");
+    result += std::string("length:") + std::to_string(length) + std::string(" ");
+    result += std::string("flow_bandwidth:") + std::to_string(flow_bandwidth) + std::string(" ");
+    return result;
+}
+
 }

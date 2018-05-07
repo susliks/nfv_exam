@@ -211,6 +211,21 @@ int FlowNode::adjust_cost(int new_cpu_cost, int new_memory_cost)
 //
 //    return flow->get_flow_bandwidth();
 //}
+//
+const std::string FlowNode::to_string()
+{
+    std::string result;
+    result += std::string("id:") + std::to_string(id) + std::string(" ");
+    result += std::string("flow_id:") + std::to_string(flow_id) + std::string(" ");
+    result += std::string("function_id:") + std::to_string(function_id) + std::string(" ");
+    result += std::string("flow_node_location:") + std::to_string(flow_node_location) + std::string(" ");
+    result += std::string("cpu_cost:") + std::to_string(cpu_cost) + std::string(" ");
+    result += std::string("memory_cost:") + std::to_string(memory_cost) + std::string(" ");
+    result += std::string("pre_flow_node_id:") + std::to_string(pre_flow_node_id) + std::string(" ");
+    result += std::string("next_flow_node_id:") + std::to_string(next_flow_node_id) + std::string(" ");
+
+    return result;
+}
 
 }
 

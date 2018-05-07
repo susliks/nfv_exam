@@ -4,4 +4,4 @@ cmake ..
 make clean
 make 
 cd ..
-./bin/nfv_exam
+#./bin/nfv_exam

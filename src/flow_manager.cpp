@@ -36,11 +36,26 @@ std::map<int, Flow*> &FlowManager::get_flow_pool() //only for Scheduler::flow_ag
     return this->flow_pool;
 }
 
-int FlowManager::get_flow(int flow_id, Flow *flow)
+//int FlowManager::get_flow(int flow_id, Flow *flow)
+//{
+//    if (flow_pool.find(flow_id) != flow_pool.end()) {
+//        flow = flow_pool[flow_id];
+//        if (flow == NULL) {
+//            warning_log("get flow failed, NULL ptr");
+//            return -1;
+//        }
+//        return 0;
+//    } else {
+//        warning_log("get flow failed, flow_id = %d", flow_id);
+//        return -1;
+//    }
+//}
+
+int FlowManager::get_flow(int flow_id, Flow **flow)
 {
     if (flow_pool.find(flow_id) != flow_pool.end()) {
-        flow = flow_pool[flow_id];
-        if (flow == NULL) {
+        (*flow) = flow_pool[flow_id];
+        if (*flow == NULL) {
             warning_log("get flow failed, NULL ptr");
             return -1;
         }
@@ -51,11 +66,11 @@ int FlowManager::get_flow(int flow_id, Flow *flow)
     }
 }
 
-int FlowManager::get_flow_node(int flow_node_id, FlowNode *flow_node)
+int FlowManager::get_flow_node(int flow_node_id, FlowNode **flow_node)
 {
     if (flow_node_pool.find(flow_node_id) != flow_node_pool.end()) {
-        flow_node = flow_node_pool[flow_node_id];
-        if (flow_node == NULL) {
+        *flow_node = flow_node_pool[flow_node_id];
+        if (*flow_node == NULL) {
             warning_log("get flow_node failed. NULL ptr");
             return -1;
         }
@@ -69,6 +84,10 @@ int FlowManager::get_flow_node(int flow_node_id, FlowNode *flow_node)
 int FlowManager::random_pick_an_active_flow_id(int &flow_id, int &flow_length)
 {
     int active_flow_count = this->flow_pool.size();
+    if (active_flow_count == 0) {
+        notice_log("no active_flow");
+        return 1;
+    }
     int position = rand() % active_flow_count;
 
     auto iter = this->flow_pool.begin();
@@ -211,10 +230,10 @@ int FlowManager::delete_a_flow(int flow_id)
     return 0;
 }
 
-int FlowManager::get_flow_node(int flow_id, int func_id, FlowNode *flow_node)
+int FlowManager::get_flow_node(int flow_id, int func_id, FlowNode **flow_node)
 {
     Flow *flow(NULL);
-    if (get_flow(flow_id, flow) != 0) {
+    if (get_flow(flow_id, &flow) != 0) {
         warning_log("get flow failed");
         return -1;
     }

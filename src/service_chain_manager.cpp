@@ -113,6 +113,7 @@ int ServiceChainManager::create_a_vnf_instance(int &vi_id)
 {
     vi_id = vnf_instance_id_count;
     this->vnf_instance_pool[vi_id] = new VnfInstance;
+    this->vnf_instance_pool[vi_id]->init(vi_id, -1, false, 0, 0, 0, 0);
     vnf_instance_id_count += 1;
     return 0;
 }
@@ -153,14 +154,18 @@ int ServiceChainManager::remove_a_flow_from_a_chain(int flow_id, int chain_id)
 
     Flow *flow(NULL);
     ServiceChain *chain(NULL);
-    if (flow_manager->get_flow(flow_id, flow) != 0) {
+    if (flow_manager->get_flow(flow_id, &flow) != 0) {
         warning_log("get flow failed");
         return -1;
     }
-    if (get_service_chain(chain_id, chain) != 0) {
+    if (get_service_chain(chain_id, &chain) != 0) {
         warning_log("get chain failed");
         return -1;
     }
+    debug_log("chain info:%s", chain->to_string().c_str());
+    debug_log("flow info:%s", flow->to_string().c_str());
+    
+
 
     int flow_length = flow->get_length();
     int chain_length = chain->get_length();
@@ -169,16 +174,31 @@ int ServiceChainManager::remove_a_flow_from_a_chain(int flow_id, int chain_id)
         return -1;
     }
 
+//TODO:debug
+for (int i = 0; i < flow_length; ++i) {
+    FlowNode *flow_node(NULL);
+    if (flow_manager->get_flow_node(flow_id, i, &flow_node) != 0) {
+        warning_log("get flow node failed");
+        return -1;
+    }
+    debug_log("flow_node %d info:%s", i, flow_node->to_string().c_str());
+}
+
     FlowNode *flow_node(NULL);
     VnfInstance *vnf_instance(NULL);
     for (int i = 0; i < flow_length; ++i) {
-        if (flow_manager->get_flow_node(flow_id, i, flow_node) != 0) {
+        if (flow_manager->get_flow_node(flow_id, i, &flow_node) != 0) {
             warning_log("get flow node failed");
             return -1;
         }
+        if (flow_node->is_settled() == false) {
+            continue;
+        }
+
+        debug_log("flow_node %d info:%s", i, flow_node->to_string().c_str());
 
         int vi_id = flow_node->get_location();
-        if (get_vnf_instance(vi_id, vnf_instance) != 0) {
+        if (get_vnf_instance(vi_id, &vnf_instance) != 0) {
             warning_log("get vi failed");
             return -1;
         }
@@ -211,10 +231,11 @@ int ServiceChainManager::place_first_flow_on_an_unsettled_chain(int flow_id, int
     }
 
     Flow *flow(NULL);
-    if (flow_manager->get_flow(flow_id, flow) != 0 || flow == NULL) {
+    if (flow_manager->get_flow(flow_id, &flow) != 0 || flow == NULL) {
         warning_log("get flow failed");
         return -1;
     }
+    debug_log("flow info:%s", flow->to_string().c_str());
 
     int flow_length = flow->get_length();
     int chain_length = this->service_chain_pool[chain_id]->get_length();
@@ -226,6 +247,7 @@ int ServiceChainManager::place_first_flow_on_an_unsettled_chain(int flow_id, int
     FlowNode *flow_node(NULL);
     VnfInstance *vnf_instance(NULL);
     ServiceChain *chain = this->service_chain_pool[chain_id];
+    debug_log("chain info:%s", chain->to_string().c_str());
     for (int i = 0; i < flow_length; ++i) {
         int vi_id = chain->get_first_vi_id(i);
         if (vi_id == -1) {
@@ -234,11 +256,11 @@ int ServiceChainManager::place_first_flow_on_an_unsettled_chain(int flow_id, int
         }
 
         //if (get_vnf_instance(chain_id, i, vnf_instance) != 0) {
-        if (get_vnf_instance(vi_id, vnf_instance) != 0) {
+        if (get_vnf_instance(vi_id, &vnf_instance) != 0) {
             warning_log("get vnf instance failed");
             return -1;
         }
-        if (flow_manager->get_flow_node(flow_id, i, flow_node) != 0) {
+        if (flow_manager->get_flow_node(flow_id, i, &flow_node) != 0) {
             warning_log("get flow node failed");
             return -1;
         }
@@ -282,6 +304,9 @@ int ServiceChainManager::place_first_flow_on_an_unsettled_chain(int flow_id, int
     int bandwidth_used = flow->get_flow_bandwidth();
     chain->set_bandwidth_used(bandwidth_used);
 
+    //update flow's chain_id
+    flow->set_chain_id(chain->get_id());
+
     return 0;
 }
 
@@ -290,36 +315,36 @@ int ServiceChainManager::place_first_flow_on_an_unsettled_chain(int flow_id, int
 //
 //}
 
-int ServiceChainManager::get_service_chain(int chain_id, ServiceChain *service_chain)
+int ServiceChainManager::get_service_chain(int chain_id, ServiceChain **service_chain)
 {
     if (this->service_chain_pool.find(chain_id) == this->service_chain_pool.end()) {
         warning_log("not exist chain_id: %d", chain_id);
         return -1;
     }
-    if ((service_chain = this->service_chain_pool[chain_id]) == NULL) {
+    if ((*service_chain = this->service_chain_pool[chain_id]) == NULL) {
         warning_log("null ptr");
         return -1;
     }
     return 0;
 }
 
-int ServiceChainManager::get_vnf_instance(int vi_id, VnfInstance *vnf_instance)
+int ServiceChainManager::get_vnf_instance(int vi_id, VnfInstance **vnf_instance)
 {
     if (this->vnf_instance_pool.find(vi_id) == this->vnf_instance_pool.end()) {
         warning_log("not exist vi_id: %d", vi_id);
         return -1;
     }
-    if ((vnf_instance = this->vnf_instance_pool[vi_id]) == NULL) {
+    if ((*vnf_instance = this->vnf_instance_pool[vi_id]) == NULL) {
         warning_log("null ptr");
         return -1;
     }
     return 0;
 }
 
-int ServiceChainManager::get_first_vnf_instance(int chain_id, int func_id, VnfInstance *vnf_instance)
+int ServiceChainManager::get_first_vnf_instance(int chain_id, int func_id, VnfInstance **vnf_instance)
 {
     ServiceChain *service_chain(NULL);
-    if (get_service_chain(chain_id, service_chain) != 0) {
+    if (get_service_chain(chain_id, &service_chain) != 0) {
         warning_log("get service chain failed");
         return -1;
     }
@@ -366,13 +391,13 @@ int ServiceChainManager::load_vi_template()
 {
     ViTemplate vi_template;
     vi_template.cpu = 2 * this->cpu_enlarge_factor;
-    vi_template.memory = 4;
+    vi_template.memory = 4000;
     this->vi_template.push_back(vi_template);
     vi_template.cpu = 4 * this->cpu_enlarge_factor;
-    vi_template.memory = 8;
+    vi_template.memory = 8000;
     this->vi_template.push_back(vi_template);
     vi_template.cpu = 8 * this->cpu_enlarge_factor;
-    vi_template.memory = 16;
+    vi_template.memory = 32000;
     this->vi_template.push_back(vi_template);
     sort(this->vi_template.begin(), this->vi_template.begin() + this->vi_template.size());
 
@@ -418,7 +443,7 @@ int ServiceChainManager::add_vnf_instance(ServiceChain *chain, int function_id, 
 
     //set edge relation
     VnfInstance *vi(NULL), *pre_vi(NULL), *next_vi(NULL);
-    if (get_vnf_instance(vi_id, vi) != 0) {
+    if (get_vnf_instance(vi_id, &vi) != 0) {
         warning_log("get vi failed");
         return -1;
     }
@@ -427,7 +452,7 @@ int ServiceChainManager::add_vnf_instance(ServiceChain *chain, int function_id, 
         for (auto iter = vnf_instance[function_id-1]->begin();
                 iter != vnf_instance[function_id-1]->end(); ++iter) {
             int pre_vi_id = *iter;
-            if (get_vnf_instance(pre_vi_id, pre_vi) != 0) {
+            if (get_vnf_instance(pre_vi_id, &pre_vi) != 0) {
                 warning_log("get pre vi failed");
                 return -1;
             }
@@ -441,7 +466,7 @@ int ServiceChainManager::add_vnf_instance(ServiceChain *chain, int function_id, 
         for (auto iter = vnf_instance[function_id+1]->begin();
                 iter != vnf_instance[function_id+1]->end(); ++iter) {
             int next_vi_id = *iter;
-            if (get_vnf_instance(next_vi_id, next_vi) != 0) {
+            if (get_vnf_instance(next_vi_id, &next_vi) != 0) {
                 warning_log("get next vi failed");
                 return -1;
             }
@@ -457,7 +482,8 @@ int ServiceChainManager::add_vnf_instance(ServiceChain *chain, int function_id, 
 
 int ServiceChainManager::remove_vnf_instance(ServiceChain *chain, int function_id, int vi_id)
 {
-    auto &vnf_instance = chain->get_vnf_instance();
+    debug_log("function_id:%d vi_id:%d", function_id, vi_id);
+    std::map<int, std::vector<int> *> &vnf_instance = chain->get_vnf_instance();
 
     if (vnf_instance.find(function_id) == vnf_instance.end()) {
         warning_log("not exist funciton id: %d", function_id);
@@ -466,7 +492,7 @@ int ServiceChainManager::remove_vnf_instance(ServiceChain *chain, int function_i
 
     //update edge relation
     VnfInstance *vi(NULL), *pre_vi(NULL), *next_vi(NULL);
-    if (get_vnf_instance(vi_id, vi) != 0) {
+    if (get_vnf_instance(vi_id, &vi) != 0) {
         warning_log("get vi failed");
         return -1;
     }
@@ -474,7 +500,7 @@ int ServiceChainManager::remove_vnf_instance(ServiceChain *chain, int function_i
         for (auto iter = vnf_instance[function_id-1]->begin();
                 iter != vnf_instance[function_id-1]->end(); ++iter) {
             int pre_vi_id = *iter;
-            if (get_vnf_instance(pre_vi_id, pre_vi) != 0) {
+            if (get_vnf_instance(pre_vi_id, &pre_vi) != 0) {
                 warning_log("get pre vi failed");
                 return -1;
             }
@@ -488,14 +514,19 @@ int ServiceChainManager::remove_vnf_instance(ServiceChain *chain, int function_i
         for (auto iter = vnf_instance[function_id+1]->begin();
                 iter != vnf_instance[function_id+1]->end(); ++iter) {
             int next_vi_id = *iter;
-            if (get_vnf_instance(next_vi_id, next_vi) != 0) {
+            debug_log("no exceeded");
+            if (get_vnf_instance(next_vi_id, &next_vi) != 0) {
                 warning_log("get next vi failed");
                 return -1;
             }
+            debug_log("get next vi done");
+            debug_log("cur_vi info: %s", vi->to_string().c_str());
+            debug_log("next_vi info: %s", next_vi->to_string().c_str());
             if (vi->remove_next_vi_id(next_vi_id) != 0 || next_vi->remove_pre_vi_id(vi_id) != 0) {
                 warning_log("remove relation failed");
                 return -1;
             }
+            debug_log("remove relation done");
         }
     }
 
@@ -526,7 +557,7 @@ int ServiceChainManager::get_related_pn_id(ServiceChain *chain, std::set<int> &p
         auto &vnf_instances = chain->get_vnf_instance(i);
         for (auto iter = vnf_instances.begin(); iter != vnf_instances.end(); ++iter) {
             int vi_id = *iter;
-            if (get_vnf_instance(vi_id, vi) != 0) {
+            if (get_vnf_instance(vi_id, &vi) != 0) {
                 warning_log("get vi failed");
                 return -1;
                 //return result;

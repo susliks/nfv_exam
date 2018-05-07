@@ -58,7 +58,7 @@ int VnfInstance::remove_next_vi_id(int next_vi_id)
 {
     for (auto iter = this->next_vi_id.begin(); iter != this->next_vi_id.end();) {
         if (*iter == next_vi_id) {
-            iter = this->pre_vi_id.erase(iter);
+            iter = this->next_vi_id.erase(iter);
             return 0;
         } else {
             ++iter;
@@ -166,7 +166,7 @@ int VnfInstance::get_location()
 
 bool VnfInstance::is_settled()
 {
-    return this->location == -1;
+    return this->location != -1;
 }
 
 int VnfInstance::set_vi_resource_cost(int vi_cpu_cost, int vi_memory_cost)
@@ -191,5 +191,33 @@ int VnfInstance::get_settled_flow_node(std::vector<int> &settled_flow_nodes)
     return 0;
 }
 
+const std::string VnfInstance::to_string()
+{
+    std::string result;
+    result += std::string("id:") + std::to_string(id) + std::string(" ");
+    result += std::string("location:") + std::to_string(location) + std::string(" ");
+    result += std::string("pre_vi_id:");
+    for (auto iter = pre_vi_id.begin(); iter != pre_vi_id.end(); ++iter) {
+        result += std::to_string(*iter) + std::string(" ");
+    }
+    result += std::string(".");
+    result += std::string("next_vi_id:");
+    for (auto iter = next_vi_id.begin(); iter != next_vi_id.end(); ++iter) {
+        result += std::to_string(*iter) + std::string(" ");
+    }
+    result += std::string(".");
+    if (disable_scale_up_down == true) {
+        result += std::string(" true ");
+    } else {
+        result += std::string(" false ");
+    }
+
+    result += std::string("cpu_used:") + std::to_string(vi_cpu_used) + std::string(" ");
+    result += std::string("memory_used:") + std::to_string(vi_memory_used) + std::string(" ");
+    result += std::string("cpu_cost:") + std::to_string(vi_cpu_cost) + std::string(" ");
+    result += std::string("memory_cost:") + std::to_string(vi_memory_cost) + std::string(" ");
+
+    return result;
+}
 
 }

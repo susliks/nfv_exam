@@ -236,4 +236,33 @@ int ServiceChain::get_bandwidth_used()
 //    return 0;
 //}
 
+const std::string ServiceChain::to_string()
+{
+    std::string result;
+    result += std::string("id:") + std::to_string(id) + std::string(" ");
+    result += std::string("length:") + std::to_string(length) + std::string(" ");
+    result += std::string("bandwidth_used(first time):") + std::to_string(bandwidth_used) + std::string(" ");
+
+    result += std::string("vi:");
+    for (int i = 0; i < length; ++i) {
+        result += std::to_string(i) + std::string(":");
+        for (auto iter = vnf_instance[i]->begin(); iter != vnf_instance[i]->end(); ++iter) {
+            result += std::to_string(*iter) + std::string(" ");
+        }
+    }
+
+    return result;
+}
+
+int ServiceChain::get_vi_count()
+{
+    int result(0);
+    for (int i = 0; i < length; ++i) {
+        for (auto iter = vnf_instance[i]->begin(); iter != vnf_instance[i]->end(); ++iter) {
+            result += 1;
+        }
+    }
+    return result;
+}
+
 }

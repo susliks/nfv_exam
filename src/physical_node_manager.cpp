@@ -108,8 +108,8 @@ int PhysicalNodeManager::get_left_bandwidth_statistics(int physical_node_id_1, i
 {
     PhysicalNode *physical_node_1(NULL);
     PhysicalNode *physical_node_2(NULL);
-    if (get_physical_node(physical_node_id_1, physical_node_1) != 0 ||
-            get_physical_node(physical_node_id_2, physical_node_2) != 0) {
+    if (get_physical_node(physical_node_id_1, &physical_node_1) != 0 ||
+            get_physical_node(physical_node_id_2, &physical_node_2) != 0) {
         warning_log("get physical node failed, id = %d & %d", physical_node_id_1, physical_node_id_2);
         return -1;
     }
@@ -126,8 +126,8 @@ int PhysicalNodeManager::get_left_bandwidth_statistics(int physical_node_id_1, i
     bandwidth_left = 0x7fffffff;
     while (parent_id_1 != parent_id_2) {
         hop_count += 2;
-        if (get_physical_node(parent_id_1, physical_node_1) != 0 ||
-                get_physical_node(parent_id_2, physical_node_2) != 0) {
+        if (get_physical_node(parent_id_1, &physical_node_1) != 0 ||
+                get_physical_node(parent_id_2, &physical_node_2) != 0) {
             warning_log("get physical node failed, id = %d & %d", parent_id_1, parent_id_2);
             return -1;
         }
@@ -144,8 +144,8 @@ int PhysicalNodeManager::get_bandwidth_hop_count(int physical_node_id_1, int phy
 {
     PhysicalNode *physical_node_1(NULL);
     PhysicalNode *physical_node_2(NULL);
-    if (get_physical_node(physical_node_id_1, physical_node_1) != 0 ||
-            get_physical_node(physical_node_id_2, physical_node_2) != 0) {
+    if (get_physical_node(physical_node_id_1, &physical_node_1) != 0 ||
+            get_physical_node(physical_node_id_2, &physical_node_2) != 0) {
         warning_log("get physical node failed, id = %d & %d", physical_node_id_1, physical_node_id_2);
         return -1;
     }
@@ -161,8 +161,8 @@ int PhysicalNodeManager::get_bandwidth_hop_count(int physical_node_id_1, int phy
     hop_count = 0;
     while (parent_id_1 != parent_id_2) {
         hop_count += 2;
-        if (get_physical_node(parent_id_1, physical_node_1) != 0 ||
-                get_physical_node(parent_id_2, physical_node_2) != 0) {
+        if (get_physical_node(parent_id_1, &physical_node_1) != 0 ||
+                get_physical_node(parent_id_2, &physical_node_2) != 0) {
             warning_log("get physical node failed, id = %d & %d", parent_id_1, parent_id_2);
             return -1;
         }
@@ -180,8 +180,8 @@ int PhysicalNodeManager::assign_bandwidth(int physical_node_id_1, int physical_n
     PhysicalNode *physical_node_1(NULL);
     PhysicalNode *physical_node_2(NULL);
     while (parent_id_1 != parent_id_2) {
-        if (get_physical_node(parent_id_1, physical_node_1) != 0 ||
-                get_physical_node(parent_id_2, physical_node_2) != 0) {
+        if (get_physical_node(parent_id_1, &physical_node_1) != 0 ||
+                get_physical_node(parent_id_2, &physical_node_2) != 0) {
             warning_log("get physical node failed, id = %d & %d", parent_id_1, parent_id_2);
             return -1;
         }
@@ -206,7 +206,7 @@ int PhysicalNodeManager::assign_bandwidth(int physical_node_id_1, int physical_n
 int PhysicalNodeManager::assign_host_resource(int physical_node_id, int cpu_cost, int memory_cost)
 {
     PhysicalNode *physical_node(NULL);
-    if (get_physical_node(physical_node_id, physical_node) != 0) {
+    if (get_physical_node(physical_node_id, &physical_node) != 0) {
         warning_log("get physical_node failed, id = %d", physical_node_id);
         return -1;
     }
@@ -226,8 +226,8 @@ int PhysicalNodeManager::release_bandwidth(int physical_node_id_1, int physical_
     PhysicalNode *physical_node_1(NULL);
     PhysicalNode *physical_node_2(NULL);
     while (parent_id_1 != parent_id_2) {
-        if (get_physical_node(parent_id_1, physical_node_1) != 0 ||
-                get_physical_node(parent_id_2, physical_node_2) != 0) {
+        if (get_physical_node(parent_id_1, &physical_node_1) != 0 ||
+                get_physical_node(parent_id_2, &physical_node_2) != 0) {
             warning_log("get physical node failed, id = %d & %d", parent_id_1, parent_id_2);
             return -1;
         }
@@ -252,7 +252,7 @@ int PhysicalNodeManager::release_bandwidth(int physical_node_id_1, int physical_
 int PhysicalNodeManager::release_host_resource(int physical_node_id, int cpu_cost, int memory_cost)
 {
     PhysicalNode *physical_node(NULL);
-    if (get_physical_node(physical_node_id, physical_node) != 0) {
+    if (get_physical_node(physical_node_id, &physical_node) != 0) {
         warning_log("get physical_node failed, id = %d", physical_node_id);
         return -1;
     }
@@ -268,7 +268,7 @@ int PhysicalNodeManager::release_host_resource(int physical_node_id, int cpu_cos
 int PhysicalNodeManager::get_cpu_statistics(int pn_id, int &cpu_used, int &cpu)
 {
     PhysicalNode *physical_node(NULL);
-    if (get_physical_node(pn_id, physical_node) != 0) {
+    if (get_physical_node(pn_id, &physical_node) != 0) {
         warning_log("get physical_node failed, id = %d", pn_id);
         return -1;
     }
@@ -282,7 +282,7 @@ int PhysicalNodeManager::get_cpu_statistics(int pn_id, int &cpu_used, int &cpu)
 int PhysicalNodeManager::get_memory_statistics(int pn_id, int &memory_used, int &memory)
 {
     PhysicalNode *physical_node(NULL);
-    if (get_physical_node(pn_id, physical_node) != 0) {
+    if (get_physical_node(pn_id, &physical_node) != 0) {
         warning_log("get physical_node failed, id = %d", pn_id);
         return -1;
     }
@@ -296,7 +296,7 @@ int PhysicalNodeManager::get_memory_statistics(int pn_id, int &memory_used, int 
 int PhysicalNodeManager::get_bandwidth_statistics(int pn_id, int &up_bandwidth_used, int &up_bandwidth)
 {
     PhysicalNode *physical_node(NULL);
-    if (get_physical_node(pn_id, physical_node) != 0) {
+    if (get_physical_node(pn_id, &physical_node) != 0) {
         warning_log("get physical_node failed, id = %d", pn_id);
         return -1;
     }
@@ -427,10 +427,10 @@ int PhysicalNodeManager::calculate_total_resource()
     return 0;
 }
 
-int PhysicalNodeManager::get_physical_node(int node_id, PhysicalNode *physical_node)
+int PhysicalNodeManager::get_physical_node(int node_id, PhysicalNode **physical_node)
 {
     if (this->physical_node.find(node_id) != this->physical_node.end()) {
-        physical_node = this->physical_node[node_id];
+        *physical_node = this->physical_node[node_id];
         return 0;
     } else {
         warning_log("physical_node not found, node_id = %d", node_id);
