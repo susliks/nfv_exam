@@ -490,12 +490,35 @@ int ServiceChainManager::remove_vnf_instance(ServiceChain *chain, int function_i
         return -1;
     }
 
-    //update edge relation
     VnfInstance *vi(NULL), *pre_vi(NULL), *next_vi(NULL);
     if (get_vnf_instance(vi_id, &vi) != 0) {
         warning_log("get vi failed");
         return -1;
     }
+
+    //if h_only: release physical_node resource
+    if (vi->get_disable_scale_up_down() == true) {
+        PhysicalNodeManager *physical_node_manager(NULL);
+        if ((physical_node_manager = PhysicalNodeManager::get_instance()) == NULL) {
+            warning_log("get instance failed");
+            return -1;
+        }
+
+        int cpu_cost = vi->get_cpu_cost();
+        int memory_cost = vi->get_memory_cost();
+        int pn_id = vi->get_location();
+        if (pn_id == -1) {
+            warning_log("unsettled vi, impossible");
+            return -1;
+        }
+
+        if (physical_node_manager->release_host_resource(pn_id, cpu_cost, memory_cost) != 0) {
+            warning_log("release host resource when h_only, remove a vi failed");
+            return -1;
+        }
+    }
+
+    //update edge relation
     if (function_id > 0) {
         for (auto iter = vnf_instance[function_id-1]->begin();
                 iter != vnf_instance[function_id-1]->end(); ++iter) {
