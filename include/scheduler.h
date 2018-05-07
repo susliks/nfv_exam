@@ -112,7 +112,7 @@ public:
     int route(Flow *flow, ServiceChain *chain, bool &resource_enough_flag);
 
     int migration(FlowNode *flow_node, int flow_bandwidth, ServiceChain *chain, bool &resource_enough_flag);
-    int get_all_flow_nodes_in_the_same_vi(FlowNode *flow_node, int flow_bandwidth, std::vector<FlowNodeCandidate> &fn_candidates);
+    int get_all_flow_nodes_in_the_same_vi(FlowNode *flow_node, std::vector<FlowNodeCandidate> &fn_candidates);
     bool place_vnf(ServiceChain *chain, int function_id, std::vector<FlowNodeCandidate> &fn_candidates, 
         int l, int r, VnfInstance *located_vi);
     int recover_to_pre_located_vi(std::vector<FlowNodeCandidate> &fn_candidates, int l, int r, VnfInstance *located_vi);

@@ -29,6 +29,10 @@ public:
     int set_bandwidth_used(int bandwidth_used);
     int get_bandwidth_used();
 
+    const std::string to_string();
+
+    int get_vi_count();
+
 
 
 private:

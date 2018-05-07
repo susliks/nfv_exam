@@ -33,8 +33,8 @@ public:
     int set_cpu_enlarge_factor(int cpu_enlarge_factor);
     int init();
 
-    int get_service_chain(int chain_id, ServiceChain *service_chain);
-    int get_vnf_instance(int vi_id, VnfInstance *vnf_instance);
+    int get_service_chain(int chain_id, ServiceChain **service_chain);
+    int get_vnf_instance(int vi_id, VnfInstance **vnf_instance);
 
     int remove_a_flow_from_a_chain(int flow_id, int chain_id);
     int place_first_flow_on_an_unsettled_chain(int flow_id, int chain_id);
@@ -50,7 +50,7 @@ public:
     int load_vi_template(); //todo:hard code
     int get_vi_template(int fn_cpu_cost, int fn_memory_cost, int &vi_cpu, int &vi_memory);
 
-    int get_first_vnf_instance(int chain_id, int func_id, VnfInstance *vnf_instance);
+    int get_first_vnf_instance(int chain_id, int func_id, VnfInstance **vnf_instance);
 
     int add_vnf_instance(ServiceChain *chain, int function_id, int vi_id);
     int remove_vnf_instance(ServiceChain *chain, int function_id, int vi_id);

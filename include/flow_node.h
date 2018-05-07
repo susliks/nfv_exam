@@ -41,6 +41,8 @@ public:
 
     int adjust_cost(int new_cpu_cost, int new_memory_cost);
 
+    const std::string to_string();
+
 
 private:
     int id;

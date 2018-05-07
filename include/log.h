@@ -8,6 +8,9 @@
 #ifndef LOG_H
 #define LOG_H
 
+//#define DEBUG
+#define NOTICE
+
 #define filename(x) strrchr(x,'/')?strrchr(x,'/')+1:x   //only select the filename from __FILE__
 
 #include <string>
@@ -22,9 +25,18 @@
             __FUNCTION__, \
             __LINE__, \
             ##args)
-
+#ifdef DEBUG
 #define debug_log(fmt, args...) UNIT_LOG("DEBUG", fmt, ##args)
 #define notice_log(fmt, args...) UNIT_LOG("NOTICE", fmt, ##args)
+#else
+#define debug_log(fmt, args...) ;
+#ifdef NOTICE
+#define notice_log(fmt, args...) UNIT_LOG("NOTICE", fmt, ##args)
+#else
+#define notice_log(fmt, args...) ;
+#endif
+#endif
+
 #define warning_log(fmt, args...) UNIT_LOG("WARNING", fmt, ##args)
 #define fatal_log(fmt, args...) UNIT_LOG("FATAL", fmt, ##args)
 

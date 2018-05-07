@@ -31,6 +31,8 @@ public:
     
     int aging();
 
+    const std::string to_string();
+
 
 private:
     int id;

@@ -36,6 +36,8 @@ public:
     int remove();
     bool is_settled();
 
+    const std::string to_string();
+
 
 private:
     int id;

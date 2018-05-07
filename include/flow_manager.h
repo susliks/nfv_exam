@@ -18,9 +18,10 @@ public:
     static FlowManager *get_instance();
     int init();
 
-    int get_flow(int flow_id, Flow *flow);
-    int get_flow_node(int flow_node_id, FlowNode *flow_node);
-    int get_flow_node(int flow_id, int func_id, FlowNode *flow_node);
+    //int get_flow(int flow_id, Flow *flow);
+    int get_flow(int flow_id, Flow **flow);
+    int get_flow_node(int flow_node_id, FlowNode **flow_node);
+    int get_flow_node(int flow_id, int func_id, FlowNode **flow_node);
 
     int create_a_flow(int length, int chain_id, int lifetime, int flow_bandwidth, 
             const std::vector<int> &flow_node_cpu_cost, const std::vector<int> &flow_node_memory_cost, int &flow_id);
