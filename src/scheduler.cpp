@@ -616,6 +616,7 @@ int Scheduler::settle_a_flow_v(FlowNode *flow_node, VnfInstance *vnf_instance)
         int cpu_cost = flow_node->get_cpu_cost();
         int memory_cost = flow_node->get_memory_cost();
 
+debug_log("assign_vi_resource vi_id=%d, cpu_cost=%d, memory_cost=%d", vi_id, cpu_cost, memory_cost);
         if (service_chain_manager->assign_vi_resource(vi_id, cpu_cost, memory_cost) != 0) {
             warning_log("assign resource failed");
             return -1;
@@ -1031,6 +1032,7 @@ int Scheduler::remove_a_flow_v(FlowNode *flow_node, VnfInstance *vnf_instance)
         int cpu_cost = flow_node->get_cpu_cost();
         int memory_cost = flow_node->get_memory_cost();
 
+debug_log("release_vi_resource vi_id=%d, cpu_cost=%d, memory_cost=%d", vi_id, cpu_cost, memory_cost);
         if (service_chain_manager->release_vi_resource(vi_id, cpu_cost, memory_cost) != 0) {
             warning_log("release resource failed");
             return -1;
@@ -2397,6 +2399,11 @@ int Scheduler::handle_req_v_only(const Req &req, bool &req_result)
                 return -1;
             }
         }
+
+        if (remove_empty_vnf_instance(chain->get_id()) != 0) {
+            warning_log("remove_empty_vnf_instance failed");
+            return -1;
+        }
     } else if (req.get_req_type() == std::string("new") && req.get_chain_id() != -1) {
 
         int flow_id(-1);
@@ -2432,16 +2439,15 @@ int Scheduler::handle_req_v_only(const Req &req, bool &req_result)
             }
         }
 
+        if (remove_empty_vnf_instance(chain->get_id()) != 0) {
+            warning_log("remove_empty_vnf_instance failed");
+            return -1;
+        }
     } else {
         warning_log("illegal situation");
         return -1;
     }
     
-    if (remove_empty_vnf_instance(chain->get_id()) != 0) {
-        warning_log("remove_empty_vnf_instance failed");
-        return -1;
-    }
-
     return 0;
 }
 
@@ -2601,6 +2607,117 @@ int Scheduler::handle_req_h_only(const Req &req, bool &req_result)
     return 0;
 }
 
+int Scheduler::h_only_scale_out(FlowNode *flow_node, ServiceChain *chain, int flow_bandwidth, bool &resource_enough_flag)
+{
+    notice_log("enter h_only_scale_out");
+    int function_id = flow_node->get_function_id();
+
+    ServiceChainManager *service_chain_manager(NULL);
+    if ((service_chain_manager = ServiceChainManager::get_instance()) == NULL) {
+        warning_log("get instance failed");
+        return -1;
+    }
+
+    int vi_id(-1), pre_vi_id(-1);
+    VnfInstance *vi(NULL), *pre_vi(NULL);
+    //get pre_vi
+    if (flow_node->has_pre_node() && flow_node->get_pre_node()->is_settled()) {
+        pre_vi_id = flow_node->get_pre_node()->get_location();
+
+        if (service_chain_manager->get_vnf_instance(pre_vi_id, &pre_vi) != 0) {
+            warning_log("get pre vi failed");
+            return -1;
+        }
+    } else {
+        warning_log("pre_flow_node unsettled, impossible");
+        return -1;
+    }
+
+    //create a new vi and add to chain
+    if (service_chain_manager->create_a_vnf_instance(vi_id) != 0) {
+        warning_log("create vi failed");
+        return -1;
+    }
+    if (service_chain_manager->add_vnf_instance(chain, function_id, vi_id) != 0) {
+        warning_log("add vnf instance failed");
+        return -1;
+    }
+    if (service_chain_manager->get_vnf_instance(vi_id, &vi) != 0) {
+        warning_log("get_vnf_instance failed");
+        return -1;
+    }
+    vi->init(vi_id, -1, true, 0, 0, 0, 0);
+
+    //set vi cost 
+    int fn_cpu_cost(0), fn_memory_cost(0);
+    int vi_cpu_cost(0), vi_memory_cost(0);
+    if (service_chain_manager->get_vi_template(fn_cpu_cost, fn_memory_cost, vi_cpu_cost, vi_memory_cost) != 0) {
+        warning_log("get vi cost failed");
+        return -1;
+    }
+    if (vi->set_vi_resource_cost(vi_cpu_cost, vi_memory_cost) != 0) {
+        warning_log("set_vi_resource_cost failed");
+        return -1;
+    }
+    if (vi->set_vi_resource_used(fn_cpu_cost, fn_memory_cost) != 0) {
+        warning_log("set_vi_resource_used failed");
+        return -1;
+    }
+
+    //settle flow_node into vi
+    if (flow_node->settle(vi->get_id()) != 0) {
+        warning_log("flow node settle failed");
+        return -1;
+    }
+    if (vi->add_settled_flow_node(flow_node->get_id()) != 0) {
+        warning_log("vi add settled flow node failed");
+        return -1;
+    }
+
+    //get server candidates
+    std::vector<ServerCandidate> server_candidates;
+    if (get_not_related_servers(chain, server_candidates) != 0) {
+        warning_log("get_not_related_servers failed");
+        return -1;
+    }
+    std::sort(server_candidates.begin(), server_candidates.begin() + server_candidates.size());
+
+    int server_candidates_size = server_candidates.size();
+    for (int i = 0; i < server_candidates_size; ++i) {
+        if (settle_a_vnf_instance(vi, server_candidates[i].physical_node_id, flow_bandwidth, pre_vi, NULL) != 0) {
+            warning_log("settle_a_vnf_instance failed");
+            return -1;
+        }
+        bool local_enough_flag = true;
+        if (calculate_a_vnf_instance_cost(vi, pre_vi, NULL, local_enough_flag) != 0) {
+            warning_log("calculate_a_vnf_instance_cost failed");
+            return -1;
+        }
+        if (local_enough_flag == true) {
+            resource_enough_flag = true;
+            return 0;
+        } else {
+            if (remove_a_vnf_instance(vi, flow_bandwidth, pre_vi, NULL) != 0) {
+                warning_log("remove_a_vnf_instance failed");
+                return -1;
+            }
+        }
+    }
+
+    resource_enough_flag = false;
+    if (flow_node->remove() != 0) {
+        warning_log("flow_node remove failed");
+        return -1;
+    }
+    if (vi->remove_settled_flow_node(flow_node->get_id()) != 0) {
+        warning_log("vi add settled flow node failed");
+        return -1;
+    }
+
+    return 0;
+}
+
+
 int Scheduler::h_only_greedy_arrange(Flow *flow, ServiceChain *chain, bool &req_result)
 {
     FlowManager *flow_manager(NULL);
@@ -2654,9 +2771,10 @@ int Scheduler::h_only_greedy_arrange(Flow *flow, ServiceChain *chain, bool &req_
         }
 
         if (local_found == false) { //scale-out
-
-            //TODO:
-
+            if (h_only_scale_out(flow_node, chain, flow_bandwidth, local_found) != 0) {
+                warning_log("h_only_scale_out failed");
+                return -1;
+            }
         }
 
         if (local_found == false) {

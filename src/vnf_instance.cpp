@@ -25,7 +25,8 @@ int VnfInstance::set_vi_resource_used(int cpu_used, int memory_used)
 {
     if (this->disable_scale_up_down == true) {
         if (cpu_used > this->vi_cpu_cost || memory_used > this->vi_memory_cost) {
-            warning_log("illegal set, cpu_used=%d, memory_used=%d", cpu_used, memory_used);
+            warning_log("illegal set, cpu_used=%d, memory_used=%d, vi_cpu=%d, vi_memory=%d", 
+                    cpu_used, memory_used, this->vi_cpu_cost, this->vi_memory_cost);
             return -1;
         }
     }

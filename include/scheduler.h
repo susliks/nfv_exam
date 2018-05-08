@@ -135,24 +135,7 @@ public:
     int h_only_greedy_arrange(Flow *flow, ServiceChain *chain, bool &req_result);
     int h_only_get_vi_candidates_on_chain_of_function_i(ServiceChain *chain, int function_id, 
             std::vector<VnfInstanceCandidate> &vi_candidates);
-
-    //int h_only_settle_a_flow_node(FlowNode *flow_node, VnfInstance *vnf_instance, int bandwidth_cost);
-    //int h_only_settle_a_flow_v(FlowNode *flow_node, VnfInstance *vnf_instance);
-    //int h_only_settle_a_flow_link(FlowNode *flow_node_1, FlowNode *flow_node_2, int bandwidth_cost);
-
-    //int h_only_calculate_a_flow_node_cost(FlowNode *flow_node, bool &enough_flag, double &cost_result);
-    //int h_only_calculate_a_flow_v_cost(FlowNode *flow_node, bool &enough_flag, double &host_cost_result);
-    //int h_only_calculate_a_flow_node_links_cost(FlowNode *flow_node, bool &enough_flag, double &bandwidth_cost);
-    //int h_only_calculate_a_flow_link_cost(FlowNode *flow_node_1, FlowNode *flow_node_2, bool &enough_flag, int &delta_bandwidth);
-
-    //int h_only_remove_a_flow_node(FlowNode *flow_node, VnfInstance *vnf_instance, int bandwidth_cost);
-    //int h_only_remove_a_flow_node(FlowNode *flow_node, int vnf_instance_id, int bandwidth_cost);
-    //int h_only_remove_a_flow_v(FlowNode *flow_node, VnfInstance *vnf_instance);
-    //int h_only_remove_a_flow_link(FlowNode *flow_node_1, FlowNode *flow_node_2, int bandwidth_cost);
-
-    //int h_only_release_flow_when_rejected(Flow *flow);
-
-
+    int h_only_scale_out(FlowNode *flow_node, ServiceChain *chain, int flow_bandwidth, bool &resource_enough_flag);
 
 
 private:

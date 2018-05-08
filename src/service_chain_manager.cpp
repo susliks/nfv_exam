@@ -280,11 +280,6 @@ int ServiceChainManager::place_first_flow_on_an_unsettled_chain(int flow_id, int
         int cpu_used = flow_node->get_cpu_cost();
         int memory_used = flow_node->get_memory_cost();
 
-        if (vnf_instance->set_vi_resource_used(cpu_used, memory_used) != 0) {
-            warning_log("set vi first resourced used failed");
-            return -1;
-        }
-
         //handle h only
         if (vnf_instance->get_disable_scale_up_down() == true) {
             int cpu_cost(0);
@@ -297,6 +292,11 @@ int ServiceChainManager::place_first_flow_on_an_unsettled_chain(int flow_id, int
                 warning_log("set vi resource cost failed");
                 return -1;
             }
+        }
+
+        if (vnf_instance->set_vi_resource_used(cpu_used, memory_used) != 0) {
+            warning_log("set vi first resourced used failed");
+            return -1;
         }
     }
 
@@ -498,7 +498,9 @@ int ServiceChainManager::remove_vnf_instance(ServiceChain *chain, int function_i
     }
 
     //if h_only: release physical_node resource
-    if (vi->get_disable_scale_up_down() == true) {
+    //TODO: not sure yes or no
+    //if (vi->get_disable_scale_up_down() == true) {
+    if (vi->get_disable_scale_up_down() == true && vi->is_settled()) {
         PhysicalNodeManager *physical_node_manager(NULL);
         if ((physical_node_manager = PhysicalNodeManager::get_instance()) == NULL) {
             warning_log("get instance failed");
