@@ -11,6 +11,7 @@ CMakeFiles/nfv_exam.dir/src/flow_manager.cpp.o: ../include/flow_manager.h
 CMakeFiles/nfv_exam.dir/src/flow_manager.cpp.o: ../include/flow_node.h
 CMakeFiles/nfv_exam.dir/src/flow_manager.cpp.o: ../include/log.h
 CMakeFiles/nfv_exam.dir/src/flow_manager.cpp.o: ../include/physical_node.h
+CMakeFiles/nfv_exam.dir/src/flow_manager.cpp.o: ../include/physical_node_manager.h
 CMakeFiles/nfv_exam.dir/src/flow_manager.cpp.o: ../include/service_chain.h
 CMakeFiles/nfv_exam.dir/src/flow_manager.cpp.o: ../include/service_chain_manager.h
 CMakeFiles/nfv_exam.dir/src/flow_manager.cpp.o: ../include/vnf_instance.h
@@ -86,6 +87,7 @@ CMakeFiles/nfv_exam.dir/src/service_chain_manager.cpp.o: ../include/flow_manager
 CMakeFiles/nfv_exam.dir/src/service_chain_manager.cpp.o: ../include/flow_node.h
 CMakeFiles/nfv_exam.dir/src/service_chain_manager.cpp.o: ../include/log.h
 CMakeFiles/nfv_exam.dir/src/service_chain_manager.cpp.o: ../include/physical_node.h
+CMakeFiles/nfv_exam.dir/src/service_chain_manager.cpp.o: ../include/physical_node_manager.h
 CMakeFiles/nfv_exam.dir/src/service_chain_manager.cpp.o: ../include/service_chain.h
 CMakeFiles/nfv_exam.dir/src/service_chain_manager.cpp.o: ../include/service_chain_manager.h
 CMakeFiles/nfv_exam.dir/src/service_chain_manager.cpp.o: ../include/vnf_instance.h

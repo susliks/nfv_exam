@@ -149,6 +149,16 @@ bool VnfInstance::get_disable_scale_up_down()
     return this->disable_scale_up_down;
 }
 
+int VnfInstance::get_cpu_used()
+{
+    return this->vi_cpu_used;
+}
+
+int VnfInstance::get_memory_used()
+{
+    return this->vi_memory_used;
+}
+
 int VnfInstance::get_cpu_cost()
 {
     return this->vi_cpu_cost;
@@ -219,5 +229,33 @@ const std::string VnfInstance::to_string()
 
     return result;
 }
+
+int VnfInstance::assign_vi_resource(int cpu_used, int memory_used)
+{
+    this->vi_cpu_used += cpu_used;
+    this->vi_memory_used += memory_used;
+    return 0;
+}
+
+int VnfInstance::release_vi_resource(int cpu_used, int memory_used)
+{
+    if (cpu_used > this->vi_cpu_used) {
+        warning_log("release more than used. vi_id = %d, cpu_used = %d, want to release cpu = %d",
+                this->id, this->vi_cpu_used, cpu_used);
+        return -1;
+    }
+    if (memory_used > this->vi_memory_used) {
+        warning_log("release more than used. vi_id = %d, memory_used = %d, want to release memory = %d",
+                this->id, this->vi_memory_used, memory_used);
+        return -1;
+    }
+    this->vi_cpu_used -= cpu_used;
+    this->vi_memory_used -= memory_used;
+    return 0;
+}
+
+
+
+
 
 }

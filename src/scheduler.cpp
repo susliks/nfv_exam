@@ -2355,15 +2355,14 @@ int Scheduler::handle_req_v_only(const Req &req, bool &req_result)
     }
 
     req_result = false;
+    Flow *flow(NULL);
+    ServiceChain *chain(NULL);
     if (req.get_req_type() == std::string("new") && req.get_chain_id() == -1) {
         if (new_flow_on_new_chain_arrange(req, req_result) != 0) {
             warning_log("new flow on new chain arrange failed");
             return -1;
         }
     } else if (req.get_req_type() == std::string("adjust")) {
-
-        Flow *flow(NULL);
-        ServiceChain *chain(NULL);
 
         if (flow_manager->get_flow(req.get_flow_id(), &flow) != 0 ) {
             warning_log("get flow failed");
@@ -2374,6 +2373,7 @@ int Scheduler::handle_req_v_only(const Req &req, bool &req_result)
             warning_log("save_pre_flow_state failed");
             return -1;
         }
+        bool resource_enough_flag(false);
         if (adjust_flow_resource(flow, req, resource_enough_flag) != 0) {
             warning_log("adjust_flow_resource failed");
             return -1;
@@ -2397,10 +2397,8 @@ int Scheduler::handle_req_v_only(const Req &req, bool &req_result)
                 return -1;
             }
         }
-    } else if (req.get_req_type() == std::string("new") && req.get_chain_id != -1) {
+    } else if (req.get_req_type() == std::string("new") && req.get_chain_id() != -1) {
 
-        Flow *flow(NULL);
-        ServiceChain *chain(NULL);
         int flow_id(-1);
 
         if (create_new_flow(req.get_flow_template_id(), req.get_chain_id(), req.get_lifetime(), flow_id) != 0) {
@@ -2467,6 +2465,7 @@ int Scheduler::v_only_place_flow_on_linear_chain(Flow *flow, ServiceChain *chain
     int flow_length = flow->get_length();
     int flow_bandwidth = flow->get_flow_bandwidth();
     FlowNode *flow_node(NULL);
+    VnfInstance *vi(NULL);
     for (int i = 0; i < flow_length && req_result == true; ++i) {
 
         if (flow_manager->get_flow_node(flow->get_id(), i, &flow_node) != 0) {
@@ -2531,6 +2530,7 @@ int Scheduler::handle_req_h_only(const Req &req, bool &req_result)
                 warning_log("save_pre_flow_state failed");
                 return -1;
             }
+            bool resource_enough_flag(false);
             if (adjust_flow_resource(flow, req, resource_enough_flag) != 0) {
                 warning_log("adjust_flow_resource failed");
                 return -1;
@@ -2591,11 +2591,11 @@ int Scheduler::handle_req_h_only(const Req &req, bool &req_result)
                 return -1;
             }
         }
-    }
 
-    if (remove_empty_vnf_instance(chain->get_id()) != 0) {
-        warning_log("remove_empty_vnf_instance failed");
-        return -1;
+        if (remove_empty_vnf_instance(chain->get_id()) != 0) {
+            warning_log("remove_empty_vnf_instance failed");
+            return -1;
+        }
     }
 
     return 0;

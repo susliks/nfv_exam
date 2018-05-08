@@ -10,6 +10,7 @@
 #include "vnf_instance.h"
 #include "service_chain.h"
 #include "flow_manager.h"
+#include "physical_node_manager.h"
 
 namespace nfv_exam {
 
@@ -56,6 +57,11 @@ public:
     int remove_vnf_instance(ServiceChain *chain, int function_id, int vi_id);
     int get_related_pn_id(ServiceChain *chain, std::set<int> &pn_id_set);
 
+    int assign_vi_resource(int vi_id, int cpu_used, int memory_used);
+    int release_vi_resource(int vi_id, int cpu_used, int memory_used);
+
+    int get_cpu_statistics(int vi_id, int &cpu_used, int &cpu);
+    int get_memory_statistics(int vi_id, int &memory_used, int &memory);
 
 private:
 

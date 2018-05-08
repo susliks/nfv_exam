@@ -397,7 +397,8 @@ int ServiceChainManager::load_vi_template()
     vi_template.memory = 8000;
     this->vi_template.push_back(vi_template);
     vi_template.cpu = 8 * this->cpu_enlarge_factor;
-    vi_template.memory = 32000;
+    //vi_template.memory = 32000;
+    vi_template.memory = 24000;
     this->vi_template.push_back(vi_template);
     sort(this->vi_template.begin(), this->vi_template.begin() + this->vi_template.size());
 
@@ -590,6 +591,66 @@ int ServiceChainManager::get_related_pn_id(ServiceChain *chain, std::set<int> &p
             }
         }
     }
+
+    return 0;
+}
+
+
+int ServiceChainManager::assign_vi_resource(int vi_id, int cpu_used, int memory_used)
+{
+    VnfInstance *vi(NULL);
+    if (get_vnf_instance(vi_id, &vi) != 0) {
+        warning_log("get vi failed");
+        return -1;
+    }
+
+    if (vi->assign_vi_resource(cpu_used, memory_used) != 0) {
+        warning_log("vi assign_vi_resource failed");
+        return -1;
+    }
+
+    return 0;
+}
+
+int ServiceChainManager::release_vi_resource(int vi_id, int cpu_used, int memory_used)
+{
+    VnfInstance *vi(NULL);
+    if (get_vnf_instance(vi_id, &vi) != 0) {
+        warning_log("get vi failed");
+        return -1;
+    }
+
+    if (vi->release_vi_resource(cpu_used, memory_used) != 0) {
+        warning_log("vi release_vi_resource failed");
+        return -1;
+    }
+
+    return 0;
+}
+
+int ServiceChainManager::get_cpu_statistics(int vi_id, int &cpu_used, int &cpu)
+{
+    VnfInstance *vi(NULL);
+    if (get_vnf_instance(vi_id, &vi) != 0) {
+        warning_log("get vi failed");
+        return -1;
+    }
+
+    cpu_used = vi->get_cpu_used();
+    cpu = vi->get_cpu_cost();
+
+    return 0;
+}
+int ServiceChainManager::get_memory_statistics(int vi_id, int &memory_used, int &memory)
+{
+    VnfInstance *vi(NULL);
+    if (get_vnf_instance(vi_id, &vi) != 0) {
+        warning_log("get vi failed");
+        return -1;
+    }
+
+    memory_used = vi->get_memory_used();
+    memory = vi->get_memory_cost();
 
     return 0;
 }

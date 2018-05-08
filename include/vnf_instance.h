@@ -20,6 +20,8 @@ public:
     int remove_next_vi_id(int next_vi_id);
 
     int get_id();
+    int get_cpu_used();
+    int get_memory_used();
     int get_cpu_cost();
     int get_memory_cost();
     int get_location();
@@ -35,6 +37,11 @@ public:
     int settle(int pn_id);
     int remove();
     bool is_settled();
+
+    int assign_vi_resource(int cpu_used, int memory_used);
+    int release_vi_resource(int cpu_used, int memory_used);
+
+    
 
     const std::string to_string();
 

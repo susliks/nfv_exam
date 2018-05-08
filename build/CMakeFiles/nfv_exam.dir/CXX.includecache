@@ -117,6 +117,8 @@ service_chain.h
 ../include/service_chain.h
 flow_manager.h
 ../include/flow_manager.h
+physical_node_manager.h
+../include/physical_node_manager.h
 
 ../include/vnf_instance.h
 vector

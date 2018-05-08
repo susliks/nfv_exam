@@ -12,6 +12,7 @@ CMakeFiles/nfv_exam.dir/src/flow_manager.cpp.o
  ../include/flow_node.h
  ../include/log.h
  ../include/physical_node.h
+ ../include/physical_node_manager.h
  ../include/service_chain.h
  ../include/service_chain_manager.h
  ../include/vnf_instance.h
@@ -87,6 +88,7 @@ CMakeFiles/nfv_exam.dir/src/service_chain_manager.cpp.o
  ../include/flow_node.h
  ../include/log.h
  ../include/physical_node.h
+ ../include/physical_node_manager.h
  ../include/service_chain.h
  ../include/service_chain_manager.h
  ../include/vnf_instance.h

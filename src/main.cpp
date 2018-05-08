@@ -36,8 +36,8 @@ const std::string physical_node_cpu_evaluation_file_path = "./data/cpu_evaluatio
 const std::string physical_node_memory_evaluation_file_path = "./data/memory_evaluation";
 const std::string physical_node_bandwidth_evaluation_file_path = "./data/bandwidth_evaluation";
 const int physical_node_evaluate_frequency = 10;
-const int new_req_procedure_count = 6;
-const int adjust_req_procedure_count = 6;
+const int new_req_procedure_count = 12;
+const int adjust_req_procedure_count = 0;
 
 const int exam_lifetime = 36000;
 
