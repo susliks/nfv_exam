@@ -47,6 +47,12 @@ int ReqManager::set_req_evaluation_file_path(const std::string &file_path)
     return 0;
 }
 
+int ReqManager::set_final_result_file_path(const std::string &file_path)
+{
+    this->final_result_file_path = file_path;
+    return 0;
+}
+
 int ReqManager::set_generate_procedure_count(int new_req_procedure_count, int adjust_req_procedure_count)
 {
     this->new_req_procedure_count = new_req_procedure_count;
@@ -71,9 +77,8 @@ int ReqManager::init()
         return -1;
     }
 
+    this->fix_template_id =-1;
 
-    //todo
-    //
     return 0;
 }
 
@@ -310,7 +315,11 @@ int ReqManager::generate_req_info(const std::string &req_type, Req &req)
         req.set_flow_template_id(get_random_template_id(flow_length));
     } else if (req_type == "new") {
         req.set_req_type(req_type);
-        req.set_flow_template_id(get_random_template_id());
+        if (this->fix_template_id == -1) { //for convinence of running experiment
+            req.set_flow_template_id(get_random_template_id());
+        } else {
+            req.set_flow_template_id(this->fix_template_id);
+        }
         req.set_length(this->flow_template[req.get_flow_template_id()]->length);
         int chain_id(-1);
         if (decide_chain_id(req.get_length(), chain_id) != 0) {
@@ -325,7 +334,6 @@ int ReqManager::generate_req_info(const std::string &req_type, Req &req)
     }
 
     req.set_lifetime(ceil(random_exponential((double)1/3600)));
-    //TODO:debug!
     //req.set_lifetime(1000000);
     notice_log("generate req info done");
 
@@ -466,6 +474,15 @@ int ReqManager::save_evaluation()
     }
 
     fclose(out_file);
+
+    //save final result
+    if ((out_file = fopen(this->final_result_file_path.c_str(), "a")) == NULL) {
+        warning_log("open req evaluation file failed");
+        return -1;
+    }
+    fprintf(out_file, "accept ratio\n%f\n", (double)this->accepted_req_count / this->total_req_count);
+    fclose(out_file);
+
     return 0;
 }
 
@@ -485,6 +502,10 @@ int ReqManager::get_template_info(int flow_template_id, int &length, std::vector
     return 0;
 }
 
-
+int ReqManager::set_fix_template_id(int template_id)
+{
+    this->fix_template_id = template_id;
+    return 0;
+}
 
 }

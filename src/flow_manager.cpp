@@ -36,21 +36,6 @@ std::map<int, Flow*> &FlowManager::get_flow_pool() //only for Scheduler::flow_ag
     return this->flow_pool;
 }
 
-//int FlowManager::get_flow(int flow_id, Flow *flow)
-//{
-//    if (flow_pool.find(flow_id) != flow_pool.end()) {
-//        flow = flow_pool[flow_id];
-//        if (flow == NULL) {
-//            warning_log("get flow failed, NULL ptr");
-//            return -1;
-//        }
-//        return 0;
-//    } else {
-//        warning_log("get flow failed, flow_id = %d", flow_id);
-//        return -1;
-//    }
-//}
-
 int FlowManager::get_flow(int flow_id, Flow **flow)
 {
     if (flow_pool.find(flow_id) != flow_pool.end()) {
@@ -110,11 +95,30 @@ int FlowManager::set_flow_evaluation_file_path(const std::string &file_path)
     return 0;
 }
 
+int FlowManager::set_flow_cpu_evaluation_file_path(const std::string &file_path)
+{
+    this->flow_cpu_evaluation_file_path = file_path;
+    return 0;
+}
+
+int FlowManager::set_final_result_file_path(const std::string &file_path)
+{
+    this->final_result_file_path = file_path;
+    return 0;
+}
+
+int FlowManager::set_flow_memory_evaluation_file_path(const std::string &file_path)
+{
+    this->flow_memory_evaluation_file_path = file_path;
+    return 0;
+}
+
 int FlowManager::save_evaluation()
 {
+    //throughput & flow_count
     FILE *out_file(NULL);
     if ((out_file = fopen(this->flow_evaluation_file_path.c_str(), "w")) == NULL) {
-        warning_log("open cpu evaluation file failed");
+        warning_log("open flow evaluation file failed");
         return -1;
     }
 
@@ -129,11 +133,70 @@ int FlowManager::save_evaluation()
     }
 
     fclose(out_file);
+
+    //cpu
+    if ((out_file = fopen(this->flow_cpu_evaluation_file_path.c_str(), "w")) == NULL) {
+        warning_log("open flow cpu evaluation file failed");
+        return -1;
+    }
+
+    int cpu_ratio_size = this->total_cpu_used_ratio_history.size();
+    for (int i = 0; i < cpu_ratio_size; ++i) {
+        fprintf(out_file, "%f\n", this->total_cpu_used_ratio_history[i]);
+    }
+
+    fclose(out_file);
+
+    //memory
+    if ((out_file = fopen(this->flow_memory_evaluation_file_path.c_str(), "w")) == NULL) {
+        warning_log("open flow memory evaluation file failed");
+        return -1;
+    }
+
+    int memory_ratio_size = this->total_memory_used_ratio_history.size();
+    for (int i = 0; i < memory_ratio_size; ++i) {
+        fprintf(out_file, "%f\n", this->total_memory_used_ratio_history[i]);
+    }
+
+    fclose(out_file);
+
+    return 0;
+}
+
+int FlowManager::save_final_result()
+{
+    FILE *out_file(NULL);
+    if ((out_file = fopen(this->final_result_file_path.c_str(), "a")) == NULL) {
+        warning_log("open final result file failed");
+        return -1;
+    }
+
+    int cpu_ratio_size = this->total_cpu_used_ratio_history.size();
+    double cpu_sum(0);
+    int cpu_count = 0;
+    for (int i = cpu_ratio_size/2; i < cpu_ratio_size; ++i) {
+        cpu_sum += this->total_cpu_used_ratio_history[i];
+        cpu_count += 1;
+    }
+    fprintf(out_file, "flow_cpu_ratio\n%f\n", cpu_sum / cpu_count);
+
+    int memory_ratio_size = this->total_memory_used_ratio_history.size();
+    double memory_sum(0);
+    int memory_count = 0;
+    for (int i = memory_ratio_size/2; i < memory_ratio_size; ++i) {
+        memory_sum += this->total_memory_used_ratio_history[i];
+        memory_count += 1;
+    }
+    fprintf(out_file, "flow_memory_ratio\n%f\n", memory_sum / memory_count);
+
+    fclose(out_file);
+
     return 0;
 }
 
 int FlowManager::update_evaluation()
 {
+    //update bandwidth(throughput) & flow_count
     int flow_count = this->flow_pool.size();
     int throughput = 0;
     for (auto iter = flow_pool.begin(); iter != flow_pool.end(); ++iter) {
@@ -143,6 +206,14 @@ int FlowManager::update_evaluation()
     this->active_flow_count.push_back(flow_count);
     this->throughput_record.push_back(throughput);
 
+    //update cpu
+    int total_cpu_used = get_flow_total_cpu_used();
+    total_cpu_used_ratio_history.push_back((double)total_cpu_used / total_cpu);
+
+    //update memory
+    int total_memory_used = get_flow_total_memory_used();
+    total_memory_used_ratio_history.push_back((double)total_memory_used / total_memory);
+
     return 0;
 }
 
@@ -150,6 +221,14 @@ int FlowManager::init()
 {
     this->flow_id_count = 0;
     this->flow_node_id_count = 0;
+
+    PhysicalNodeManager *physical_node_manager(NULL);
+    if ((physical_node_manager = PhysicalNodeManager::get_instance()) == NULL) {
+        warning_log("get instance failed");
+        return -1;
+    }
+    this->total_cpu = physical_node_manager->get_total_cpu();
+    this->total_memory = physical_node_manager->get_total_memory();
 
     return 0;
 }
@@ -209,7 +288,7 @@ int FlowManager::delete_a_flow(int flow_id)
         return -1;
     }
     
-    //TODO: here has a bug. need to judge when should delete a chain. which vnf_instance
+    //FIXED: here has a bug. need to judge when should delete a chain. which vnf_instance
 
     int chain_id = this->flow_pool[flow_id]->get_chain_id();
     if (chain_id != -1) {
@@ -252,16 +331,25 @@ int FlowManager::get_flow_node(int flow_id, int func_id, FlowNode **flow_node)
     return 0;
 }
 
-//int FlowManager::flow_aging()
-//{
-//    for (auto iter = this->flow_pool.begin(); iter != this->flow_pool.end() ++iter) {
-//        if ((*iter)->aging() == 1) { //means lifetime_left == 0
-//
-//
-//        }
-//    }
-//    return 0;
-//}
+int FlowManager::get_flow_total_cpu_used()
+{
+    int result = 0;
+    for (auto iter = flow_node_pool.begin(); iter != flow_node_pool.end(); ++iter) {
+        result += iter->second->get_cpu_cost();
+    }
+    return result;
+}
+
+int FlowManager::get_flow_total_memory_used()
+{
+    int result = 0;
+    for (auto iter = flow_node_pool.begin(); iter != flow_node_pool.end(); ++iter) {
+        result += iter->second->get_memory_cost();
+    }
+    return result;
+}
+
+
 
 
 }

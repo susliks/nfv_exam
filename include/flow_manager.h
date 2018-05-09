@@ -28,20 +28,22 @@ public:
     int create_a_flow_node(int &flow_node_id);
     int delete_a_flow(int flow_id);
 
-
-    //int flow_aging();
-
     std::map<int, Flow*> &get_flow_pool(); //only for Scheduler::flow_aging()
-    
-
 
     int random_pick_an_active_flow_id(int &flow_id, int &flow_length);
 
     int set_flow_evaluation_file_path(const std::string &file_path);
+    int set_flow_cpu_evaluation_file_path(const std::string &file_path);
+    int set_flow_memory_evaluation_file_path(const std::string &file_path);
+    int set_final_result_file_path(const std::string &file_path);
     int update_evaluation();
     int save_evaluation();
 
+    int save_final_result();
+
 private:
+    int get_flow_total_cpu_used();
+    int get_flow_total_memory_used();
 
 private:
     std::map<int, Flow*> flow_pool;
@@ -50,10 +52,17 @@ private:
     int flow_node_id_count;
 
     std::string flow_evaluation_file_path;
+    std::string flow_cpu_evaluation_file_path;
+    std::string flow_memory_evaluation_file_path;
+    std::string final_result_file_path;
 
     std::vector<int> throughput_record;
     std::vector<int> active_flow_count;
 
+    int total_cpu;
+    int total_memory;
+    std::vector<double> total_cpu_used_ratio_history;
+    std::vector<double> total_memory_used_ratio_history;
 
 };
 

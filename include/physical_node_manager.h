@@ -46,10 +46,14 @@ public:
     int set_physical_node_cpu_evaluation_file_path(const std::string &file_path);
     int set_physical_node_memory_evaluation_file_path(const std::string &file_path);
     int set_physical_node_bandwidth_evaluation_file_path(const std::string &file_path);
+    int set_final_result_file_path(const std::string &file_path);
     int save_evaluation();
+    int save_final_result();
 
     int get_server_cpu();
     int get_server_memory();
+    int get_total_cpu();
+    int get_total_memory();
 
 private:
     int add_physical_node(int parent_id);
@@ -78,6 +82,7 @@ private:
     std::string physical_node_cpu_evaluation_file_path;
     std::string physical_node_memory_evaluation_file_path;
     std::string physical_node_bandwidth_evaluation_file_path;
+    std::string final_result_file_path;
 
     std::vector<double> total_cpu_used_ratio_history;
     std::vector<double> total_memory_used_ratio_history;

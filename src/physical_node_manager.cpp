@@ -510,5 +510,59 @@ int PhysicalNodeManager::save_evaluation()
     return 0;
 }
 
+int PhysicalNodeManager::set_final_result_file_path(const std::string &file_path)
+{
+    this->final_result_file_path = file_path;
+    return 0;
+}
+
+int PhysicalNodeManager::save_final_result()
+{
+    FILE *out_file(NULL);
+    if ((out_file = fopen(this->final_result_file_path.c_str(), "a")) == NULL) {
+        warning_log("open final result file failed");
+        return -1;
+    }
+
+    int cpu_ratio_size = this->total_cpu_used_ratio_history.size();
+    double cpu_sum(0);
+    int cpu_count = 0;
+    for (int i = cpu_ratio_size/2; i < cpu_ratio_size; ++i) {
+        cpu_sum += this->total_cpu_used_ratio_history[i];
+        cpu_count += 1;
+    }
+    fprintf(out_file, "cpu_ratio\n%f\n", cpu_sum / cpu_count);
+
+    int memory_ratio_size = this->total_memory_used_ratio_history.size();
+    double memory_sum(0);
+    int memory_count = 0;
+    for (int i = memory_ratio_size/2; i < memory_ratio_size; ++i) {
+        memory_sum += this->total_memory_used_ratio_history[i];
+        memory_count += 1;
+    }
+    fprintf(out_file, "memory_ratio\n%f\n", memory_sum / memory_count);
+
+    int bandwidth_ratio_size = this->total_bandwidth_used_ratio_history.size();
+    double bandwidth_sum(0);
+    int bandwidth_count = 0;
+    for (int i = bandwidth_ratio_size/2; i < bandwidth_ratio_size; ++i) {
+        bandwidth_sum += this->total_bandwidth_used_ratio_history[i];
+        bandwidth_count += 1;
+    }
+    fprintf(out_file, "bandwidth_ratio\n%f\n", bandwidth_sum / bandwidth_count);
+
+    fclose(out_file);
+    return 0;
+}
+
+int PhysicalNodeManager::get_total_cpu()
+{
+    return this->total_cpu;
+}
+
+int PhysicalNodeManager::get_total_memory()
+{
+    return this->total_memory;
+}
 
 }

@@ -21,6 +21,7 @@ public:
     int set_flow_template_file_path(const std::string &file_path);
     int set_req_evaluation_file_path(const std::string &file_path);
     int set_generate_procedure_count(int new_req_procedure_count, int adjust_req_procedure_count);
+    int set_final_result_file_path(const std::string &file_path);
     int set_exam_lifetime(int exam_lifetime);
     int init();
 
@@ -33,6 +34,7 @@ public:
     
     int save_evaluation();
 
+    int set_fix_template_id(int template_id);
 private:
 
 
@@ -62,6 +64,7 @@ private:
 private:
     std::string flow_template_file_path;
     std::string req_evaluation_file_path;
+    std::string final_result_file_path;
 
     std::map<int, FlowTemplate *> flow_template;
     std::map<int, std::vector<int> > length2flow_template_id;
@@ -80,6 +83,8 @@ private:
     int accepted_req_count;
     int total_req_count;
     std::vector<double> accept_ratio_history;
+
+    int fix_template_id;
 
 };
 

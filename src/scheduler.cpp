@@ -235,6 +235,7 @@ int Scheduler::place_new_chain_on_physical_nodes(int chain_id, bool &req_result)
             }
 
             if (local_enough_flag == false) {
+                debug_log("local_enough_flag==false");
                 if (remove_a_vnf_instance(vnf_instance, service_chain->get_bandwidth_used(), pre_vi, NULL) != 0) {
                     warning_log("remove vi failed");
                     return -1;
@@ -327,6 +328,7 @@ int Scheduler::settle_a_vnf_instance(VnfInstance *vnf_instance, int pn_id, int b
     int vi_cpu_cost = vnf_instance->get_cpu_cost();
     int vi_memory_cost = vnf_instance->get_memory_cost();
 
+debug_log("settle_a_vnf_instance: pn_id=%d, vi_cpu_cost=%d, vi_memory_cost=%d", pn_id, vi_cpu_cost, vi_memory_cost);
     if (physical_node_manager->assign_host_resource(pn_id, vi_cpu_cost, vi_memory_cost) != 0) {
         warning_log("assign resource failed");
         return -1;
@@ -433,6 +435,7 @@ int Scheduler::remove_a_vnf_instance(VnfInstance *vnf_instance, int bandwidth_co
     int vi_cpu_cost = vnf_instance->get_cpu_cost();
     int vi_memory_cost = vnf_instance->get_memory_cost();
 
+debug_log("remove_a_vnf_instance: pn_id=%d, vi_cpu_cost=%d, vi_memory_cost=%d", pn_id, vi_cpu_cost, vi_memory_cost);
     if (physical_node_manager->release_host_resource(pn_id, vi_cpu_cost, vi_memory_cost) != 0) {
         warning_log("release resource failed");
         return -1;
@@ -588,7 +591,7 @@ int Scheduler::settle_a_flow_v(FlowNode *flow_node, VnfInstance *vnf_instance)
         return -1;
     }
 
-    //TODO:update vnf instance resource info
+    //FIXED:update vnf instance resource info (cancel)
 
     if (vnf_instance->get_disable_scale_up_down() == false) {
         int pn_id = vnf_instance->get_location();
@@ -1004,7 +1007,7 @@ int Scheduler::remove_a_flow_v(FlowNode *flow_node, VnfInstance *vnf_instance)
         return -1;
     }
 
-    //TODO:update vnf instance resource info
+    //FIXED:update vnf instance resource info (cancel)
 
     if (vnf_instance->get_disable_scale_up_down() == false) {
         int pn_id = vnf_instance->get_location();
@@ -1365,9 +1368,11 @@ int Scheduler::remove_empty_vnf_instance(int chain_id)
                 warning_log("get vi failed");
                 return -1;
             }
+            debug_log("vi %d info:%s", vi->get_id(), vi->to_string().c_str());
 
             if (vi->has_settled_flow_node() == false) {
                 debug_log("judge done");
+                
                 //if (chain->remove_vnf_instance(i, vi_id) != 0) {
                 if (service_chain_manager->remove_vnf_instance(chain, i, vi_id) != 0) {
                     warning_log("remove a vi from a chain failed");
@@ -1405,6 +1410,8 @@ int Scheduler::remove_empty_vnf_instance(int chain_id)
             return -1;
         } 
     }
+    debug_log("delete empty chain done");
+
 
     return 0;
 }
@@ -1421,21 +1428,27 @@ int Scheduler::flow_aging()
     for (auto iter = flow_pool.begin(); iter != flow_pool.end(); ++iter) {
         if (iter->second->aging() == 1) { //means lifetime_left == 0
             Flow *flow = iter->second;
+            debug_log("aginging remove flow info:%s", flow->to_string().c_str());
             int chain_id = flow->get_chain_id();
             if (release_flow_when_rejected(flow) != 0) {
                 warning_log("release flow when aging failed");
                 return -1;
             }
+            debug_log("release flow done");
             
             if (flow_manager->delete_a_flow(flow->get_id()) != 0) {
                 warning_log("delete a flow failed");
                 return -1;
             }
+            //super trick;
+            --iter;
+            debug_log("delete flow done");
 
             if (remove_empty_vnf_instance(chain_id) != 0) {
                 warning_log("remove_empty_vnf_instance failed");
                 return -1;
             }
+            debug_log("remove empty vi done");
         }
     }
 
@@ -1459,10 +1472,6 @@ int Scheduler::handle_req(const Req &req, bool &req_result)
             warning_log("new flow on new chain arrange failed");
             return -1;
         }
-    //} else {
-    //    req_result = false;
-    //}
-    //TODO:debug
     } else {
         if (sugoi_arrange(req, req_result) != 0) {
             warning_log("sugoi arrange failed");
@@ -1494,10 +1503,6 @@ int Scheduler::sugoi_arrange(const Req &req, bool &req_result)
     }
 
     if (req.get_req_type() == std::string("adjust")) {
-//TODO:debug
-//req_result = false;
-//return 0;
-        
 
         if (flow_manager->get_flow(req.get_flow_id(), &flow) != 0 ) {
             warning_log("get flow failed");
@@ -1517,9 +1522,6 @@ int Scheduler::sugoi_arrange(const Req &req, bool &req_result)
             return -1;
         }
     } else if (req.get_req_type() == std::string("new")) {
-//TODO:debug
-//req_result = false;
-//return 0;
         int flow_id(-1);
         if (create_new_flow(req.get_flow_template_id(), req.get_chain_id(), req.get_lifetime(), flow_id) != 0) {
             warning_log("create new flow failed");
@@ -1650,7 +1652,7 @@ int Scheduler::route(Flow *flow, ServiceChain *chain, bool &resource_enough_flag
         return -1;
     }
 
-//TODO:debug
+//FIXED:debug
 {
     debug_log("before stage1");
     debug_log("flow info:%s", flow->to_string().c_str());
@@ -1723,7 +1725,7 @@ int Scheduler::route(Flow *flow, ServiceChain *chain, bool &resource_enough_flag
 
     notice_log("stage 1 done");
 
-//TODO:debug
+//FIXED:debug
 {
     debug_log("flow info:%s", flow->to_string().c_str());
     FlowNode *flow_node(NULL);
@@ -1736,7 +1738,7 @@ int Scheduler::route(Flow *flow, ServiceChain *chain, bool &resource_enough_flag
     }
 }
 
-//TODO:debug
+//FIXED:debug
 int max_iter_count = 100;
 int iter_count = 0;
 
@@ -1745,7 +1747,7 @@ int iter_count = 0;
     while (update_flag == true) {
         update_flag = false;
 
-//TODO:debug
+//FIXED:debug
 ++iter_count;
 if (iter_count > max_iter_count) {
     notice_log("too slow to converge");
@@ -1827,7 +1829,7 @@ if (iter_count > max_iter_count) {
         }
     }
 
-//TODO:debug
+//FIXED:debug
 {
     debug_log("flow info:%s", flow->to_string().c_str());
     FlowNode *flow_node(NULL);
@@ -1901,7 +1903,7 @@ int Scheduler::migration(FlowNode *flow_node, int flow_bandwidth, ServiceChain *
     std::sort(fn_candidates.begin(), fn_candidates.begin() + fn_candidates.size());
     int fn_candidates_size = fn_candidates.size();
 
-//TODO:debug
+//FIXED:debug
 { 
     for (int i = 0; i < fn_candidates_size; ++i) {
         debug_log("fn candidates %d info:%s", i, fn_candidates[i].flow_node->to_string().c_str());
@@ -1911,7 +1913,7 @@ int Scheduler::migration(FlowNode *flow_node, int flow_bandwidth, ServiceChain *
     for (int mig_fn_count = 1; mig_fn_count <= fn_candidates_size; ++mig_fn_count) {
         for (int i = 0; i < (fn_candidates_size - mig_fn_count + 1); ++i) {
 debug_log("mig_fn_count:%d i:%d", mig_fn_count, i);
-//TODO:debug
+//FIXED:debug
 { 
     for (int i = 0; i < fn_candidates_size; ++i) {
         debug_log("fn candidates %d info:%s", i, fn_candidates[i].flow_node->to_string().c_str());
@@ -2289,7 +2291,7 @@ int Scheduler::get_pn_cost_result(int pn_id, double &cost_result)
         warning_log("get instance failed");
         return -1;
     }
-if (physical_node_manager->get_cpu_statistics(pn_id, cpu_used, cpu) != 0 ||
+    if (physical_node_manager->get_cpu_statistics(pn_id, cpu_used, cpu) != 0 ||
             physical_node_manager->get_memory_statistics(pn_id, memory_used, memory) != 0 ||
             physical_node_manager->get_bandwidth_statistics(pn_id, up_bandwidth_used, up_bandwidth) != 0) {
         warning_log("get statistics failed");
@@ -2824,26 +2826,6 @@ int Scheduler::h_only_get_vi_candidates_on_chain_of_function_i(ServiceChain *cha
 
     return 0;
 }
-
-//int h_only_settle_a_flow_node(FlowNode *flow_node, VnfInstance *vnf_instance, int bandwidth_cost);
-//int h_only_settle_a_flow_v(FlowNode *flow_node, VnfInstance *vnf_instance);
-//int h_only_settle_a_flow_link(FlowNode *flow_node_1, FlowNode *flow_node_2, int bandwidth_cost);
-//
-//int h_only_calculate_a_flow_node_cost(FlowNode *flow_node, bool &enough_flag, double &cost_result);
-//int h_only_calculate_a_flow_v_cost(FlowNode *flow_node, bool &enough_flag, double &host_cost_result);
-//int h_only_calculate_a_flow_node_links_cost(FlowNode *flow_node, bool &enough_flag, double &bandwidth_cost);
-//int h_only_calculate_a_flow_link_cost(FlowNode *flow_node_1, FlowNode *flow_node_2, bool &enough_flag, int &delta_bandwidth);
-//
-//int h_only_remove_a_flow_node(FlowNode *flow_node, VnfInstance *vnf_instance, int bandwidth_cost);
-//int h_only_remove_a_flow_node(FlowNode *flow_node, int vnf_instance_id, int bandwidth_cost);
-//int h_only_remove_a_flow_v(FlowNode *flow_node, VnfInstance *vnf_instance);
-//int h_only_remove_a_flow_link(FlowNode *flow_node_1, FlowNode *flow_node_2, int bandwidth_cost);
-
-//int h_only_release_flow_when_rejected(Flow *flow);
-
-
- 
-
 
 RouteBestSolution::RouteBestSolution()
 {

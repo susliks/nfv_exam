@@ -350,7 +350,7 @@ int ServiceChainManager::get_first_vnf_instance(int chain_id, int func_id, VnfIn
     }
 
     //const auto &vnf_instances = service_chain->get_vnf_instance();
-    //const std::map<int, std::vector<int> *> &vnf_instances = service_chain->get_vnf_instance(); //todo: not elegant
+    //const std::map<int, std::vector<int> *> &vnf_instances = service_chain->get_vnf_instance(); //fixed: not elegant
     std::map<int, std::vector<int> *> &vnf_instances = service_chain->get_vnf_instance();
 
     if (vnf_instances.find(func_id) == vnf_instances.end()) {
@@ -515,6 +515,7 @@ int ServiceChainManager::remove_vnf_instance(ServiceChain *chain, int function_i
             return -1;
         }
 
+debug_log("release vi resource, pn_id=%d, cpu_cost=%d, memory_cost=%d", pn_id, cpu_cost, memory_cost);
         if (physical_node_manager->release_host_resource(pn_id, cpu_cost, memory_cost) != 0) {
             warning_log("release host resource when h_only, remove a vi failed");
             return -1;
