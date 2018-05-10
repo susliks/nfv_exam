@@ -475,6 +475,12 @@ int ReqManager::save_evaluation()
 
     fclose(out_file);
 
+    return 0;
+}
+
+int ReqManager::save_final_result()
+{
+    FILE *out_file(NULL);
     //save final result
     if ((out_file = fopen(this->final_result_file_path.c_str(), "a")) == NULL) {
         warning_log("open req evaluation file failed");

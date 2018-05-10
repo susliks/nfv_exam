@@ -31,8 +31,8 @@ public:
     int get_template_info(int flow_template_id, int &length, std::vector<int> &node_cpu_cost, 
             std::vector<int> &node_memory_cost, int &flow_bandwidth_cost); 
 
-    
     int save_evaluation();
+    int save_final_result();
 
     int set_fix_template_id(int template_id);
 private:

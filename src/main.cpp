@@ -41,7 +41,7 @@ const std::string flow_cpu_evaluation_file_path = "./data/flow_cpu_evaluation";
 const std::string flow_memory_evaluation_file_path = "./data/flow_memory_evaluation";
 const std::string physical_node_bandwidth_evaluation_file_path = "./data/bandwidth_evaluation";
 
-const std::string final_result_file_path = "./data/final_result";
+std::string final_result_file_path = "./data/final_result";
 
 const int physical_node_evaluate_frequency = 10;
 const int new_req_procedure_count = 80;
@@ -60,8 +60,13 @@ int main(int argc, char **argv)
     srand((unsigned)time(NULL));
 
     notice_log("log start");
+    notice_log("strategy:%s", scheduler_strategy.c_str());
     debug_log("debug_log test");
 
+    if (argc == 2) {
+        final_result_file_path = final_result_file_path + std::string("_") + std::string(argv[1]);
+        printf("final_result_file_path:%s", final_result_file_path.c_str());
+    }
 
 
     nfv_exam::PhysicalNodeManager *physical_node_manager = nfv_exam::PhysicalNodeManager::get_instance();
@@ -155,6 +160,7 @@ int main(int argc, char **argv)
     physical_node_manager->save_evaluation();
     physical_node_manager->save_final_result();
     req_manager->save_evaluation();
+    req_manager->save_final_result();
     flow_manager->save_evaluation();
     flow_manager->save_final_result();
     
