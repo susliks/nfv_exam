@@ -2722,6 +2722,8 @@ int Scheduler::h_only_scale_out(FlowNode *flow_node, ServiceChain *chain, int fl
 
 int Scheduler::h_only_greedy_arrange(Flow *flow, ServiceChain *chain, bool &req_result)
 {
+    req_result = true; //init
+
     FlowManager *flow_manager(NULL);
     if ((flow_manager = FlowManager::get_instance()) == NULL) {
         warning_log("get flow_manager failed");
