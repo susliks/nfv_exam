@@ -79,6 +79,15 @@ int ReqManager::init()
 
     this->fix_template_id =-1;
 
+    //TODO:trick
+    this->fix_threshold = 0;
+
+    return 0;
+}
+
+int ReqManager::set_fix_threshold(double threshold)
+{
+    this->fix_threshold = threshold;
     return 0;
 }
 
@@ -397,12 +406,19 @@ int ReqManager::decide_chain_id(int length, int &chain_id)
     //int enlargement_factor = 100;
     //int threshold = floor(resource_used_ratio * enlargement_factor);
     //int random_int = rand() % enlargement_factor;
-    int threshold = floor(resource_used_ratio * this->cpu_enlarge_factor);
+    //TODO: in fact, not cpu_enlarge_factor, but it doesn't matter
+    //TODO:trick
+    int threshold(0);
+    if (this->fix_threshold < 0.01) {
+        threshold = floor(resource_used_ratio * this->cpu_enlarge_factor);
+    } else {
+        threshold = floor(this->fix_threshold * this->cpu_enlarge_factor);
+    }
     int random_int = rand() % this->cpu_enlarge_factor;
     notice_log("threshold:%d, random_int:%d", threshold, random_int);
     //TODO:debug
     //if (random_int > threshold) {
-    if (random_int > 2*threshold) {
+    if (random_int > threshold) {
         chain_id = -1;
         notice_log("new req in new chain");
     } else {

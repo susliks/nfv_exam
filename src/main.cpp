@@ -160,6 +160,11 @@ int main(int argc, char **argv)
             flow_manager->save_evaluation();
         }
         debug_log("update eval done");
+
+        //TODO:trick
+        if (req_count > max_req_count / 2) {
+            req_manager->set_fix_threshold(0.9);
+        }
     }
 
     physical_node_manager->save_evaluation();

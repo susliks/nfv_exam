@@ -35,6 +35,7 @@ public:
     int save_final_result();
 
     int set_fix_template_id(int template_id);
+    int set_fix_threshold(double threshold);
 private:
 
 
@@ -86,6 +87,8 @@ private:
 
     int fix_template_id;
 
+    //TODO:trick
+    double fix_threshold;
 };
 
 }
