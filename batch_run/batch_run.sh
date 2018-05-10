@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for i in `req 19`
+for i in `seq 19`
 do
     echo $i
     cd batch_nfv_exam/nfv_exam_$i
