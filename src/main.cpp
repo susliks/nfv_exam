@@ -22,12 +22,15 @@ const int cpu_enlarge_factor = 100;
 //const int max_req_count = 100000;
 const int max_req_count = 50000;
 
+//TODO:
+const int resource_shrink_factor = 2;
+
 const int LEVEL0_SON_NUM = 4;
 const int LEVEL1_SON_NUM = 20;
 const int LEVEL2_SON_NUM = 20;
-const int SERVER_CPU = 12 * cpu_enlarge_factor;
-const int SERVER_MEMORY = 32000;
-const int SERVER_UP_BANDWIDTH = 1000;
+const int SERVER_CPU = 12 * cpu_enlarge_factor / resource_shrink_factor;
+const int SERVER_MEMORY = 32000 / resource_shrink_factor;
+const int SERVER_UP_BANDWIDTH = 1000 / resource_shrink_factor;
 const int LEVEL0_BANDWIDTH_DECAY = 2;
 const int LEVEL1_BANDWIDTH_DECAY = 2;
 
@@ -44,8 +47,10 @@ const std::string physical_node_bandwidth_evaluation_file_path = "./data/bandwid
 std::string final_result_file_path = "./data/final_result";
 
 const int physical_node_evaluate_frequency = 10;
-const int new_req_procedure_count = 80;
-const int adjust_req_procedure_count = 20;
+
+//TODO:adjust para
+const int new_req_procedure_count = 40;
+const int adjust_req_procedure_count = 10;
 
 const int exam_lifetime = 36000;
 

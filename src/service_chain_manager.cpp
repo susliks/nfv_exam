@@ -398,7 +398,9 @@ int ServiceChainManager::load_vi_template()
     this->vi_template.push_back(vi_template);
     vi_template.cpu = 8 * this->cpu_enlarge_factor;
     //vi_template.memory = 32000;
-    vi_template.memory = 24000;
+    //vi_template.memory = 24000;
+    //TODO:adjust para
+    vi_template.memory = 16000;
     this->vi_template.push_back(vi_template);
     sort(this->vi_template.begin(), this->vi_template.begin() + this->vi_template.size());
 
