@@ -2767,7 +2767,8 @@ int Scheduler::h_only_greedy_arrange(Flow *flow, ServiceChain *chain, bool &req_
             if (local_enough_flag == true) {
                 local_found = true;
             } else {
-                if (remove_a_flow_node(flow_node, local_enough_flag, local_cost_result) != 0) {
+                //if (remove_a_flow_node(flow_node, local_enough_flag, local_cost_result) != 0) {
+                if (remove_a_flow_node(flow_node, iter->vi, local_cost_result) != 0) {
                     warning_log("remove_a_flow_node failed");
                     return -1;
                 }
