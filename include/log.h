@@ -11,9 +11,20 @@
 #define DEBUG
 //#define NOTICE
 
-#define filename(x) strrchr(x,'/')?strrchr(x,'/')+1:x   //only select the filename from __FILE__
+//#define filename(x) strrchr(x,'/')?strrchr(x,'/')+1:x   //only select the filename from __FILE__
 
 #include <string>
+
+//#define UNIT_LOG(level, format, args...) \
+//    rs_frame::log_debug( \
+//            std::string(std::string("[%s] [%s %s] [%s:%s:%d] ") + format + "\n").c_str(), \
+//            level, \
+//            __DATE__, \
+//            __TIME__, \
+//            filename(__FILE__), \
+//            __FUNCTION__, \
+//            __LINE__, \
+//            ##args)
 
 #define UNIT_LOG(level, format, args...) \
     rs_frame::log_debug( \
@@ -21,7 +32,7 @@
             level, \
             __DATE__, \
             __TIME__, \
-            filename(__FILE__), \
+            __FILE__, \
             __FUNCTION__, \
             __LINE__, \
             ##args)
