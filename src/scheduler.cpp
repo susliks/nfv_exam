@@ -2623,16 +2623,18 @@ int Scheduler::h_only_scale_out(FlowNode *flow_node, ServiceChain *chain, int fl
     int vi_id(-1), pre_vi_id(-1);
     VnfInstance *vi(NULL), *pre_vi(NULL);
     //get pre_vi
-    if (flow_node->has_pre_node() && flow_node->get_pre_node()->is_settled()) {
-        pre_vi_id = flow_node->get_pre_node()->get_location();
+    if (flow_node->has_pre_node()) {
+        if (flow_node->get_pre_node()->is_settled()) {
+            pre_vi_id = flow_node->get_pre_node()->get_location();
 
-        if (service_chain_manager->get_vnf_instance(pre_vi_id, &pre_vi) != 0) {
-            warning_log("get pre vi failed");
+            if (service_chain_manager->get_vnf_instance(pre_vi_id, &pre_vi) != 0) {
+                warning_log("get pre vi failed");
+                return -1;
+            }
+        } else {
+            warning_log("pre_flow_node unsettled, impossible");
             return -1;
         }
-    } else {
-        warning_log("pre_flow_node unsettled, impossible");
-        return -1;
     }
 
     //create a new vi and add to chain
