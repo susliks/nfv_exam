@@ -2653,6 +2653,8 @@ int Scheduler::h_only_scale_out(FlowNode *flow_node, ServiceChain *chain, int fl
     //set vi cost 
     int fn_cpu_cost(0), fn_memory_cost(0);
     int vi_cpu_cost(0), vi_memory_cost(0);
+    fn_cpu_cost = flow_node->get_cpu_cost();
+    fn_memory_cost = flow_node->get_memory_cost();
     if (service_chain_manager->get_vi_template(fn_cpu_cost, fn_memory_cost, vi_cpu_cost, vi_memory_cost) != 0) {
         warning_log("get vi cost failed");
         return -1;
@@ -2675,6 +2677,7 @@ int Scheduler::h_only_scale_out(FlowNode *flow_node, ServiceChain *chain, int fl
         warning_log("vi add settled flow node failed");
         return -1;
     }
+    debug_log("vi info:%s", vi->to_string().c_str());
 
     //get server candidates
     std::vector<ServerCandidate> server_candidates;
@@ -2706,6 +2709,7 @@ int Scheduler::h_only_scale_out(FlowNode *flow_node, ServiceChain *chain, int fl
         }
     }
 
+    debug_log("before reomve vi info:%s", vi->to_string().c_str());
     resource_enough_flag = false;
     if (flow_node->remove() != 0) {
         warning_log("flow_node remove failed");
@@ -2716,6 +2720,7 @@ int Scheduler::h_only_scale_out(FlowNode *flow_node, ServiceChain *chain, int fl
         return -1;
     }
 
+    debug_log("after remove vi info:%s", vi->to_string().c_str());
     return 0;
 }
 

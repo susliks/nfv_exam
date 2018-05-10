@@ -14,9 +14,9 @@ int VnfInstance::init(int id, int location, bool disable_scale_up_down, int vi_c
     this->vi_cpu_cost = vi_cpu_cost;
     this->vi_memory_cost = vi_memory_cost;
 
-    this->pre_vi_id.clear();
-    this->next_vi_id.clear();
-    settled_flow_nodes.clear();
+    //this->pre_vi_id.clear();
+    //this->next_vi_id.clear();
+    //settled_flow_nodes.clear();
 
     return 0;
 }
@@ -46,6 +46,7 @@ int VnfInstance::remove_pre_vi_id(int pre_vi_id)
     for (auto iter = this->pre_vi_id.begin(); iter != this->pre_vi_id.end();) {
         if (*iter == pre_vi_id) {
             iter = this->pre_vi_id.erase(iter);
+            debug_log("cur_vi_id=%d, pre_vi_id=%d", this->id, pre_vi_id);
             return 0;
         } else {
             ++iter;
@@ -60,6 +61,7 @@ int VnfInstance::remove_next_vi_id(int next_vi_id)
     for (auto iter = this->next_vi_id.begin(); iter != this->next_vi_id.end();) {
         if (*iter == next_vi_id) {
             iter = this->next_vi_id.erase(iter);
+            debug_log("cur_vi_id=%d, next_vi_id=%d", this->id, next_vi_id);
             return 0;
         } else {
             ++iter;
@@ -223,6 +225,11 @@ const std::string VnfInstance::to_string()
         result += std::string(" false ");
     }
 
+
+    result += std::string("settled_flow_nodes size:") + std::to_string(this->settled_flow_nodes.size()) + std::string(" ");
+    for (auto iter = this->settled_flow_nodes.begin(); iter != this->settled_flow_nodes.end(); ++iter) {
+        result += std::string("_") + std::to_string(*iter) + std::string(" ");
+    }
     result += std::string("cpu_used:") + std::to_string(vi_cpu_used) + std::string(" ");
     result += std::string("memory_used:") + std::to_string(vi_memory_used) + std::string(" ");
     result += std::string("cpu_cost:") + std::to_string(vi_cpu_cost) + std::string(" ");

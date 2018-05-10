@@ -480,6 +480,8 @@ int ServiceChainManager::add_vnf_instance(ServiceChain *chain, int function_id, 
             }
         }
     }
+    debug_log("add_vnf_instance done");
+    debug_log("vi info:%s", vi->to_string().c_str());
 
     return 0;
 }
