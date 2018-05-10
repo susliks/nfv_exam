@@ -400,7 +400,9 @@ int ReqManager::decide_chain_id(int length, int &chain_id)
     int threshold = floor(resource_used_ratio * this->cpu_enlarge_factor);
     int random_int = rand() % this->cpu_enlarge_factor;
     notice_log("threshold:%d, random_int:%d", threshold, random_int);
-    if (random_int > threshold) {
+    //TODO:debug
+    //if (random_int > threshold) {
+    if (random_int > 2*threshold) {
         chain_id = -1;
         notice_log("new req in new chain");
     } else {

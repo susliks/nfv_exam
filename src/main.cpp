@@ -56,9 +56,9 @@ const int exam_lifetime = 36000;
 
 //scheduler
 const double scheduler_alpha = 1.0;
-const std::string scheduler_strategy = "normal";
+//const std::string scheduler_strategy = "normal";
 //const std::string scheduler_strategy = "vertical_only";
-//const std::string scheduler_strategy = "horizontal_only";
+const std::string scheduler_strategy = "horizontal_only";
 
 int main(int argc, char **argv)
 {
