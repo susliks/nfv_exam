@@ -8,7 +8,7 @@
 #ifndef LOG_H
 #define LOG_H
 
-#define DEBUG
+//#define DEBUG
 //#define NOTICE
 
 //#define filename(x) strrchr(x,'/')?strrchr(x,'/')+1:x   //only select the filename from __FILE__
