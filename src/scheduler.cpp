@@ -2574,6 +2574,7 @@ int Scheduler::handle_req_h_only(const Req &req, bool &req_result)
             }
         }
 
+        //TODO:debug
         if (h_only_greedy_arrange(flow, chain, req_result) != 0) {
             warning_log("greedy_arrange failed");
             return -1;
@@ -2775,7 +2776,7 @@ int Scheduler::h_only_greedy_arrange(Flow *flow, ServiceChain *chain, bool &req_
                 local_found = true;
             } else {
                 //if (remove_a_flow_node(flow_node, local_enough_flag, local_cost_result) != 0) {
-                if (remove_a_flow_node(flow_node, iter->vi, local_cost_result) != 0) {
+                if (remove_a_flow_node(flow_node, iter->vi, flow_bandwidth) != 0) {
                     warning_log("remove_a_flow_node failed");
                     return -1;
                 }
