@@ -26,7 +26,7 @@ const int max_req_count = 50000;
 const int resource_shrink_factor = 2;
 
 const int LEVEL0_SON_NUM = 4;
-const int LEVEL1_SON_NUM = 20;
+int LEVEL1_SON_NUM = 20;    //not const for sensitive study
 const int LEVEL2_SON_NUM = 20;
 const int SERVER_CPU = 12 * cpu_enlarge_factor / resource_shrink_factor;
 const int SERVER_MEMORY = 32000 / resource_shrink_factor;
@@ -71,6 +71,10 @@ int main(int argc, char **argv)
     if (argc == 2) {
         final_result_file_path = final_result_file_path + std::string("_") + std::string(argv[1]);
         printf("final_result_file_path:%s", final_result_file_path.c_str());
+    } else if (argc == 3) {
+        LEVEL1_SON_NUM -= atoi(argv[2]);
+        printf("LEVEL1_SON_NUM=%d", LEVEL1_SON_NUM);
+        final_result_file_path = final_result_file_path + std::string("_sensitive_") + std::string(argv[2]);
     }
 
 
